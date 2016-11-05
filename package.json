@@ -1,0 +1,20 @@
+{
+  "name": "Headset",
+  "version": "1.0.0",
+  "description": "Native Player for OSX",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=development electron .",
+    "production": "NODE_ENV=production electron .",
+    "build": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build"
+  },
+  "productName": "Headset",
+  "author": "Daniel Ravina",
+  "license": "MIT",
+  "dependencies": {
+    "electron-default-menu": "^0.1.1",
+    "electron-packager": "^7.0.2",
+    "electron-prebuilt": "^1.2.0",
+    "iconutil": "^1.0.1"
+  }
+}
