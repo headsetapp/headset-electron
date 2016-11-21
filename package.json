@@ -1,6 +1,6 @@
 {
   "name": "Headset",
-  "version": "1.2.4",
+  "version": "1.2.6",
   "description": "Native Player for OSX",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "dependencies": {
     "electron-default-menu": "^0.1.1",
     "electron-packager": "^7.0.2",
-    "electron-prebuilt": "^1.2.0",
+    "electron": "1.4.2",
     "iconutil": "^1.0.1"
   }
 }

@@ -1,6 +1,7 @@
 const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
 const { NODE_ENV } = process.env;
+const { version } = require('./package')
 
 const {
   app,
@@ -18,10 +19,10 @@ const start = () => {
     height: 667,
     resizable: false,
     title: 'Headset',
-    // alwaysOnTop: true,
     titleBarStyle: 'hidden-inset',
     icon: `file://${__dirname}/Icon.icns`
   });
+
 
   if (NODE_ENV === 'development') {
     win.loadURL('http://localhost:3000');
@@ -30,6 +31,10 @@ const start = () => {
   }
 
   win.webContents.on('did-finish-load', () => {
+    win.webContents.executeJavaScript(`
+      window.electronVersion = "v${version}"
+    `)
+
     globalShortcut.register('MediaPlayPause', () => {
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
