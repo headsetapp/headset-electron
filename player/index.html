@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Player</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="ytplayer"></div>
+  <script type="text/javascript">
+    const { ipcRenderer } = require('electron');
+    window.ipcRenderer = ipcRenderer
+  </script>
+  <script src="./ytPlayer.js"></script>
+  <div class="playBlock"></div>
+</body>
+</html>
