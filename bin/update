@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-curl -L -o /tmp/headset.zip $DL_URL
-unzip -oq /tmp/headset.zip -d /tmp
-rsync -avq /tmp/Headset.app/* /Applications/Headset.app
-rm /tmp/headset.zip
-rm -R /tmp/Headset.app/
