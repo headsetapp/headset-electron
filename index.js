@@ -27,21 +27,6 @@ const start = () => {
     icon: `file://${__dirname}/Icon.icns`
   });
 
-  win.webContents.on('did-finish-load', () => {
-    if(player) return;
-
-    player = new BrowserWindow({
-      width: 220,
-      height: 245,
-      resizable: false,
-      title: 'Headset - Player',
-      maximizable: false
-    })
-
-    // player.minimize()
-    player.loadURL('http://127.0.0.1:3001');
-  })
-
   if (NODE_ENV === 'development') {
     win.loadURL('http://localhost:3000');
   } else {
@@ -49,6 +34,31 @@ const start = () => {
   }
 
   win.webContents.on('did-finish-load', () => {
+    if(player) return;
+
+    player = new BrowserWindow({
+      width: 285,
+      height: 440,
+      resizable: false,
+      title: 'Headset - Player',
+      maximizable: false,
+    });
+
+    player.minimize();
+
+    if (NODE_ENV === 'development') {
+      player.loadURL('http://127.0.0.1:3001');
+    } else {
+      player.loadURL('http://danielravina.github.io/headset/player');
+    }
+
+    player.on('close', (e) => {
+      if(!willQuitApp) {
+        dialog.showErrorBox('Oops! 🤕', `Sorry, player window cannot be closed. You can only minimize it.`);
+        e.preventDefault();
+      }
+    })
+
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
     `)
@@ -81,8 +91,7 @@ const start = () => {
     menu[2]['submenu'] = [ menu[2]['submenu'][0] ];
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
-
-  }); // end start
+  }); // end did-finish-load
 
   win.on('close', (e) => {
     if (willQuitApp) {
@@ -100,15 +109,16 @@ const start = () => {
     e.preventDefault();
     win.show();
   });
-};
+}; // end start
 
 app.on('activate', () => win.show());
 app.on('before-quit', () => willQuitApp = true);
 app.on('ready', start);
 
 /*
- * This is the proxy. it gets messages from the renderrer
- * and send them to the player, and vice versa
+ * This is the proxy between the 2 windows.
+ * it receives messages from a renderrer
+ * and send them to the other renderrer
 */
 ipcMain.on('win2Player', (e, args) => {
   // console.log('win2Player', args);
@@ -117,5 +127,7 @@ ipcMain.on('win2Player', (e, args) => {
 
 ipcMain.on('player2Win', (e, args) => {
   // console.log('player2Win', args);
-  win.webContents.send('player2Win', args)
+  try {
+    win.webContents.send('player2Win', args)
+  } catch(err) {/* window already closed */}
 })

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-pwd
+rm -R ~/Library/Application\ Support/Headset/Cache
 cd player
 http-server -p 3001

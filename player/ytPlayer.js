@@ -4,7 +4,6 @@ let ytPlayer;
    from and to the main process. The main process then proxy the messages
    to the player window and proxy back the here (via callbacks).
 */
-
 class YTPlayer {
   constructor() {
     this.listenToWin()
@@ -14,7 +13,14 @@ class YTPlayer {
 
   setState(state) {
     this.playerState = state
+    if(this.videoEnded) {
+      this.send('onEnd')
+    }
     return false
+  }
+
+  get videoEnded() {
+    return this.playerState === YT.PlayerState.ENDED
   }
 
   get isPlaying() {
@@ -38,7 +44,7 @@ class YTPlayer {
   }
 
   loadVideoById(id) {
-    ytPlayer.loadVideoById({videoId: id, suggestedQuality: 'small' });
+    ytPlayer.loadVideoById({ videoId: id, suggestedQuality: 'small' });
   }
 
   sendCurrentTime() {
@@ -54,7 +60,7 @@ class YTPlayer {
       if (this.isPlaying) {
         this.sendCurrentTime();
       }
-    }, 1000);
+    }, 500);
   }
 
   listenToWin() {
@@ -81,7 +87,7 @@ window.onYouTubePlayerAPIReady = () => {
   let yt;
 
   ytPlayer = new YT.Player('ytplayer', {
-    width: '200',
+    width: '262',
     height: '200',
     controls: 0,
     disablekb: 1,
@@ -90,9 +96,6 @@ window.onYouTubePlayerAPIReady = () => {
       onReady() {
         yt = new YTPlayer()
         yt.send('onReady')
-      },
-      onEnd() {
-        yt.send('onEnd')
       },
       onStateChange(e) {
         yt.setState(e.data)
