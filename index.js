@@ -83,7 +83,7 @@ const start = () => {
 
     if (NODE_ENV === 'development') {
       win.webContents.openDevTools();
-      player.webContents.openDevTools();
+      // player.webContents.openDevTools();
     }
 
     let menu = defaultMenu();

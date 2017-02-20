@@ -2,9 +2,9 @@
   width: 40px;
   height: 30px;
   background: none;
-  position: relative;
-  bottom: 38px;
-  left: 17px;
+  position: absolute;
+  bottom: 6px;
+  left: 27px;
 }
 
 p, h1, body {
@@ -26,6 +26,7 @@ p {
 }
 
 .player-wrapper {
+  position: relative;
   text-align: center;
   margin-top: 12px;
   margin-bottom: 12px;
