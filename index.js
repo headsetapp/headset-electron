@@ -34,7 +34,10 @@ const start = () => {
   }
 
   win.webContents.on('did-finish-load', () => {
-    if(player) return;
+    if(player) {
+      if(NODE_ENV !== 'development') player.reload()
+      return;
+    }
 
     player = new BrowserWindow({
       width: 285,
