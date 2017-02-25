@@ -16,6 +16,8 @@ let win;
 let player;
 let willQuitApp = false;
 
+const isDev = (NODE_ENV === 'development')
+
 const start = () => {
   win = new BrowserWindow({
     width: 375,
@@ -27,15 +29,15 @@ const start = () => {
     icon: `file://${__dirname}/Icon.icns`
   });
 
-  if (NODE_ENV === 'development') {
+  if (isDev) {
     win.loadURL('http://localhost:3000');
   } else {
     win.loadURL('http://danielravina.github.io/headset/app/');
   }
 
   win.webContents.on('did-finish-load', () => {
-    if(player) {
-      if(NODE_ENV !== 'development') player.reload()
+    if (player) {
+      if (!isDev) player.reload()
       return;
     }
 
@@ -49,7 +51,7 @@ const start = () => {
 
     player.minimize();
 
-    if (NODE_ENV === 'development') {
+    if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
     } else {
       player.loadURL('http://danielravina.github.io/headset/player');
@@ -84,7 +86,7 @@ const start = () => {
       `)
     });
 
-    if (NODE_ENV === 'development') {
+    if (isDev) {
       win.webContents.openDevTools();
       // player.webContents.openDevTools();
     }
@@ -124,13 +126,15 @@ app.on('ready', start);
  * and send them to the other renderrer
 */
 ipcMain.on('win2Player', (e, args) => {
-  // console.log('win2Player', args);
+  if (isDev) { console.log('win2Player', args); }
+
   player.webContents.send('win2Player', args)
 })
 
 ipcMain.on('player2Win', (e, args) => {
-  // console.log('player2Win', args);
+  if (isDev) { console.log('player2Win', args); }
+
   try {
     win.webContents.send('player2Win', args)
-  } catch(err) {/* window already closed */}
+  } catch(err) { /* window already closed */ }
 })

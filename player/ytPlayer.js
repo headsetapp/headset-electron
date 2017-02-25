@@ -15,6 +15,7 @@ class YTPlayer {
     this.playerState = state
     if(this.videoEnded) {
       this.send('onEnd')
+      this.sendCurrentTime()
     }
     return false
   }
@@ -29,6 +30,7 @@ class YTPlayer {
 
   pauseVideo() {
     ytPlayer.pauseVideo()
+    this.waitToBuffer().then(() => ytPlayer.pauseVideo())
   }
 
   playVideo() {
@@ -53,6 +55,22 @@ class YTPlayer {
 
   setVolume(value) {
     ytPlayer.setVolume(value)
+  }
+
+  waitToBuffer() {
+    const timeOut = 100 // 100mil * 100 tries = 10sec
+    return new Promise((resolve, reject)=> {
+      const bufferWaitInterval = setInterval(() => {
+        if (this.playerState !== YT.PlayerState.BUFFERING) {
+          clearInterval(bufferWaitInterval)
+          resolve()
+        }
+        if(--timeOut < 0) {
+          clearInterval(bufferWaitInterval)
+          reject()
+        }
+      }, 100)
+    })
   }
 
   startProgressChecker() {
