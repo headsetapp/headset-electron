@@ -32,7 +32,7 @@ const start = () => {
   if (isDev) {
     win.loadURL('http://localhost:3000');
   } else {
-    win.loadURL('http://danielravina.github.io/headset/app/');
+    win.loadURL('https://danielravina.github.io/headset/app/');
   }
 
   win.webContents.on('did-finish-load', () => {
