@@ -1,6 +1,6 @@
 {
   "name": "Headset",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Native Player for OSX",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "author": "Daniel Ravina",
   "license": "MIT",
   "dependencies": {
-    "electron": "1.4.2",
+    "electron": "^1.6.2",
     "electron-default-menu": "^0.1.1",
     "electron-packager": "^7.0.2",
     "iconutil": "^1.0.1"
