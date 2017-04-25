@@ -1,6 +1,6 @@
 {
   "name": "Headset",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Native Player for OSX",
   "main": "index.js",
   "scripts": {
