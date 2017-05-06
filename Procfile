@@ -1,2 +1,2 @@
 headset: npm run electron
-player: npm run player 
+player: cd player && http-server -p 3001

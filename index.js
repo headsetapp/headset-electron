@@ -2,6 +2,9 @@ const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
 const { NODE_ENV } = process.env;
 const { version } = require('./package')
+const path = require('path')
+const iconPath = path.join(__dirname, 'system_tray16x16.png');
+const Positioner = require('electron-positioner')
 
 const {
   app,
@@ -9,24 +12,26 @@ const {
   globalShortcut,
   Menu,
   ipcMain,
-  dialog
+  dialog,
+  Tray
 } = electron;
 
 let win;
 let player;
 let willQuitApp = false;
 
-const isDev = (NODE_ENV === 'development')
+const isDev = (NODE_ENV !== 'production')
 
 const start = () => {
   win = new BrowserWindow({
-    width: 375,
-    height: 667,
+    width: 391,
+    height: 726,
     resizable: false,
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hidden-inset',
-    icon: `file://${__dirname}/Icon.icns`
+    icon: `file://${__dirname}/Icon.icns`,
+    frame: true
   });
 
   if (isDev) {
@@ -46,7 +51,11 @@ const start = () => {
       maximizable: false,
     });
 
-    player.minimize();
+    positioner = new Positioner(player).move('bottomCenter')
+
+    setTimeout(()=> {
+      player.minimize();
+    }, 2000)
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
@@ -55,7 +64,7 @@ const start = () => {
     }
 
     player.on('close', (e) => {
-      if(!willQuitApp) {
+      if (win) {
         dialog.showErrorBox('Oops! 🤕', `Sorry, player window cannot be closed. You can only minimize it.`);
         e.preventDefault();
       }
@@ -96,21 +105,16 @@ const start = () => {
   }); // end did-finish-load
 
   win.on('close', (e) => {
-    if (willQuitApp) {
-      // the user tried to quit the app
-      player = null
-      win = null;
-    } else {
-      // the user only tried to close the win
-      e.preventDefault();
-      win.hide();
-    }
+    win = null
+    player.close()
   });
 
   win.on('restore', (e) => {
     e.preventDefault();
     win.show();
   });
+  ipcMain.on('close', () => win.close())
+  ipcMain.on('minimize', () => win.minimize())
 }; // end start
 
 app.on('activate', () => win.show());

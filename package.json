@@ -4,11 +4,12 @@
   "description": "Native Player for OSX",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development NODE_PATH=. nf start",
+    "start": "nf start",
     "electron": "./node_modules/.bin/electron .",
     "player": "./bin/player-window",
     "production": "NODE_ENV=production electron .",
-    "build": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build"
+    "build": "electron-packager ./ Headset --overwrite --platform=win32 --arch=ia32 --ignore=node_modules/electron-prebuilt --ignore=node_modules/electron-packager --out=build",
+    "installer": "node bin/winstaller.js"
   },
   "productName": "Headset",
   "author": "Daniel Ravina",
@@ -18,6 +19,10 @@
     "electron-default-menu": "^0.1.1",
     "electron-osx-sign": "^0.4.4",
     "electron-packager": "^7.0.2",
+    "electron-positioner": "^3.0.0",
     "iconutil": "^1.0.1"
+  },
+  "devDependencies": {
+    "electron-winstaller": "^2.5.2"
   }
 }
