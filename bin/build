@@ -28,7 +28,7 @@ electron-packager . \
   --osx-sign
 
 cd build/Headset-darwin-x64/
-
+zip -ryq Headset@$NEW_VERSION.zip Headset.app
 create-dmg Headset.app
 
 open .
