@@ -2,21 +2,21 @@ const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
 const { NODE_ENV } = process.env;
 const { version } = require('./package')
+const path = require('path')
 
 const {
   app,
   BrowserWindow,
   globalShortcut,
-  Menu,
   ipcMain,
-  dialog
+  dialog,
 } = electron;
 
 let win;
 let player;
 let willQuitApp = false;
 
-const isDev = (NODE_ENV === 'development')
+const isDev = (NODE_ENV !== 'production')
 
 const start = () => {
   win = new BrowserWindow({
@@ -26,7 +26,8 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hidden-inset',
-    icon: `file://${__dirname}/Icon.icns`
+    icon: `file://${__dirname}/Headset.png`,
+    frame: true
   });
 
   if (isDev) {
@@ -45,8 +46,8 @@ const start = () => {
       title: 'Headset - Player',
       maximizable: false,
     });
-    
-    setTimeout(() => {
+
+    setTimeout(()=> {
       player.minimize();
     }, 2000)
 
@@ -57,7 +58,7 @@ const start = () => {
     }
 
     player.on('close', (e) => {
-      if(!willQuitApp) {
+      if (win) {
         dialog.showErrorBox('Oops! 🤕', `Sorry, player window cannot be closed. You can only minimize it.`);
         e.preventDefault();
       }
@@ -87,26 +88,12 @@ const start = () => {
 
     if (isDev) {
       win.webContents.openDevTools();
-      // player.webContents.openDevTools();
     }
-
-    let menu = defaultMenu();
-
-    menu[2]['submenu'] = [ menu[2]['submenu'][0] ];
-
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
   }); // end did-finish-load
 
   win.on('close', (e) => {
-    if (willQuitApp) {
-      // the user tried to quit the app
-      player = null
-      win = null;
-    } else {
-      // the user only tried to close the win
-      e.preventDefault();
-      win.hide();
-    }
+    win = null
+    player.close()
   });
 
   win.on('restore', (e) => {
@@ -119,6 +106,9 @@ app.on('activate', () => win.show());
 app.on('before-quit', () => willQuitApp = true);
 app.on('ready', start);
 
+app.on('browser-window-created',function(e,window) {
+  window.setMenu(null);
+});
 /*
  * This is the proxy between the 2 windows.
  * it receives messages from a renderrer
