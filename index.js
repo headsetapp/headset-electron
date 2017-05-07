@@ -46,7 +46,9 @@ const start = () => {
       maximizable: false,
     });
 
-    player.minimize();
+    setTimeout(() => {
+      player.minimize();
+    }, 2000)
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
