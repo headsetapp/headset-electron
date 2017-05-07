@@ -8,11 +8,11 @@
     "electron": "./node_modules/.bin/electron .",
     "player": "./bin/player-window",
     "production": "NODE_ENV=production electron .",
-    "build": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build"
+    "build:mac": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build-mac",
+    "build:linux": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build-linux"
   },
   "productName": "Headset",
   "author": "Daniel Ravina",
-  "license": "MIT",
   "dependencies": {
     "electron": "^1.6.2",
     "electron-default-menu": "^0.1.1",

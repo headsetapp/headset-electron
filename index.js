@@ -45,7 +45,7 @@ const start = () => {
       title: 'Headset - Player',
       maximizable: false,
     });
-
+    
     setTimeout(() => {
       player.minimize();
     }, 2000)
