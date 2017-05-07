@@ -6,3 +6,5 @@ electron-packager . \
   --out build/ \
   --overwrite \
   --icon=Icon.png
+  --platform=linux \
+  --arch=x64 \
