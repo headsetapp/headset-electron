@@ -1,4 +1,4 @@
-require('./installers/setupEvents')
+if(require('electron-squirrel-startup')) return;
 
 const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
@@ -11,23 +11,21 @@ const {
   app,
   BrowserWindow,
   globalShortcut,
-  Menu,
   ipcMain,
   dialog,
-  Tray
 } = electron;
 
 let win;
 let player;
 let willQuitApp = false;
 
-// THIS HAS TO BE CHANGED MANUALLY TO FALSE BEFORE DEPLOYING!!! :((((
+// THIS HAS TO BE CHANGED MANUALLY TO false BEFORE DEPLOYING!!! :((((
 const isDev = false//(NODE_ENV !== 'production')
 
 const start = () => {
   win = new BrowserWindow({
     width: 391,
-    height: 726,
+    height: 706,
     resizable: false,
     title: 'Headset',
     maximizable: false,
@@ -47,7 +45,7 @@ const start = () => {
 
     player = new BrowserWindow({
       width: 285,
-      height: 440,
+      height: 480,
       resizable: false,
       title: 'Headset - Player',
       maximizable: false,
@@ -96,14 +94,7 @@ const start = () => {
 
     if (isDev) {
       win.webContents.openDevTools();
-      // player.webContents.openDevTools();
     }
-
-    let menu = defaultMenu();
-
-    menu[2]['submenu'] = [ menu[2]['submenu'][0] ];
-
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
   }); // end did-finish-load
 
   win.on('close', (e) => {
@@ -121,6 +112,9 @@ app.on('activate', () => win.show());
 app.on('before-quit', () => willQuitApp = true);
 app.on('ready', start);
 
+app.on('browser-window-created',function(e,window) {
+  window.setMenu(null);
+});
 /*
  * This is the proxy between the 2 windows.
  * it receives messages from a renderrer
