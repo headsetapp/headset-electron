@@ -1,9 +1,10 @@
+require('./installers/setupEvents')
+
 const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
 const { NODE_ENV } = process.env;
 const { version } = require('./package')
 const path = require('path')
-const iconPath = path.join(__dirname, 'system_tray16x16.png');
 const Positioner = require('electron-positioner')
 
 const {
@@ -20,7 +21,8 @@ let win;
 let player;
 let willQuitApp = false;
 
-const isDev = (NODE_ENV !== 'production')
+// THIS HAS TO BE CHANGED MANUALLY TO FALSE BEFORE DEPLOYING!!! :((((
+const isDev = false//(NODE_ENV !== 'production')
 
 const start = () => {
   win = new BrowserWindow({
@@ -30,7 +32,7 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hidden-inset',
-    icon: `file://${__dirname}/Icon.icns`,
+    icon: `file://${__dirname}/Headset.ico`,
     frame: true
   });
 
@@ -113,8 +115,6 @@ const start = () => {
     e.preventDefault();
     win.show();
   });
-  ipcMain.on('close', () => win.close())
-  ipcMain.on('minimize', () => win.minimize())
 }; // end start
 
 app.on('activate', () => win.show());
