@@ -26,7 +26,7 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hidden-inset',
-    icon: `file://${__dirname}/Headset.png`,
+    icon: `file://${__dirname}/Icon256x256.png`,
     frame: true
   });
 
