@@ -5,11 +5,10 @@ electron-packager . \
   --ignore=node_modules/electron-packager \
   --out build/ \
   --overwrite \
-  --icon=Icon256x256.png \
   --platform=linux \
-  --arch=x64 \
+  --arch=x64 
 
-electron-installer-debian \
-  --src build/Headset-linux-x64/ \
-  --dest build/installers/ \
-  --arch amd64
+#electron-installer-debian \
+#  --src build/Headset-linux-x64/ \
+#  --dest build/installers/ \
+#  --arch amd64

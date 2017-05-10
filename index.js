@@ -10,15 +10,20 @@ const {
   globalShortcut,
   ipcMain,
   dialog,
+  nativeImage
 } = electron;
 
 let win;
 let player;
 let willQuitApp = false;
 
-const isDev = (NODE_ENV !== 'production')
+const isDev = false //(NODE_ENV !== 'production')
+
 
 const start = () => {
+
+  const appIcon = nativeImage.createFromPath(__dirname + '/icon.png')
+  
   win = new BrowserWindow({
     width: 375,
     height: 667,
@@ -26,7 +31,7 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hidden-inset',
-    icon: `file://${__dirname}/Icon256x256.png`,
+    icon:  './icon.png',
     frame: true
   });
 
@@ -48,7 +53,11 @@ const start = () => {
     });
 
     setTimeout(()=> {
-      player.minimize();
+      try {
+        player.minimize();
+      } catch(err) {
+       // this prevents a js error if user closes the window too quickly.
+      }
     }, 2000)
 
     if (isDev) {
@@ -109,6 +118,7 @@ app.on('ready', start);
 app.on('browser-window-created',function(e,window) {
   window.setMenu(null);
 });
+
 /*
  * This is the proxy between the 2 windows.
  * it receives messages from a renderrer
