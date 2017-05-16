@@ -6,9 +6,9 @@ electron-packager . \
   --out build/ \
   --overwrite \
   --platform=linux \
-  --arch=x64 
+  --arch=x64
 
-#electron-installer-debian \
-#  --src build/Headset-linux-x64/ \
-#  --dest build/installers/ \
-#  --arch amd64
+electron-installer-debian \
+  --src build/Headset-linux-x64/ \
+  --dest build/installers/ \
+  --arch amd64
