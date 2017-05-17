@@ -6,6 +6,8 @@ A music player for the busy ones. [http://headsetapp.co](http://headsetapp.co)
 
 Since this project is using electron js, it can work on any platform that can run node js. The maintainers of Headset only support macOs, Windows and Ubuntu. If you would like to create a build for a different environment (e.g Manjaro or Aur, etc.) please follow these steps:
 
+0. Install NodeJs 6.2.0 or later
+
 1. Clone the Repo
 ```bash
 $ git clone https://github.com/headsetapp/headset-electron.git
