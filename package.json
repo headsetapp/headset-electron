@@ -1,7 +1,7 @@
 {
   "name": "Headset",
-  "version": "1.5.2",
-  "description": "Native Player for OSX",
+  "version": "1.5.3",
+  "description": "Native YouTube Player",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development NODE_PATH=. nf start",
