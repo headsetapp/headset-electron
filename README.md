@@ -21,8 +21,22 @@ electron-packager . \
   --ignore=node_modules/electron-packager \
   --out build/ \
   --overwrite \
-  --icon=Icon.png
   --platform=linux \
   --arch=x64 \
 ```
 4. [Optional] For the Ubuntu build, we're using `electron-installer-debian`. There might be an installer for your specifc version, just have to google for it.
+
+
+## Known Issues
+
+### Missing icon in Ubuntu
+
+electron-packager ignores the Icon argument. You can add the icon path to the `.desktop` file like so:
+```
+# in /usr/applications/Headset.desktop
+
+[Desktop Entry]
+...
+Icon=/usr/lib/Headset/resources/app/icon.png
+...
+```
