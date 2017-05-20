@@ -30,7 +30,7 @@ const start = () => {
   });
 
   if (isDev) {
-    win.loadURL('http://127.0.0.1:3000');
+    win.loadURL('http://192.168.1.68:3000');
   } else {
     win.loadURL('https://danielravina.github.io/headset/app/');
   }
@@ -45,7 +45,7 @@ const start = () => {
       title: 'Headset - Player',
       maximizable: false,
     });
-    
+
     setTimeout(() => {
       player.minimize();
     }, 2000)

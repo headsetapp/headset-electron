@@ -18,6 +18,7 @@ $ npm install -g electron-packager
 ```
 3. Create your build:
 ```bash
+cd headset-electron
 electron-packager . \
   --ignore=node_modules/electron-prebuilt \
   --ignore=node_modules/electron-packager \
