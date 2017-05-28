@@ -6,7 +6,7 @@ const { NODE_ENV } = process.env;
 const { version } = require('./package')
 const path = require('path')
 const Positioner = require('electron-positioner')
-
+const { exec } = require('child_process')
 const {
   app,
   BrowserWindow,
@@ -67,6 +67,8 @@ const start = () => {
       if (win) {
         dialog.showErrorBox('Oops! 🤕', `Sorry, player window cannot be closed. You can only minimize it.`);
         e.preventDefault();
+      } else {
+        exec('taskkill /F /IM Headset.exe')
       }
     })
 
