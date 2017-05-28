@@ -3,6 +3,7 @@ const defaultMenu = require('electron-default-menu');
 const { NODE_ENV } = process.env;
 const { version } = require('./package')
 const path = require('path')
+const { exec } = require('child_process')
 
 const {
   app,
@@ -15,14 +16,10 @@ const {
 
 let win;
 let player;
-let willQuitApp = false;
 
-const isDev = false //(NODE_ENV !== 'production')
-
+const isDev = false; //(NODE_ENV !== 'production')
 
 const start = () => {
-
-  const appIcon = nativeImage.createFromPath(__dirname + '/icon.png')
   
   win = new BrowserWindow({
     width: 375,
@@ -36,7 +33,7 @@ const start = () => {
   });
 
   if (isDev) {
-    win.loadURL('http://127.0.0.1:3000');
+    win.loadURL('http://192.168.1.68:3000');
   } else {
     win.loadURL('https://danielravina.github.io/headset/app/');
   }
@@ -70,6 +67,9 @@ const start = () => {
       if (win) {
         dialog.showErrorBox('Oops! 🤕', `Sorry, player window cannot be closed. You can only minimize it.`);
         e.preventDefault();
+      } else {
+        player = null
+        exec('kill -9 $(pgrep Headset) &> /dev/null')
       }
     })
 
@@ -112,7 +112,6 @@ const start = () => {
 }; // end start
 
 app.on('activate', () => win.show());
-app.on('before-quit', () => willQuitApp = true);
 app.on('ready', start);
 
 app.on('browser-window-created',function(e,window) {
