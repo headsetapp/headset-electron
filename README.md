@@ -36,7 +36,7 @@ electron-packager . \
 
 electron-packager ignores the Icon argument. You can add the icon path to the `.desktop` file like so:
 ```
-# in /usr/applications/Headset.desktop
+# in /usr/share/applications/Headset.desktop
 
 [Desktop Entry]
 ...
