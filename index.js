@@ -9,7 +9,8 @@ const {
   globalShortcut,
   Menu,
   ipcMain,
-  dialog
+  dialog,
+  shell
 } = electron;
 
 let win;
@@ -90,7 +91,7 @@ const start = () => {
       // player.webContents.openDevTools();
     }
 
-    let menu = defaultMenu();
+    let menu = defaultMenu(app, shell);
 
     menu[2]['submenu'] = [ menu[2]['submenu'][0] ];
 
