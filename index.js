@@ -19,7 +19,7 @@ let win;
 let player;
 let willQuitApp = false;
 
-// THIS HAS TO BE CHANGED MANUALLY TO false BEFORE DEPLOYING!!! :((((
+// THIS HAS TO BE CHANGED MANUALLY TO false BEFORE A RELEASE
 const isDev = false//(NODE_ENV !== 'production')
 
 const start = () => {
@@ -77,18 +77,21 @@ const start = () => {
     `)
 
     globalShortcut.register('MediaPlayPause', () => {
+      if (win === null) return;
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
       `)
     });
 
     globalShortcut.register('MediaNextTrack', () => {
+      if (win === null) return;
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-next')
       `)
     });
 
     globalShortcut.register('MediaPreviousTrack', () => {
+      if (win === null) return;
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-previous')
       `)
@@ -101,6 +104,8 @@ const start = () => {
 
   win.on('close', (e) => {
     win = null
+    // after app closes in Win, the global shourtcuts are still up, disabling it here.
+    globalShortcut.unregisterAll()
     player.close()
   });
 
