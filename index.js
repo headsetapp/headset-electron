@@ -2,6 +2,7 @@ const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
 const { NODE_ENV } = process.env;
 const { version } = require('./package')
+const windowStateKeeper = require('electron-window-state');
 
 const {
   app,
@@ -20,7 +21,10 @@ let willQuitApp = false;
 const isDev = (NODE_ENV === 'development')
 
 const start = () => {
+  let mainWindowState = windowStateKeeper()
   win = new BrowserWindow({
+    x: mainWindowState.x,
+    y: mainWindowState.y,
     width: 375,
     height: 667,
     resizable: false,
@@ -29,6 +33,7 @@ const start = () => {
     titleBarStyle: 'hidden-inset',
     icon: `file://${__dirname}/Icon.icns`
   });
+  mainWindowState.manage(win);
 
   if (isDev) {
     win.loadURL('http://192.168.1.68:3000');
