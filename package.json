@@ -17,7 +17,7 @@
     "electron-default-menu": "^1.0.1",
     "electron-osx-sign": "^0.4.4",
     "electron-packager": "^7.0.2",
-    "iconutil": "^1.0.1",
-    "electron-window-state": "^4.1.1"
+    "electron-window-state": "^4.1.1",
+    "iconutil": "^1.0.1"
   }
 }
