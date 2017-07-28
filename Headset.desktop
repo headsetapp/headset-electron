@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Headset
+Comment=Native YouTube Player
+GenericName=Headset
+Exec=Headset %U
+Icon=Headset
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Audio;Player;Music;
+Actions=Play;Pause;Stop;StopAfterCurrent;Previous;Next;
+Keywords=music;audio;stream;
+
