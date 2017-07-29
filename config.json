@@ -1,0 +1,11 @@
+{
+  "dest": "build/installer/",
+  "icon": "icon.png",
+  "categories": [
+    "GNOME",
+    "GTK",
+    "Audio",
+    "Player",
+    "Music"
+  ]
+}
