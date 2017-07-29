@@ -11,4 +11,5 @@ electron-packager . \
 electron-installer-debian \
   --src build/Headset-linux-x64/ \
   --dest build/installers/ \
-  --arch amd64
+  --arch amd64 \
+  --config config.json
