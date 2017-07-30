@@ -1,37 +1,41 @@
+if(require('electron-squirrel-startup')) return;
+
 const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
 const { NODE_ENV } = process.env;
 const { version } = require('./package')
+const path = require('path')
+const Positioner = require('electron-positioner')
+const { exec } = require('child_process')
 const windowStateKeeper = require('electron-window-state');
 
 const {
   app,
   BrowserWindow,
   globalShortcut,
-  Menu,
   ipcMain,
   dialog,
-  shell
 } = electron;
 
 let win;
 let player;
 let willQuitApp = false;
 
-const isDev = (NODE_ENV === 'development')
+const isDev = false;
 
 const start = () => {
   let mainWindowState = windowStateKeeper()
   win = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
-    width: 375,
-    height: 667,
+    width: 391,
+    height: 706,
     resizable: false,
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hidden-inset',
-    icon: `file://${__dirname}/Icon.icns`
+    icon: `file://${__dirname}/Headset.ico`,
+    frame: true
   });
 
   mainWindowState.manage(win);
@@ -47,13 +51,15 @@ const start = () => {
 
     player = new BrowserWindow({
       width: 285,
-      height: 440,
+      height: 480,
       resizable: true,
       title: 'Headset - Player',
       maximizable: true,
     });
 
-    setTimeout(() => {
+    positioner = new Positioner(player).move('bottomCenter')
+
+    setTimeout(()=> {
       player.minimize();
     }, 2000)
 
@@ -64,9 +70,11 @@ const start = () => {
     }
 
     player.on('close', (e) => {
-      if(!willQuitApp) {
+      if (win) {
         dialog.showErrorBox('Oops! 🤕', `Sorry, player window cannot be closed. You can only minimize it.`);
         e.preventDefault();
+      } else {
+        exec('taskkill /F /IM Headset.exe')
       }
     })
 
@@ -75,18 +83,21 @@ const start = () => {
     `)
 
     globalShortcut.register('MediaPlayPause', () => {
+      if (win === null) return;
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
       `)
     });
 
     globalShortcut.register('MediaNextTrack', () => {
+      if (win === null) return;
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-next')
       `)
     });
 
     globalShortcut.register('MediaPreviousTrack', () => {
+      if (win === null) return;
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-previous')
       `)
@@ -94,26 +105,14 @@ const start = () => {
 
     if (isDev) {
       win.webContents.openDevTools();
-      // player.webContents.openDevTools();
     }
-
-    let menu = defaultMenu(app, shell);
-
-    menu[2]['submenu'] = [ menu[2]['submenu'][0] ];
-
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
   }); // end did-finish-load
 
   win.on('close', (e) => {
-    if (willQuitApp) {
-      // the user tried to quit the app
-      player = null
-      win = null;
-    } else {
-      // the user only tried to close the win
-      e.preventDefault();
-      win.hide();
-    }
+    win = null
+    // after app closes in Win, the global shourtcuts are still up, disabling it here.
+    globalShortcut.unregisterAll()
+    player.close()
   });
 
   win.on('restore', (e) => {
@@ -126,6 +125,9 @@ app.on('activate', () => win.show());
 app.on('before-quit', () => willQuitApp = true);
 app.on('ready', start);
 
+app.on('browser-window-created',function(e,window) {
+  window.setMenu(null);
+});
 /*
  * This is the proxy between the 2 windows.
  * it receives messages from a renderrer
