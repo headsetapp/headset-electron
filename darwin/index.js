@@ -131,7 +131,7 @@ app.on('ready', start);
 */
 ipcMain.on('win2Player', (e, args) => {
   if (isDev) { console.log('win2Player', args); }
-
+  
   player.webContents.send('win2Player', args)
 })
 

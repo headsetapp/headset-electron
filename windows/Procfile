@@ -1,2 +1,2 @@
 headset: npm run electron
-player: cd ../player && http-server -p 3001
+player: cd ../shared/player && http-server -p 3001
