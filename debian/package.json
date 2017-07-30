@@ -13,7 +13,7 @@
   "productName": "Headset",
   "author": "Daniel Ravina",
   "dependencies": {
-    "electron": "^1.6.2",
+    "electron": "^1.6.11",
     "electron-default-menu": "^0.1.1",
     "electron-packager": "^7.0.2",
     "electron-window-state": "^4.1.1",
