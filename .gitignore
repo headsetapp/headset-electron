@@ -1,6 +1,6 @@
 node_modules
 *.log
-build
+*/build/
 .DS_Store
 config.js
 .sass-cache
