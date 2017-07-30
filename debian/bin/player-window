@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-cd player
+cd ../player
 http-server -p 3001

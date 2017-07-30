@@ -12,14 +12,13 @@ const {
   globalShortcut,
   ipcMain,
   dialog,
-  nativeImage
 } = electron;
 
 let win;
 let player;
 
 const isDev = false;
-console.log('HIHIHIH', __dirname + '/icon.png')
+
 const start = () => {
   let mainWindowState = windowStateKeeper();
 
@@ -32,7 +31,7 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hidden-inset',
-    icon:  __dirname + '/icon.png',
+    icon:  path.join(__dirname, 'icon.png'),
     frame: true
   });
   
@@ -51,7 +50,7 @@ const start = () => {
       height: 440,
       resizable: true,
       title: 'Headset - Player',
-      icon: __dirname + '/icon.png',
+      icon:  path.join(__dirname, 'icon.png'),
       maximizable: true,
     });
 
