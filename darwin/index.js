@@ -47,9 +47,9 @@ const start = () => {
     player = new BrowserWindow({
       width: 285,
       height: 440,
-      resizable: false,
+      resizable: true,
       title: 'Headset - Player',
-      maximizable: false,
+      maximizable: true,
     });
 
     setTimeout(() => {

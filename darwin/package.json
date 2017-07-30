@@ -1,14 +1,14 @@
 {
   "name": "Headset",
-  "version": "1.5.2",
-  "description": "Native Player for OSX",
+  "version": "1.6.0",
+  "description": "Discover and collect music on YouTube",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development NODE_PATH=. nf start",
     "electron": "./node_modules/.bin/electron .",
     "player": "./bin/player-window",
     "production": "NODE_ENV=production electron .",
-    "build:mac": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build-mac"
+    "build": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build"
   },
   "productName": "Headset",
   "author": "Daniel Ravina",
