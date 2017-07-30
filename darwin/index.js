@@ -99,8 +99,6 @@ const start = () => {
 
     let menu = defaultMenu(app, shell);
 
-    menu[2]['submenu'] = [ menu[2]['submenu'][0] ];
-
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
   }); // end did-finish-load
 
