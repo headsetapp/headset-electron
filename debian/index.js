@@ -31,10 +31,10 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hidden-inset',
-    icon:  path.join(__dirname, 'icon.png'),
+    icon: `file://${__dirname}/icon.png`,
     frame: true
   });
-  
+
   mainWindowState.manage(win);
   if (isDev) {
     win.loadURL('http://192.168.1.68:3000');
@@ -50,7 +50,6 @@ const start = () => {
       height: 440,
       resizable: true,
       title: 'Headset - Player',
-      icon:  path.join(__dirname, 'icon.png'),
       maximizable: true,
     });
 
