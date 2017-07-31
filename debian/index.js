@@ -81,19 +81,19 @@ const start = () => {
       window.electronVersion = "v${version}"
     `)
 
-    globalShortcut.register('MediaPlayPause', () => {
+    globalShortcut.register('CmdOrCtrl+MediaPlayPause', () => {
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
       `)
     });
 
-    globalShortcut.register('MediaNextTrack', () => {
+    globalShortcut.register('CmdOrCtrl+MediaNextTrack', () => {
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-next')
       `)
     });
 
-    globalShortcut.register('MediaPreviousTrack', () => {
+    globalShortcut.register('CmdOrCtrl+MediaPreviousTrack', () => {
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-previous')
       `)
