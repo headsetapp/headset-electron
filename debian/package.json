@@ -1,0 +1,23 @@
+{
+  "name": "Headset",
+  "version": "1.6.0",
+  "description": "Discover and collect music on YouTube",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=development NODE_PATH=. nf start",
+    "electron": "./node_modules/.bin/electron .",
+    "player": "./bin/player-window",
+    "production": "NODE_ENV=production electron .",
+    "build": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build"
+  },
+  "productName": "Headset",
+  "license": "MIT",
+  "author": "Daniel Ravina",
+  "dependencies": {
+    "electron": "^1.6.11",
+    "electron-default-menu": "^0.1.1",
+    "electron-packager": "^7.0.2",
+    "electron-window-state": "^4.1.1",
+    "iconutil": "^1.0.1"
+  }
+}
