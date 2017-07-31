@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nf start",
+    "electron": "./node_modules/.bin/electron .",
     "production": "NODE_ENV=production electron .",
     "build": "electron-packager ./ Headset --overwrite --platform=win32 --arch=ia32 --ignore=node_modules/electron-prebuilt --ignore=node_modules/electron-packager --out=build --icon=./Headset.ico --version-string.ProductName=\"Headset\"",
     "installer": "node bin/winstaller.js",
