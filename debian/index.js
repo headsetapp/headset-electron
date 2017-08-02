@@ -5,6 +5,7 @@ const { version } = require('./package')
 const path = require('path')
 const { exec } = require('child_process')
 const windowStateKeeper = require('electron-window-state');
+const DBus = require('dbus');
 
 const {
   app,
@@ -76,28 +77,23 @@ const start = () => {
         exec('kill -9 $(pgrep Headset) &> /dev/null')
       }
     })
+    
+    // Code based on MarshallOfSound Google-Play-Music-Desktop-Player-UNOFFICIAL-
+    // file src/main/features/linux/mediaKeysDBus.js
+    // Other desktop environments might have their own dbus which can be added
+    try {
+      const bus = DBus.getBus('session');
+
+      registerBindings('gnome', bus);
+      registerBindings('mate', bus);
+      
+    } catch (err) {
+      
+    }
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
     `)
-
-    globalShortcut.register('CmdOrCtrl+MediaPlayPause', () => {
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-pause')
-      `)
-    });
-
-    globalShortcut.register('CmdOrCtrl+MediaNextTrack', () => {
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-next')
-      `)
-    });
-
-    globalShortcut.register('CmdOrCtrl+MediaPreviousTrack', () => {
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-previous')
-      `)
-    });
 
     if (isDev) {
       win.webContents.openDevTools();
@@ -140,3 +136,29 @@ ipcMain.on('player2Win', (e, args) => {
     win.webContents.send('player2Win', args)
   } catch(err) { /* window already closed */ }
 })
+
+// Code based on MarshallOfSound Google-Play-Music-Desktop-Player-UNOFFICIAL-
+// file src/main/features/linux/mediaKeysDBus.js
+function registerBindings(desktopEnv, bus) {
+  bus.getInterface(`org.${desktopEnv}.SettingsDaemon`,
+  `/org/${desktopEnv}/SettingsDaemon/MediaKeys`,
+  `org.${desktopEnv}.SettingsDaemon.MediaKeys`, (err, iface) => {
+    if (!err) {
+      iface.on('MediaPlayerKeyPressed', (n, keyName) => {
+        switch (keyName) {
+          case 'Next': win.webContents.executeJavaScript(`
+                         window.electronConnector.emit('play-next')
+                       `); return;
+          case 'Previous': win.webContents.executeJavaScript(`
+                             window.electronConnector.emit('play-previous')
+                           `); return;
+          case 'Play': win.webContents.executeJavaScript(`
+                         window.electronConnector.emit('play-pause')
+                       `); return;
+          default: return;
+        }
+      });
+      iface.GrabMediaPlayerKeys(0, `org.${desktopEnv}.SettingsDaemon.MediaKeys`);
+    }
+  });
+};
