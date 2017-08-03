@@ -6,6 +6,7 @@ const path = require('path')
 const { exec } = require('child_process')
 const windowStateKeeper = require('electron-window-state');
 const DBus = require('dbus');
+const registerBindings = require('./registerBindings.js');
 
 const {
   app,
@@ -78,17 +79,13 @@ const start = () => {
       }
     })
     
-    // Code based on MarshallOfSound Google-Play-Music-Desktop-Player-UNOFFICIAL-
-    // file src/main/features/linux/mediaKeysDBus.js
-    // Other desktop environments might have their own dbus which can be added
     try {
       const bus = DBus.getBus('session');
 
-      registerBindings('gnome', bus);
-      registerBindings('mate', bus);
-      
+      registerBindings(win, 'gnome', bus);
+      registerBindings(win, 'mate', bus);
     } catch (err) {
-      
+      console.error(err);
     }
 
     win.webContents.executeJavaScript(`
@@ -136,29 +133,3 @@ ipcMain.on('player2Win', (e, args) => {
     win.webContents.send('player2Win', args)
   } catch(err) { /* window already closed */ }
 })
-
-// Code based on MarshallOfSound Google-Play-Music-Desktop-Player-UNOFFICIAL-
-// file src/main/features/linux/mediaKeysDBus.js
-function registerBindings(desktopEnv, bus) {
-  bus.getInterface(`org.${desktopEnv}.SettingsDaemon`,
-  `/org/${desktopEnv}/SettingsDaemon/MediaKeys`,
-  `org.${desktopEnv}.SettingsDaemon.MediaKeys`, (err, iface) => {
-    if (!err) {
-      iface.on('MediaPlayerKeyPressed', (n, keyName) => {
-        switch (keyName) {
-          case 'Next': win.webContents.executeJavaScript(`
-                         window.electronConnector.emit('play-next')
-                       `); return;
-          case 'Previous': win.webContents.executeJavaScript(`
-                             window.electronConnector.emit('play-previous')
-                           `); return;
-          case 'Play': win.webContents.executeJavaScript(`
-                         window.electronConnector.emit('play-pause')
-                       `); return;
-          default: return;
-        }
-      });
-      iface.GrabMediaPlayerKeys(0, `org.${desktopEnv}.SettingsDaemon.MediaKeys`);
-    }
-  });
-};

@@ -16,12 +16,12 @@
   "license": "MIT",
   "author": "Daniel Ravina",
   "dependencies": {
+    "dbus": "^1.0.0",
     "electron": "^1.6.11",
     "electron-default-menu": "^0.1.1",
     "electron-packager": "^7.0.2",
+    "electron-rebuild": "^1.6.0",
     "electron-window-state": "^4.1.1",
-    "iconutil": "^1.0.1",
-    "dbus": "^1.0.0",
-    "electron-rebuild": "^1.6.0"
+    "iconutil": "^1.0.1"
   }
 }
