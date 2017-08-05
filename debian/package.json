@@ -10,7 +10,7 @@
     "player": "./bin/player-window",
     "production": "NODE_ENV=production electron .",
     "build": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build",
-    "rebuild": "electron-rebuild"
+    "install": "electron-rebuild"
   },
   "productName": "Headset",
   "license": "MIT",
