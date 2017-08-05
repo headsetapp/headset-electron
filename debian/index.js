@@ -5,6 +5,8 @@ const { version } = require('./package')
 const path = require('path')
 const { exec } = require('child_process')
 const windowStateKeeper = require('electron-window-state');
+const DBus = require('dbus');
+const registerBindings = require('./registerBindings.js');
 
 const {
   app,
@@ -76,28 +78,19 @@ const start = () => {
         exec('kill -9 $(pgrep Headset) &> /dev/null')
       }
     })
+    
+    try {
+      const bus = DBus.getBus('session');
+
+      registerBindings(win, 'gnome', bus);
+      registerBindings(win, 'mate', bus);
+    } catch (err) {
+      console.error(err);
+    }
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
     `)
-
-    globalShortcut.register('MediaPlayPause', () => {
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-pause')
-      `)
-    });
-
-    globalShortcut.register('MediaNextTrack', () => {
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-next')
-      `)
-    });
-
-    globalShortcut.register('MediaPreviousTrack', () => {
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-previous')
-      `)
-    });
 
     if (isDev) {
       win.webContents.openDevTools();
