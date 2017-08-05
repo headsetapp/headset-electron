@@ -1,2 +1,2 @@
-headset: npm run electron
-player: npm run player 
+headset: yarn electron
+player: yarn player 

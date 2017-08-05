@@ -33,7 +33,7 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hidden-inset',
-    icon: `file://${__dirname}/icon.png`,
+    icon: `icon.png`,
     frame: true
   });
 
