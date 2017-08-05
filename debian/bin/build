@@ -3,6 +3,7 @@
 electron-packager . \
   --ignore bin \
   --ignore config.json \
+  --prune true \
   --packageManager yarn \
   --out build/ \
   --overwrite \

@@ -347,10 +347,6 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
 
-electron-default-menu@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/electron-default-menu/-/electron-default-menu-1.0.1.tgz#3173c5018eb507404fec63bdf3b78c38eedba808"
-
 electron-download@^2.0.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/electron-download/-/electron-download-2.2.1.tgz#3d78af3645c96435e3bf3df9b882a14cc2ca294c"

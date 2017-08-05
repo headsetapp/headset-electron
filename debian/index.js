@@ -1,5 +1,4 @@
 const electron = require('electron');
-const defaultMenu = require('electron-default-menu');
 const { NODE_ENV } = process.env;
 const { version } = require('./package')
 const path = require('path')
