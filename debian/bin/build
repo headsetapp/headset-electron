@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 electron-packager . \
   --ignore bin \
   --ignore config.json \
