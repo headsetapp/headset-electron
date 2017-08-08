@@ -1,4 +1,5 @@
 # Headset
+https://travis-ci.org/headsetapp/headset-electron.svg?branch=master
 
 A music player for the busy ones. [http://headsetapp.co](http://headsetapp.co)
 
