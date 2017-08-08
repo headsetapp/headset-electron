@@ -1,0 +1,23 @@
+language: node_js
+
+node_js: "6"
+
+addons:
+  apt:
+    packages:
+      - xvfb
+      - fakeroot
+      - dpkg
+      - libdbus-1-dev
+      - libglib2.0-dev
+      - dbus
+
+before_install:
+  - cd debian/
+
+script:
+  - yarn build
+
+cache:
+  directories:
+  - debian/node_modules

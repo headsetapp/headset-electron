@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
+set -e
+
 electron-packager . \
-  --ignore=node_modules/electron-prebuilt \
-  --ignore=node_modules/electron-packager \
+  --ignore bin \
+  --ignore config.json \
+  --prune true \
+  --packageManager yarn \
   --out build/ \
-  --icon ../icon.png \
   --overwrite \
   --platform=linux \
   --arch=x64
