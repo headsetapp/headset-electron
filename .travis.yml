@@ -21,3 +21,10 @@ script:
 cache:
   directories:
   - debian/node_modules
+
+deploy:
+  provider: packagecloud
+  repository: "headset-electron"
+  username: "headsetapp"
+  token: "${PACKAGECLOUD_TOKEN}"
+  dist: "ubuntu/precise"
