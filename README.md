@@ -3,7 +3,19 @@
 
 A music player for the busy ones. [http://headsetapp.co](http://headsetapp.co)
 
-## Building for other systems
+## Install on debian based OS:
+```
+$ wget -q https://packagecloud.io/headsetapp/headset-electron/gpgkey -O- | sudo apt-key add -
+$ echo "deb https://packagecloud.io/headsetapp/headset-electron/ubuntu/ trusty main" | sudo tee /etc/apt/sources.list.d/headsetapp_headset-electron.list
+```
+
+After those two commands are run, just install headset with:
+
+```
+$ sudo apt install headset
+```
+
+## Building from source
 
 Since this project is using electron js, it can work on any platform that can run node js. The maintainers of Headset only support macOs, Windows and Ubuntu. If you would like to create a build for a different environment (e.g Manjaro or Aur, etc.) please follow these steps:
 
