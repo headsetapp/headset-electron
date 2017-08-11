@@ -27,5 +27,7 @@ deploy:
   username: "headsetapp"
   token: "${PACKAGECLOUD_TOKEN}"
   dist: "ubuntu/trusty"
+  local_dir: build/installers
+  skip_cleanup: true
   on:
     branch: deploy-script
