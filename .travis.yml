@@ -5,7 +5,6 @@ node_js: "6"
 addons:
   apt:
     packages:
-      - xvfb
       - fakeroot
       - dpkg
       - libdbus-1-dev
@@ -27,4 +26,6 @@ deploy:
   repository: "headset-electron"
   username: "headsetapp"
   token: "${PACKAGECLOUD_TOKEN}"
-  dist: "ubuntu/precise"
+  dist: "ubuntu/trusty"
+  on:
+    branch: deploy-script
