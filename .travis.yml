@@ -13,14 +13,15 @@ addons:
       - dbus
 
 before_install:
-  - cd debian/
+  - cd linux/
 
 script:
   - yarn build
 
 cache:
+  yarn: true
   directories:
-  - debian/node_modules
+  - linux/node_modules
 
 deploy:
   - provider: packagecloud
