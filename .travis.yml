@@ -18,6 +18,9 @@ before_install:
 script:
   - yarn build
 
+git:
+  depth: 3
+
 cache:
   yarn: true
   directories:
