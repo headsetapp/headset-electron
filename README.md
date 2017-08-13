@@ -12,7 +12,7 @@ $ echo "deb https://packagecloud.io/headsetapp/headset-electron/ubuntu/ trusty m
 After those two commands are run, just install headset with:
 
 ```
-$ sudo apt install headset
+$ sudo apt update && sudo apt install headset
 ```
 
 ## Building from source
