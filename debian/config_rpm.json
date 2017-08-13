@@ -1,0 +1,15 @@
+{
+  "icon": "icon.png",
+  "requires": [
+    "dbus",
+    "libXScrnSaver"
+  ],
+  "group": "Applications/Internet",
+  "categories": [
+    "GNOME",
+    "GTK",
+    "Audio",
+    "Player",
+    "Music"
+  ]
+}
