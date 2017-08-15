@@ -4,12 +4,11 @@ set -e
 
 electron-packager . \
   --ignore bin \
-  --ignore "config_(deb|rpm).json" \
-  --prune true \
-  --packageManager yarn \
-  --out build/ \
-  --overwrite \
-  --platform=linux \
+  --prune true  \
+  --packageManager yarn  \
+  --out build/  \
+  --overwrite  \
+  --platform=linux  \
   --arch=x64
 
 echo -e "\n\033[1mPackaging deb installer:\033[01;0m"
@@ -17,11 +16,11 @@ electron-installer-debian \
   --src build/Headset-linux-x64/ \
   --dest build/installers/ \
   --arch amd64 \
-  --config config_deb.json
+  --config bin/config_deb.json
 
 echo -e "\n\033[1mPackaging rpm installer:\033[01;0m"
 electron-installer-redhat \
   --src build/Headset-linux-x64/ \
   --dest build/installers/ \
   --arch amd64 \
-  --config config_rpm.json
+  --config bin/config_rpm.json
