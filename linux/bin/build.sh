@@ -3,6 +3,7 @@
 set -e
 
 electron-packager . \
+  headset \
   --ignore bin \
   --prune true  \
   --packageManager yarn  \
@@ -13,14 +14,14 @@ electron-packager . \
 
 echo -e "\n\033[1mPackaging deb installer:\033[01;0m"
 electron-installer-debian \
-  --src build/Headset-linux-x64/ \
+  --src build/headset-linux-x64/ \
   --dest build/installers/ \
   --arch amd64 \
   --config bin/config_deb.json
 
 echo -e "\n\033[1mPackaging rpm installer:\033[01;0m"
 electron-installer-redhat \
-  --src build/Headset-linux-x64/ \
+  --src build/headset-linux-x64/ \
   --dest build/installers/ \
   --arch amd64 \
   --config bin/config_rpm.json
