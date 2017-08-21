@@ -25,27 +25,3 @@ cache:
   yarn: true
   directories:
   - linux/node_modules
-
-deploy:
-  - provider: packagecloud
-    repository: "headset-electron"
-    username: "headsetapp"
-    token: "${PACKAGECLOUD_TOKEN}"
-    dist: "ubuntu/trusty"
-    local_dir: build/installers
-    package_glob: "*.deb"
-    skip_cleanup: true
-    on:
-      branch: master
-      tags: true
-  - provider: packagecloud
-    repository: "headset-electron"
-    username: "headsetapp"
-    token: "${PACKAGECLOUD_TOKEN}"
-    dist: "fedora/26"
-    local_dir: build/installers
-    package_glob: "*.rpm"
-    skip_cleanup: true
-    on:
-      branch: master
-      tags: true
