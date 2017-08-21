@@ -2,8 +2,7 @@
 
 set -e
 
-electron-packager . \
-  headset \
+electron-packager . headset \
   --ignore bin \
   --prune true  \
   --packageManager yarn  \

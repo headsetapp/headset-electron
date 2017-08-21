@@ -32,14 +32,13 @@ $ yarn
 ```
 3. Create your build:
 ```bash
-electron-packager . \
+electron-packager . headset \
   --ignore bin \
-  --ignore "config_(deb|rpm).json" \
-  --prune true \
-  --packageManager yarn \
-  --out build/ \
-  --overwrite \
-  --platform=linux \
+  --prune true  \
+  --packageManager yarn  \
+  --out build/  \
+  --overwrite  \
+  --platform=linux  \
   --arch=x64
 ```
 4. [Optional] For the Ubuntu build, we're using `electron-installer-debian` and for the Fedora build, we're using `electron-installer-redhat`. There might be an installer for your specifc version, just have to google for it.
