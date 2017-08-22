@@ -7,28 +7,21 @@ addons:
     packages:
       - fakeroot
       - dpkg
+      - rpm
       - libdbus-1-dev
       - libglib2.0-dev
       - dbus
 
 before_install:
-  - cd debian/
+  - cd linux/
 
 script:
   - yarn build
 
-cache:
-  directories:
-  - debian/node_modules
+git:
+  depth: 3
 
-deploy:
-  provider: packagecloud
-  repository: "headset-electron"
-  username: "headsetapp"
-  token: "${PACKAGECLOUD_TOKEN}"
-  dist: "ubuntu/trusty"
-  local_dir: build/installers
-  skip_cleanup: true
-  on:
-    branch: master
-    tags: true
+cache:
+  yarn: true
+  directories:
+  - linux/node_modules

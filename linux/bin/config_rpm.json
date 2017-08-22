@@ -1,9 +1,10 @@
 {
   "icon": "icon.png",
-  "depends": [
-    "dbus"
+  "requires": [
+    "dbus",
+    "libXScrnSaver"
   ],
-  "section": "Sound",
+  "group": "Applications/Internet",
   "categories": [
     "GNOME",
     "GTK",
