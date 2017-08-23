@@ -23,7 +23,6 @@ git:
   depth: 3
 
 cache:
-  yarn: true
   directories:
   - linux/node_modules
 
