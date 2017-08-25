@@ -14,14 +14,23 @@ addons:
 
 before_install:
   - cd linux/
+  - npm i -g npm@latest
 
 script:
-  - yarn build
+  - npm run build
 
 git:
   depth: 3
 
 cache:
-  yarn: true
   directories:
   - linux/node_modules
+
+deploy:
+  - provider: releases
+    skip_cleanup: true
+    file_glob: true
+    api_key: $GITHUB_TOKEN
+    file: build/installers/*
+    on:
+      tags: true
