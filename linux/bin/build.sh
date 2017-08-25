@@ -3,11 +3,10 @@
 set -e
 
 electron-packager . headset \
-  --ignore bin \
+  --ignore bin  \
   --prune true  \
-  --packageManager yarn  \
   --out build/  \
-  --overwrite  \
+  --overwrite   \
   --platform=linux  \
   --arch=x64
 
