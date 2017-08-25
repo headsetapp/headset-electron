@@ -5,7 +5,6 @@ set -e
 electron-packager . headset \
   --ignore bin \
   --prune true  \
-  --packageManager yarn  \
   --out build/  \
   --overwrite  \
   --platform=linux  \

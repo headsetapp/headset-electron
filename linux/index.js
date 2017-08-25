@@ -74,10 +74,10 @@ const start = () => {
         e.preventDefault();
       } else {
         player = null
-        exec('kill -9 $(pgrep Headset) &> /dev/null')
+        exec('kill -9 $(pgrep headset) &> /dev/null')
       }
     })
-    
+
     try {
       const bus = DBus.getBus('session');
 
