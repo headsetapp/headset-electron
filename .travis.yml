@@ -17,7 +17,7 @@ before_install:
   - npm i -g npm@latest
 
 script:
-  - npm install
+  - npm run build
 
 git:
   depth: 3
