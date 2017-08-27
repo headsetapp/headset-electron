@@ -1,5 +1,5 @@
 # Headset
-![(https://travis-ci.org/headsetapp/headset-electron.svg?branch=master)](https://travis-ci.org/headsetapp/headset-electron)
+Linux: [![Build Status](https://travis-ci.org/headsetapp/headset-electron.svg?branch=master)](https://travis-ci.org/headsetapp/headset-electron)
 
 A music player for the busy ones. [http://headsetapp.co](http://headsetapp.co)
 
