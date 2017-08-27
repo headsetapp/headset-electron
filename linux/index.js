@@ -4,8 +4,8 @@ const { version } = require('./package')
 const path = require('path')
 const { exec } = require('child_process')
 const windowStateKeeper = require('electron-window-state');
-const DBus = require('dbus');
-const registerBindings = require('./registerBindings.js');
+const registerMediaKeys = require('./registerMediaKeys.js');
+const mprisService = require('./mprisService.js');
 
 const {
   app,
@@ -79,10 +79,8 @@ const start = () => {
     })
 
     try {
-      const bus = DBus.getBus('session');
-
-      registerBindings(win, 'gnome', bus);
-      registerBindings(win, 'mate', bus);
+      mprisService(win, player);
+      registerMediaKeys(win);
     } catch (err) {
       console.error(err);
     }
