@@ -91,7 +91,7 @@ module.exports = (win, player) => {
       mprisPlayer.volume = args[1]/100 + 1e-15;
     } else if (args[0] == 'trackInfo') {
       mprisPlayer.metadata = {
-        'xesam:artist': args[1]['artist'],
+        'xesam:artist': [ args[1]['artist'] ],
         'xesam:title': args[1]['title'],
         'xesam:url': "https://www.youtube.com/watch?v=" + args[1]['id'],
         'mpris:artUrl': args[1]['thumbnail'],
