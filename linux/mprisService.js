@@ -75,31 +75,33 @@ module.exports = (win, player) => {
     mprisPlayer.volume = volume + 1e-15;
   });
 
-  mprisPlayer.on('seek', (args) => {
-    if (mprisPlayer.playbackStatus == 'Playing' ||
-        mprisPlayer.playbackStatus == 'Paused') {
-      player.webContents.send('win2Player', ['seekTo', args.position/1e6]);
-    }
-  });
-
   ipcMain.on('win2Player', (e, args) => {
-    if (args[0] == 'playVideo') {
-      mprisPlayer.playbackStatus = 'Playing';
-    } else if (args[0] == 'pauseVideo') {
-      mprisPlayer.playbackStatus = 'Paused';
-    } else if (args[0] == 'setVolume') {
-      mprisPlayer.volume = args[1]/100 + 1e-15;
-    } else if (args[0] == 'trackInfo') {
-      mprisPlayer.metadata = {
-        'xesam:artist': [ args[1]['artist'] ],
-        'xesam:title': args[1]['title'],
-        'xesam:url': "https://www.youtube.com/watch?v=" + args[1]['id'],
-        'mpris:artUrl': args[1]['thumbnail'],
-        'mpris:length': args[1]['duration'] * 1e6 //in microseconds
-      };
-    } else if (args[0] == 'seekTo') {
-      const delta = Math.round(args[1]*1e6) - mprisPlayer.position;
-      mprisPlayer.seeked(delta);
+    switch (args[0]) {
+      case 'playVideo':
+        mprisPlayer.playbackStatus = 'Playing'
+        break;
+      case 'pauseVideo':
+        mprisPlayer.playbackStatus = 'Paused'
+        break;
+      case 'setVolume':
+        mprisPlayer.volume = args[1]/100 + 1e-15
+        break;
+      case 'trackInfo':
+        mprisPlayer.canSeek = false
+        mprisPlayer.metadata = {
+          'xesam:artist': [ args[1]['artist'] ],
+          'xesam:title': args[1]['title'],
+          'xesam:url': "https://www.youtube.com/watch?v=" + args[1]['id'],
+          'mpris:artUrl': args[1]['thumbnail'],
+          'mpris:length': args[1]['duration'] * 1e6 //in microseconds
+        }
+        break;
+      case 'seekTo':
+        const delta = Math.round(args[1]*1e6) - mprisPlayer.position;
+        mprisPlayer.seeked(delta);
+        break;
+      default:
+        break;
     }
   });
 
