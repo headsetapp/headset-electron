@@ -112,6 +112,7 @@ const start = () => {
     win = null
     // after app closes in Win, the global shourtcuts are still up, disabling it here.
     globalShortcut.unregisterAll()
+    if (player === undefined) return;
     player.close()
   });
 
