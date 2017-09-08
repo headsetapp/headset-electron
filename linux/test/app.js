@@ -1,4 +1,4 @@
-var Application = require('spectron').Application
+const Application = require('spectron').Application
 var assert = require('assert')
 const path = require('path');
 

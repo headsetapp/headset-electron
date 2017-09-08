@@ -18,9 +18,10 @@ before_install:
 
 script:
   - npm run build
+  - npm run test
 
 git:
-  depth: 3
+  depth: 1
 
 cache:
   directories:
