@@ -23,12 +23,12 @@ electron-packager . \
   --out build/ \
   --overwrite \
   --app-bundle-id="co.headsetapp.app" \
-  --app-version=$NEW_VERSION \
+  --app-version="$NEW_VERSION" \
   --build-version="1.0.100" \
   --osx-sign
 
 cd build/Headset-darwin-x64/
-zip -ryq Headset@$NEW_VERSION.zip Headset.app
+zip -ryq "Headset@$NEW_VERSION.zip" Headset.app
 create-dmg Headset.app
 
 open .
