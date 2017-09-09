@@ -1,28 +1,31 @@
-const Application = require('spectron').Application
-var assert = require('assert')
+const Application = require('spectron').Application;
+const assert = require('assert');
 const path = require('path');
 
 const appPath = path.join(__dirname, '..', 'build', 'headset-linux-x64', 'headset');
 
-describe('application', function (test) {
-  this.timeout(10000)
+describe('application', function () { // eslint-disable-line func-names
+  this.timeout(10000);
 
-  beforeEach(function () {
+  before(() => {
     this.app = new Application({
-      path: appPath
-    })
-    return this.app.start()
-  })
+      path: appPath,
+    });
+    return this.app.start();
+  });
 
-  afterEach(function () {
+  after(() => {
     if (this.app && this.app.isRunning()) {
-      return this.app.stop()
+      return this.app.stop();
     }
-  })
+    throw new Error('App is not running');
+  });
 
-  it('start application', function () {
-    return this.app.client.getWindowCount().then(function (count) {
-      assert.equal(count, 2)
-    })
-  })
-})
+  it('start application', () => {
+    if (this.app && this.app.isRunning()) {
+      this.app.client.getWindowCount().then((count) => {
+        assert.equal(count, 2);
+      });
+    }
+  });
+});

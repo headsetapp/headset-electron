@@ -1,0 +1,23 @@
+{
+  env: {
+    es6: true,
+    node: true,
+    mocha: true,
+  },
+  extends: "airbnb",
+  parser: "babel-eslint",
+  parserOptions: {
+    ecmaVersion: 6,
+    sourceType: "module",
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true,
+    }
+  },
+  rules: {
+    "new-cap": 'off',
+    "max-len": ["error", 120],
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off",
+    "no-console": "off",
+  }
+}
