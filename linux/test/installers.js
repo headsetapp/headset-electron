@@ -4,7 +4,7 @@ const path = require('path');
 const exec = require('child_process').exec;
 
 describe('packages', function () { // eslint-disable-line func-names
-  this.timeout(20000);
+  this.timeout(40000);
 
   const packagePath = path.join(__dirname, '..', 'build', 'installers');
   const debPackage = `headset_${packJson.version}_amd64.deb`;
