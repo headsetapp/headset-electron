@@ -23,6 +23,19 @@ let willQuitApp = false;
 
 const isDev = false;
 
+const shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
+  // Someone tried to run a second instance, we should focus our window.
+  if (win) {
+    if (win.isMinimized()) win.restore();
+    win.focus();
+  }
+});
+
+if (shouldQuit) {
+  app.quit();
+  return;
+}
+
 const start = () => {
   let mainWindowState = windowStateKeeper()
   win = new BrowserWindow({
@@ -112,6 +125,7 @@ const start = () => {
     win = null
     // after app closes in Win, the global shourtcuts are still up, disabling it here.
     globalShortcut.unregisterAll()
+    if (player === undefined) return;
     player.close()
   });
 

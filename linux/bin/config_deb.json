@@ -5,11 +5,10 @@
   "depends": [
     "dbus"
   ],
-  "section": "Sound",
+  "section": "sound",
   "categories": [
-    "GNOME",
-    "GTK",
     "Audio",
+    "AudioVideo",
     "Player",
     "Music"
   ]
