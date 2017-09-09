@@ -15,7 +15,7 @@ addons:
 
 before_install:
   - cd linux/
-  - npm i -g npm@5.2.0
+  - npm i -g npm@latest
 
 before_script:
   - "export DISPLAY=:99.0"

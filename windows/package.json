@@ -24,7 +24,7 @@
     "babel-eslint": "^7.2.3",
     "electron": "^1.7.6",
     "electron-packager": "^9.0.1",
-    "electron-winstaller": "^2.5.2",
+    "electron-winstaller": "^2.6.3",
     "eslint": "^4.6.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
