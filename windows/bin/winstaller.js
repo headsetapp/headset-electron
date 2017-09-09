@@ -1,4 +1,4 @@
-const electronInstaller = require('electron-winstaller');
+const electronInstaller = require('electron-winstaller'); // eslint-disable-line import/no-extraneous-dependencies
 
 const resultPromise = electronInstaller.createWindowsInstaller({
   appDirectory: './build/Headset-win32-ia32',
@@ -7,7 +7,7 @@ const resultPromise = electronInstaller.createWindowsInstaller({
   exe: 'Headset.exe',
   noMsi: true,
   iconUrl: `file://${__dirname}/Headset.ico`,
-  loadingGif: './loading.gif'
+  loadingGif: './loading.gif',
 });
 
-resultPromise.then(() => console.log("It worked!"), (e) => console.log(`No dice: ${e.message}`));
+resultPromise.then(() => console.log('It worked!'), e => console.log(`No dice: ${e.message}`));

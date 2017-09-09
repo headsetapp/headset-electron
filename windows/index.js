@@ -1,12 +1,10 @@
-if(require('electron-squirrel-startup')) return;
+if (require('electron-squirrel-startup')) return;// eslint-disable-line global-require
 
-const electron = require('electron');
-const defaultMenu = require('electron-default-menu');
-const { NODE_ENV } = process.env;
-const { version } = require('./package')
-const path = require('path')
-const Positioner = require('electron-positioner')
-const { exec } = require('child_process')
+const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
+
+const { version } = require('./package');
+const Positioner = require('electron-positioner');
+const { exec } = require('child_process');
 const windowStateKeeper = require('electron-window-state');
 
 const {
@@ -19,11 +17,10 @@ const {
 
 let win;
 let player;
-let willQuitApp = false;
 
 const isDev = false;
 
-const shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
+const shouldQuit = app.makeSingleInstance(() => {
   // Someone tried to run a second instance, we should focus our window.
   if (win) {
     if (win.isMinimized()) win.restore();
@@ -37,7 +34,7 @@ if (shouldQuit) {
 }
 
 const start = () => {
-  let mainWindowState = windowStateKeeper()
+  const mainWindowState = windowStateKeeper();
   win = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
@@ -48,7 +45,7 @@ const start = () => {
     maximizable: false,
     titleBarStyle: 'hidden-inset',
     icon: `file://${__dirname}/Headset.ico`,
-    frame: true
+    frame: true,
   });
 
   mainWindowState.manage(win);
@@ -70,11 +67,11 @@ const start = () => {
       maximizable: true,
     });
 
-    positioner = new Positioner(player).move('bottomCenter')
+    const positioner = new Positioner(player).move('bottomCenter'); // eslint-disable-line no-unused-vars
 
-    setTimeout(()=> {
+    setTimeout(() => {
       player.minimize();
-    }, 2000)
+    }, 2000);
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
@@ -84,36 +81,36 @@ const start = () => {
 
     player.on('close', (e) => {
       if (win) {
-        dialog.showErrorBox('Oops! 🤕', `Sorry, player window cannot be closed. You can only minimize it.`);
+        dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
         e.preventDefault();
       } else {
-        exec('taskkill /F /IM Headset.exe')
+        exec('taskkill /F /IM Headset.exe');
       }
-    })
+    });
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
-    `)
+    `);
 
     globalShortcut.register('MediaPlayPause', () => {
       if (win === null) return;
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
-      `)
+      `);
     });
 
     globalShortcut.register('MediaNextTrack', () => {
       if (win === null) return;
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-next')
-      `)
+      `);
     });
 
     globalShortcut.register('MediaPreviousTrack', () => {
       if (win === null) return;
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-previous')
-      `)
+      `);
     });
 
     if (isDev) {
@@ -121,12 +118,12 @@ const start = () => {
     }
   }); // end did-finish-load
 
-  win.on('close', (e) => {
-    win = null
+  win.on('close', () => {
+    win = null;
     // after app closes in Win, the global shourtcuts are still up, disabling it here.
-    globalShortcut.unregisterAll()
+    globalShortcut.unregisterAll();
     if (player === undefined) return;
-    player.close()
+    player.close();
   });
 
   win.on('restore', (e) => {
@@ -135,11 +132,10 @@ const start = () => {
   });
 }; // end start
 
-app.on('activate', () => win.show());
-app.on('before-quit', () => willQuitApp = true);
+app.on('activate', () => { win.show(); });
 app.on('ready', start);
 
-app.on('browser-window-created',function(e,window) {
+app.on('browser-window-created', (e, window) => {
   window.setMenu(null);
 });
 /*
@@ -150,13 +146,13 @@ app.on('browser-window-created',function(e,window) {
 ipcMain.on('win2Player', (e, args) => {
   if (isDev) { console.log('win2Player', args); }
 
-  player.webContents.send('win2Player', args)
-})
+  player.webContents.send('win2Player', args);
+});
 
 ipcMain.on('player2Win', (e, args) => {
   if (isDev) { console.log('player2Win', args); }
 
   try {
-    win.webContents.send('player2Win', args)
-  } catch(err) { /* window already closed */ }
-})
+    win.webContents.send('player2Win', args);
+  } catch (err) { /* window already closed */ }
+});
