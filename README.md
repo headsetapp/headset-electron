@@ -1,5 +1,5 @@
 # Headset
-![](https://travis-ci.org/headsetapp/headset-electron.svg?branch=master)
+Linux: [![Build Status](https://travis-ci.org/headsetapp/headset-electron.svg?branch=master)](https://travis-ci.org/headsetapp/headset-electron)
 
 A music player for the busy ones. [http://headsetapp.co](http://headsetapp.co)
 
@@ -22,10 +22,10 @@ $ npm install
 ```bash
 electron-packager . headset \
   --ignore bin \
-  --prune true  \
-  --out build/  \
+  --prune true \
+  --out build/ \
   --overwrite  \
-  --platform=linux  \
+  --platform=linux \
   --arch=x64
 ```
 4. [Optional] For the Ubuntu build, we're using `electron-installer-debian` and for the Fedora build, we're using `electron-installer-redhat`. There might be an installer for your specifc version, just have to google for it.
