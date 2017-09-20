@@ -14,8 +14,11 @@ addons:
       - dbus
 
 before_install:
-  - cd linux/
-  - npm i -g npm@latest
+  - npm i -g npm@5.4.2
+
+install:
+  - npm install
+  - npm run linux
 
 before_script:
   - "export DISPLAY=:99.0"
@@ -23,6 +26,8 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
+  - npm run lint
+  - cd linux/
   - npm run test
 
 git:
