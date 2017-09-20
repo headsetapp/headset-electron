@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 mkdir Icon.iconset
 sips -z 16 16     Icon.png --out Icon.iconset/icon_16x16.png
 sips -z 32 32     Icon.png --out Icon.iconset/icon_16x16@2x.png

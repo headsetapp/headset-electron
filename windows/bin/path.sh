@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 root="../node_modules"
 local="node_modules/.bin"
 
