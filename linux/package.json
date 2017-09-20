@@ -9,16 +9,15 @@
   "bugs": "https://github.com/headsetapp/headset-electron/issues",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development NODE_PATH=. nf start",
-    "electron": "./node_modules/.bin/electron .",
+    "start": "NODE_ENV=development nf start",
+    "electron": "electron .",
     "player": "./bin/player-window.sh",
     "production": "NODE_ENV=production electron .",
-    "package": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build_package.sh",
+    "pack": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build_package.sh",
     "dist": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build_installers.sh",
-    "postinstall": "electron-rebuild",
-    "lint": "eslint .",
-    "mocha": "mocha",
-    "test": "npm run lint && npm run package && mocha test/app.js && npm run dist && mocha test/installers.js"
+    "build": "npm run pack && npm run dist",
+    "postinstall": "electron-rebuild && ./bin/path.sh",
+    "test": "npm run pack && mocha test/app.js && npm run dist && mocha test/installers.js"
   },
   "dependencies": {
     "dbus": "^0.2.23",
@@ -26,19 +25,8 @@
     "mpris-service": "^1.1.3"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "electron": "^1.7.6",
     "electron-installer-debian": "fcastilloec/electron-installer-debian#lintian",
     "electron-installer-redhat": "^0.5.0",
-    "electron-packager": "^9.1.0",
-    "electron-rebuild": "^1.6.0",
-    "eslint": "^4.7.0",
-    "eslint-config-airbnb": "^15.1.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.3.0",
-    "foreman": "^2.0.0",
-    "mocha": "^3.5.3",
-    "spectron": "^3.7.2"
+    "electron-rebuild": "^1.6.0"
   }
 }

@@ -1,34 +1,29 @@
 {
-  "name": "Headset",
+  "name": "headset",
+  "productName": "Headset",
   "version": "1.6.0",
   "description": "Discover and collect music on YouTube",
+  "license": "MIT",
+  "author": "Daniel Ravina",
+  "homepage": "http://headsetapp.co",
+  "bugs": "https://github.com/headsetapp/headset-electron/issues",
   "main": "index.js",
   "scripts": {
     "start": "nf start",
-    "electron": "./node_modules/.bin/electron .",
+    "electron": "electron .",
     "production": "NODE_ENV=production electron .",
     "build": "electron-packager ./ Headset --overwrite --platform=win32 --arch=ia32 --ignore=node_modules/electron-prebuilt --ignore=node_modules/electron-packager --out=build --icon=./Headset.ico --version-string.ProductName=\"Headset\"",
     "installer": "node bin/winstaller.js",
-    "lint": "eslint .",
+    "postinstall": "./bin/path.sh",
     "ship": "npm run build & npm run installer"
   },
-  "productName": "Headset",
-  "author": "Daniel Ravina",
-  "license": "MIT",
   "dependencies": {
+    "electron-packager": "^9.1.0",
     "electron-positioner": "^3.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^4.1.1"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "electron": "^1.7.6",
-    "electron-packager": "^9.0.1",
-    "electron-winstaller": "^2.6.3",
-    "eslint": "^4.6.1",
-    "eslint-config-airbnb": "^15.1.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.3.0"
+    "electron-winstaller": "^2.6.3"
   }
 }
