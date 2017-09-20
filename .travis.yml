@@ -37,9 +37,14 @@ git:
 
 cache:
   directories:
-  - linux/node_modules
+  - node_modules
   - darwin/node_modules
+  - linux/node_modules
   - windows/node_modules
+
+before_cache:
+  - cd ..
+  - ./remove-path.sh
 
 deploy:
   - provider: releases
