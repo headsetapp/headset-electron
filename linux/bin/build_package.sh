@@ -10,7 +10,7 @@ electron-packager . headset \
   --prune true \
   --out build/ \
   --overwrite \
-  --asar true \
+  --asar \
   --platform=linux \
   --arch=x64
 

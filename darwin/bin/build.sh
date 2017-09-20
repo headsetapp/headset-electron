@@ -17,6 +17,7 @@ rm -R Icon.iconset
 electron-packager . \
   --platform=darwin \
   --arch=x64 \
+  --asar \
   --icon=Icon.icns \
   --ignore=node_modules/electron-prebuilt \
   --ignore=node_modules/electron-packager \
