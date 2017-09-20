@@ -1,4 +1,4 @@
-const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
+const electron = require('electron');
 const { version } = require('./package');
 const { exec } = require('child_process');
 const windowStateKeeper = require('electron-window-state');

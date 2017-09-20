@@ -1,4 +1,4 @@
-const electronInstaller = require('electron-winstaller'); // eslint-disable-line import/no-extraneous-dependencies
+const electronInstaller = require('electron-winstaller');
 
 const resultPromise = electronInstaller.createWindowsInstaller({
   appDirectory: './build/Headset-win32-ia32',

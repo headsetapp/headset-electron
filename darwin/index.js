@@ -1,4 +1,4 @@
-const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
+const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
 
 const { NODE_ENV } = process.env;

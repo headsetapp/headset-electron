@@ -21,6 +21,6 @@
     "no-undef": "off",
     "no-plusplus": "off",
     "class-methods-use-this": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+    "import/no-extraneous-dependencies": "off"
   }
 }

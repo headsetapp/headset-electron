@@ -1,4 +1,4 @@
-const { ipcMain } = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
+const { ipcMain } = require('electron');
 const { exec } = require('child_process');
 const mpris = require('mpris-service');
 

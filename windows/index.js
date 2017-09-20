@@ -1,6 +1,6 @@
-if (require('electron-squirrel-startup')) return;// eslint-disable-line global-require
+if (require('electron-squirrel-startup')) return; // eslint-disable-line global-require
 
-const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
+const electron = require('electron');
 
 const { version } = require('./package');
 const Positioner = require('electron-positioner');
