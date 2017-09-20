@@ -2,7 +2,7 @@
 
 set -e
 
-environments=(darwin linux windows)
+root="../node_modules/.bin"
 commandList=(electron
              electron-packager
              eslint
@@ -10,12 +10,8 @@ commandList=(electron
              nf
              mocha)
 
-for os in "${environments[@]}"
+for command in "${commandList[@]}"
 do
-  mkdir -p "$os/node_modules/.bin/"
-  for command in "${commandList[@]}"
-  do
-    link=$(readlink "node_modules/.bin/$command")
-    ln -frs "${link/../node_modules}" "$os/node_modules/.bin/$command"
-  done
+  link=$(readlink "$root/$command")
+  ln -fs "../../../${link/../node_modules}" "$PWD/node_modules/.bin/$command"
 done
