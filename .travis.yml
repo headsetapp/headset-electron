@@ -19,6 +19,8 @@ before_install:
 install:
   - npm install
   - npm run linux
+  - npm run darwin # needed for eslint to pass
+  - npm run windows # needed for eslint to pass
 
 before_script:
   - "export DISPLAY=:99.0"
@@ -36,6 +38,8 @@ git:
 cache:
   directories:
   - linux/node_modules
+  - darwin/node_modules
+  - windows/node_modules
 
 deploy:
   - provider: releases
