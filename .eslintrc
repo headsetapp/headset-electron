@@ -19,6 +19,7 @@
     "no-underscore-dangle": "off",
     "no-param-reassign": "off",
     "no-console": "off",
+    "func-names": "off",
     "import/no-extraneous-dependencies": "off"
   }
 }

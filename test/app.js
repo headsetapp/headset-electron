@@ -7,7 +7,7 @@ const appPath = path.join(__dirname, '..', os, 'build', `headset-${os}-x64`, 'he
 
 console.log(appPath);
 
-describe('application', function () { // eslint-disable-line func-names
+describe('application', function () {
   this.timeout(10000);
 
   before(() => {

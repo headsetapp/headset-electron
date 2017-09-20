@@ -3,7 +3,7 @@ const packJson = require('../package.json');
 const path = require('path');
 const exec = require('child_process').exec;
 
-describe('packages', function () { // eslint-disable-line func-names
+describe('packages', function () {
   this.timeout(40000);
 
   const packagePath = path.join(__dirname, '..', 'build', 'installers');
