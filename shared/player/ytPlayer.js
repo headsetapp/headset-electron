@@ -6,39 +6,39 @@ let ytPlayer;
 */
 class YTPlayer {
   constructor() {
-    this.listenToWin()
+    this.listenToWin();
     this.startProgressChecker();
     this.playerState = null;
   }
 
   setState(state) {
-    this.playerState = state
-    if(this.videoEnded) {
-      this.send('onEnd')
-      this.sendCurrentTime()
+    this.playerState = state;
+    if (this.videoEnded) {
+      this.send('onEnd');
+      this.sendCurrentTime();
     }
-    return false
+    return false;
   }
 
   get videoEnded() {
-    return this.playerState === YT.PlayerState.ENDED
+    return this.playerState === YT.PlayerState.ENDED;
   }
 
   get isPlaying() {
-    return this.playerState === YT.PlayerState.PLAYING
+    return this.playerState === YT.PlayerState.PLAYING;
   }
 
   pauseVideo() {
-    ytPlayer.pauseVideo()
-    this.waitToBuffer().then(() => ytPlayer.pauseVideo())
+    ytPlayer.pauseVideo();
+    this.waitToBuffer().then(() => ytPlayer.pauseVideo());
   }
 
   playVideo() {
-    ytPlayer.playVideo();
+    this.ytPlayer.playVideo();
   }
 
   unMute() {
-    ytPlayer.unMute()
+    this.ytPlayer.unMute();
   }
 
   seekTo(value) {
@@ -50,27 +50,27 @@ class YTPlayer {
   }
 
   sendCurrentTime() {
-    this.send('currentTime', ytPlayer.getCurrentTime())
+    this.send('currentTime', ytPlayer.getCurrentTime());
   }
 
   setVolume(value) {
-    ytPlayer.setVolume(value)
+    ytPlayer.setVolume(value);
   }
 
   waitToBuffer() {
-    const timeOut = 100 // 100mil * 100 tries = 10sec
-    return new Promise((resolve, reject)=> {
+    let timeOut = 100; // 100mil * 100 tries = 10sec
+    return new Promise((resolve, reject) => {
       const bufferWaitInterval = setInterval(() => {
         if (this.playerState !== YT.PlayerState.BUFFERING) {
-          clearInterval(bufferWaitInterval)
-          resolve()
+          clearInterval(bufferWaitInterval);
+          resolve();
         }
-        if(--timeOut < 0) {
-          clearInterval(bufferWaitInterval)
-          reject()
+        if (--timeOut < 0) {
+          clearInterval(bufferWaitInterval);
+          reject();
         }
-      }, 100)
-    })
+      }, 100);
+    });
   }
 
   startProgressChecker() {
@@ -82,10 +82,10 @@ class YTPlayer {
   }
 
   listenToWin() {
-    window.ipcRenderer.on('win2Player' , (e, args) => {
-      const [command, data] = args
-      this[command](data)
-    })
+    window.ipcRenderer.on('win2Player', (e, args) => {
+      const [command, data] = args;
+      this[command](data);
+    });
   }
 
   send(command, args) {
@@ -96,9 +96,9 @@ class YTPlayer {
 // Replace the 'ytplayer' element with an <iframe> and
 // YouTube player after the API code downloads.
 // Load the IFrame Player API code asynchronously.
-let tag = document.createElement('script');
-tag.src = "https://www.youtube.com/player_api";
-let firstScriptTag = document.getElementsByTagName('script')[0];
+const tag = document.createElement('script');
+tag.src = 'https://www.youtube.com/player_api';
+const firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 window.onYouTubePlayerAPIReady = () => {
@@ -112,12 +112,12 @@ window.onYouTubePlayerAPIReady = () => {
     fs: 0,
     events: {
       onReady() {
-        yt = new YTPlayer()
-        yt.send('onReady')
+        yt = new YTPlayer();
+        yt.send('onReady');
       },
       onStateChange(e) {
-        yt.setState(e.data)
-      }
-    }
+        yt.setState(e.data);
+      },
+    },
   });
-}
+};

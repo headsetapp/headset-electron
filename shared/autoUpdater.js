@@ -2,7 +2,7 @@ const request = require('request');
 const { version } = require('../package.json');
 const { exec } = require('child_process');
 
-const PACKAGE_REMOTE = 'https://raw.githubusercontent.com/danielravina/headset/master/package.json'
+const PACKAGE_REMOTE = 'https://raw.githubusercontent.com/danielravina/headset/master/package.json';
 const HOUR = 3600000; // milliseconds
 
 class AutoUpdater {
@@ -19,7 +19,7 @@ class AutoUpdater {
 
   start() {
     this._checkVersion((newPackage) => {
-      console.info('new', newPackage.version,'current', version);
+      console.info('new', newPackage.version, 'current', version);
       if (newPackage.version !== version) {
         this._doUpdate(newPackage);
       }
@@ -36,7 +36,10 @@ class AutoUpdater {
   _doUpdate(newPackage) {
     const url = newPackage.downloadUrl.darwin;
     exec(`DL_URL=${url} sh ${__dirname}/../bin/update`, (error, stdout, stderr) => {
-      if (error) return console.log(stderr);
+      if (error) {
+        console.log(stderr);
+        return;
+      }
       this.options.onUpdate(newPackage.version);
     });
   }
