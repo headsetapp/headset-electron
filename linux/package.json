@@ -18,6 +18,7 @@
     "build": "npm run pack && npm run dist",
     "preinstall": "cd .. && npm install && cd linux",
     "postinstall": "electron-rebuild",
+    "lint": "eslint .",
     "test": "npm run pack && OS=linux mocha ../test/app.js && npm run dist && mocha test/installers.js"
   },
   "dependencies": {
