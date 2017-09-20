@@ -17,7 +17,6 @@ before_install:
   - npm i -g npm@5.4.2
 
 install:
-  - npm install
   - npm run linux
   - npm run darwin # needed for eslint to pass
   - npm run windows # needed for eslint to pass
@@ -44,7 +43,7 @@ cache:
 
 before_cache:
   - cd ..
-  - ./remove-path.sh
+  - ./shared/bin/remove-path.sh
 
 deploy:
   - provider: releases

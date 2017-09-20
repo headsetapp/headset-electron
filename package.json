@@ -3,6 +3,7 @@
     "darwin": "cd darwin && npm install && cd ..",
     "linux": "cd linux && npm install && cd ..",
     "windows": "cd windows && npm install && cd ..",
+    "postinstall": "./shared/bin/path.sh",
     "lint": "eslint ."
   },
   "devDependencies": {

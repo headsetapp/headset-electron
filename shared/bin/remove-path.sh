@@ -2,17 +2,21 @@
 
 set -e
 
-root="../node_modules"
+environments=(darwin linux windows)
+
 local="node_modules/.bin"
 
 commandList=(electron
              electron-packager
+             eslint
              http-server
              nf
              mocha)
 
-for command in "${commandList[@]}"
+for os in "${environments[@]}"
 do
-  link=$(readlink "$root/.bin/$command")
-  ln -frs "${link/../$root}" "$local/$command"
+  for command in "${commandList[@]}"
+  do
+    rm -f "$os/$local/$command"
+  done
 done

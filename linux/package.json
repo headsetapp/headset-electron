@@ -16,7 +16,8 @@
     "pack": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build_package.sh",
     "dist": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build_installers.sh",
     "build": "npm run pack && npm run dist",
-    "postinstall": "electron-rebuild && ./bin/path.sh",
+    "preinstall": "cd .. && npm install && cd linux",
+    "postinstall": "electron-rebuild",
     "test": "npm run pack && OS=linux mocha ../test/app.js && npm run dist && mocha test/installers.js"
   },
   "dependencies": {
