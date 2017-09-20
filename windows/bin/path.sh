@@ -14,5 +14,5 @@ commandList=(electron
 for command in "${commandList[@]}"
 do
   link=$(readlink "$root/.bin/$command")
-  ln -sr "${link/../$root}" "$local/$command"
+  ln -frs "${link/../$root}" "$local/$command"
 done
