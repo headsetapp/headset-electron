@@ -2,10 +2,7 @@ const { Application } = require('spectron');
 const assert = require('assert');
 const path = require('path');
 
-const os = process.env.OS;
-const appPath = path.join(__dirname, '..', os, 'build', `headset-${os}-x64`, 'headset');
-
-console.log(appPath);
+const appPath = path.join(__dirname, '..', 'build', 'headset-linux-x64', 'headset');
 
 describe('application', function () {
   this.timeout(10000);

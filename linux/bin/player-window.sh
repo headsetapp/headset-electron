@@ -2,5 +2,4 @@
 
 set -e
 
-cd ../shared/player
-http-server -p 3001
+http-server ../shared/player -p 3001

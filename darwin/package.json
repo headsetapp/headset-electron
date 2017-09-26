@@ -9,21 +9,25 @@
   "bugs": "https://github.com/headsetapp/headset-electron/issues",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development NODE_PATH=. nf start",
+    "start": "NODE_ENV=development nf start",
     "electron": "electron .",
     "player": "./bin/player-window.sh",
-    "preinstall": "cd .. && npm install && cd darwin",
     "production": "NODE_ENV=production electron .",
-    "postinstall": "./../shared/bin/path.sh",
-    "lint": "eslint .",
+    "test": "npm run build && mocha test/app.test.js",
     "build": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build.sh"
   },
   "dependencies": {
     "electron-default-menu": "^1.0.1",
-    "electron-osx-sign": "^0.4.7",
     "electron-window-state": "^4.1.1"
   },
   "devDependencies": {
-    "iconutil": "^1.0.2"
+    "electron": "^1.7.8",
+    "electron-osx-sign": "^0.4.7",
+    "electron-packager": "^9.1.0",
+    "foreman": "^2.0.0",
+    "http-server": "^0.10.0",
+    "iconutil": "^1.0.2",
+    "mocha": "^3.5.3",
+    "spectron": "^3.7.2"
   }
 }
