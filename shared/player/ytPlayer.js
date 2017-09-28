@@ -65,7 +65,7 @@ class YTPlayer {
           clearInterval(bufferWaitInterval);
           resolve();
         }
-        if (--timeOut < 0) {
+        if (--timeOut < 0) { // eslint-disable-line no-plusplus
           clearInterval(bufferWaitInterval);
           reject();
         }

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const packJson = require('../package.json');
 const path = require('path');
-const exec = require('child_process').exec;
+const { exec } = require('child_process');
 
 describe('packages', function () {
   this.timeout(40000);
