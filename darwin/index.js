@@ -1,7 +1,8 @@
 const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
+
 const { NODE_ENV } = process.env;
-const { version } = require('./package')
+const { version } = require('./package');
 const windowStateKeeper = require('electron-window-state');
 
 const {
@@ -11,17 +12,17 @@ const {
   Menu,
   ipcMain,
   dialog,
-  shell
+  shell,
 } = electron;
 
 let win;
 let player;
 let willQuitApp = false;
 
-const isDev = (NODE_ENV === 'development')
+const isDev = (NODE_ENV === 'development');
 
 const start = () => {
-  let mainWindowState = windowStateKeeper()
+  const mainWindowState = windowStateKeeper();
   win = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
@@ -31,7 +32,7 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hidden-inset',
-    icon: `file://${__dirname}/Icon.icns`
+    icon: `file://${__dirname}/Icon.icns`,
   });
 
   mainWindowState.manage(win);
@@ -55,7 +56,7 @@ const start = () => {
 
     setTimeout(() => {
       player.minimize();
-    }, 2000)
+    }, 2000);
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
@@ -64,32 +65,32 @@ const start = () => {
     }
 
     player.on('close', (e) => {
-      if(!willQuitApp) {
-        dialog.showErrorBox('Oops! 🤕', `Sorry, player window cannot be closed. You can only minimize it.`);
+      if (!willQuitApp) {
+        dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
         e.preventDefault();
       }
-    })
+    });
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
-    `)
+    `);
 
     globalShortcut.register('MediaPlayPause', () => {
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
-      `)
+      `);
     });
 
     globalShortcut.register('MediaNextTrack', () => {
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-next')
-      `)
+      `);
     });
 
     globalShortcut.register('MediaPreviousTrack', () => {
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-previous')
-      `)
+      `);
     });
 
     if (isDev) {
@@ -97,7 +98,7 @@ const start = () => {
       // player.webContents.openDevTools();
     }
 
-    let menu = defaultMenu(app, shell);
+    const menu = defaultMenu(app, shell);
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
   }); // end did-finish-load
@@ -105,7 +106,7 @@ const start = () => {
   win.on('close', (e) => {
     if (willQuitApp) {
       // the user tried to quit the app
-      player = null
+      player = null;
       win = null;
     } else {
       // the user only tried to close the win
@@ -120,8 +121,8 @@ const start = () => {
   });
 }; // end start
 
-app.on('activate', () => win.show());
-app.on('before-quit', () => willQuitApp = true);
+app.on('activate', () => { win.show(); });
+app.on('before-quit', () => { willQuitApp = true; });
 app.on('ready', start);
 
 /*
@@ -132,13 +133,13 @@ app.on('ready', start);
 ipcMain.on('win2Player', (e, args) => {
   if (isDev) { console.log('win2Player', args); }
 
-  player.webContents.send('win2Player', args)
-})
+  player.webContents.send('win2Player', args);
+});
 
 ipcMain.on('player2Win', (e, args) => {
   if (isDev) { console.log('player2Win', args); }
 
   try {
-    win.webContents.send('player2Win', args)
-  } catch(err) { /* window already closed */ }
-})
+    win.webContents.send('player2Win', args);
+  } catch (err) { /* window already closed */ }
+});

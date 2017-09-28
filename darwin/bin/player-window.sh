@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+set -e
+
 rm -R ~/Library/Application\ Support/Headset/Cache
-cd ../shared/player
-http-server -p 3001
+http-server ../shared/player -p 3001

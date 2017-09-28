@@ -1,0 +1,30 @@
+{
+  env: {
+    es6: true,
+    node: true,
+    mocha: true,
+    browser: true,
+  },
+  extends: "airbnb-base",
+  parser: "babel-eslint",
+  parserOptions: {
+    ecmaVersion: 6,
+    sourceType: "module",
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true,
+    }
+  },
+  "globals": {
+    "YT": true,
+  },
+  rules: {
+    "new-cap": 'off',
+    "max-len": ["error", 120],
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off",
+    "no-console": "off",
+    "func-names": "off",
+    "class-methods-use-this": "off",
+    "import/no-extraneous-dependencies": "off"
+  }
+}

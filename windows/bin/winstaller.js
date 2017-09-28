@@ -6,8 +6,8 @@ const resultPromise = electronInstaller.createWindowsInstaller({
   authors: 'Alignment Digital',
   exe: 'Headset.exe',
   noMsi: true,
-  iconUrl: `file://${__dirname}/Headset.ico`,
-  loadingGif: './loading.gif'
+  iconUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/windows/Headset.ico',
+  loadingGif: './loading.gif',
 });
 
-resultPromise.then(() => console.log("It worked!"), (e) => console.log(`No dice: ${e.message}`));
+resultPromise.then(() => console.log('It worked!'), e => console.log(`No dice: ${e.message}`));

@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "darwin": "cd darwin && npm install && cd ..",
+    "linux": "cd linux && npm install && cd ..",
+    "windows": "cd windows && npm install && cd ..",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.7.2",
+    "eslint-config-airbnb-base": "^12.0.1",
+    "eslint-plugin-import": "^2.7.0"
+  }
+}

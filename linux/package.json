@@ -4,17 +4,20 @@
   "version": "1.6.0",
   "description": "Discover and collect music on YouTube",
   "license": "MIT",
-  "author": "Daniel Ravina",
+  "author": "Daniel Ravina <hello@headsetapp.co>",
   "homepage": "http://headsetapp.co",
   "bugs": "https://github.com/headsetapp/headset-electron/issues",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development NODE_PATH=. nf start",
-    "electron": "./node_modules/.bin/electron .",
+    "start": "NODE_ENV=development nf start",
+    "electron": "electron .",
     "player": "./bin/player-window.sh",
     "production": "NODE_ENV=production electron .",
-    "build": "NODE_ENV=production NEW_VERSION=$npm_package_version ./bin/build.sh",
-    "postinstall": "electron-rebuild"
+    "pack": "NODE_ENV=production ./bin/build_package.sh",
+    "dist": "NODE_ENV=production ./bin/build_installers.sh",
+    "build": "npm run pack && npm run dist",
+    "postinstall": "electron-rebuild",
+    "test": "npm run pack && mocha test/app.test.js && npm run dist && mocha test/installers.test.js"
   },
   "dependencies": {
     "dbus": "^0.2.23",
@@ -22,11 +25,14 @@
     "mpris-service": "^1.1.3"
   },
   "devDependencies": {
-    "electron": "^1.7.5",
-    "electron-installer-debian": "^0.5.2",
+    "electron": "^1.7.8",
+    "electron-installer-debian": "^0.6.0",
     "electron-installer-redhat": "^0.5.0",
-    "electron-packager": "^9.0.0",
+    "electron-packager": "^9.1.0",
     "electron-rebuild": "^1.6.0",
-    "foreman": "^2.0.0"
+    "foreman": "^2.0.0",
+    "http-server": "^0.10.0",
+    "mocha": "^3.5.3",
+    "spectron": "^3.7.2"
   }
 }

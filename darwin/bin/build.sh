@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 mkdir Icon.iconset
 sips -z 16 16     Icon.png --out Icon.iconset/icon_16x16.png
 sips -z 32 32     Icon.png --out Icon.iconset/icon_16x16@2x.png
@@ -14,21 +16,24 @@ cp Icon.png Icon.iconset/icon_512x512@2x.png
 iconutil -c icns Icon.iconset
 rm -R Icon.iconset
 
+ignoring="(bin|test|Procfile)"
+
 electron-packager . \
   --platform=darwin \
   --arch=x64 \
+  --asar \
+  --ignore=$ignoring \
+  --prune true \
   --icon=Icon.icns \
-  --ignore=node_modules/electron-prebuilt \
-  --ignore=node_modules/electron-packager \
   --out build/ \
   --overwrite \
   --app-bundle-id="co.headsetapp.app" \
-  --app-version=$NEW_VERSION \
+  --app-version="$NEW_VERSION" \
   --build-version="1.0.100" \
   --osx-sign
 
 cd build/Headset-darwin-x64/
-zip -ryq Headset@$NEW_VERSION.zip Headset.app
+zip -ryq "Headset@$NEW_VERSION.zip" Headset.app
 create-dmg Headset.app
 
 open .

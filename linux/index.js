@@ -1,8 +1,6 @@
 const electron = require('electron');
-const { NODE_ENV } = process.env;
-const { version } = require('./package')
-const path = require('path')
-const { exec } = require('child_process')
+const { version } = require('./package');
+const { exec } = require('child_process');
 const windowStateKeeper = require('electron-window-state');
 const registerMediaKeys = require('./registerMediaKeys.js');
 const mprisService = require('./mprisService.js');
@@ -10,7 +8,6 @@ const mprisService = require('./mprisService.js');
 const {
   app,
   BrowserWindow,
-  globalShortcut,
   ipcMain,
   dialog,
 } = electron;
@@ -20,7 +17,7 @@ let player;
 
 const isDev = false;
 
-const shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
+const shouldQuit = app.makeSingleInstance(() => {
   // Someone tried to run a second instance, we should focus our window.
   if (win) {
     if (win.isMinimized()) win.restore();
@@ -34,7 +31,7 @@ if (shouldQuit) {
 }
 
 const start = () => {
-  let mainWindowState = windowStateKeeper();
+  const mainWindowState = windowStateKeeper();
 
   win = new BrowserWindow({
     x: mainWindowState.x,
@@ -45,8 +42,8 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hidden-inset',
-    icon: `icon.png`,
-    frame: true
+    icon: 'icon.png',
+    frame: true,
   });
 
   mainWindowState.manage(win);
@@ -67,13 +64,13 @@ const start = () => {
       maximizable: true,
     });
 
-    setTimeout(()=> {
+    setTimeout(() => {
       try {
         player.minimize();
-      } catch(err) {
-       // this prevents a js error if user closes the window too quickly.
+      } catch (err) {
+        // this prevents a js error if user closes the window too quickly.
       }
-    }, 2000)
+    }, 2000);
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
@@ -83,13 +80,13 @@ const start = () => {
 
     player.on('close', (e) => {
       if (win) {
-        dialog.showErrorBox('Oops! 🤕', `Sorry, player window cannot be closed. You can only minimize it.`);
+        dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
         e.preventDefault();
       } else {
-        player = null
-        exec('kill -9 $(pgrep headset) &> /dev/null')
+        player = null;
+        exec('kill -9 $(pgrep headset) &> /dev/null');
       }
-    })
+    });
 
     try {
       mprisService(win, player);
@@ -100,16 +97,16 @@ const start = () => {
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
-    `)
+    `);
 
     if (isDev) {
       win.webContents.openDevTools();
     }
   }); // end did-finish-load
 
-  win.on('close', (e) => {
-    win = null
-    player.close()
+  win.on('close', () => {
+    win = null;
+    player.close();
   });
 
   win.on('restore', (e) => {
@@ -121,7 +118,7 @@ const start = () => {
 app.on('activate', () => win.show());
 app.on('ready', start);
 
-app.on('browser-window-created',function(e,window) {
+app.on('browser-window-created', (e, window) => {
   window.setMenu(null);
 });
 
@@ -133,13 +130,13 @@ app.on('browser-window-created',function(e,window) {
 ipcMain.on('win2Player', (e, args) => {
   if (isDev) { console.log('win2Player', args); }
 
-  player.webContents.send('win2Player', args)
-})
+  player.webContents.send('win2Player', args);
+});
 
 ipcMain.on('player2Win', (e, args) => {
   if (isDev) { console.log('player2Win', args); }
 
   try {
-    win.webContents.send('player2Win', args)
-  } catch(err) { /* window already closed */ }
-})
+    win.webContents.send('player2Win', args);
+  } catch (err) { /* window already closed */ }
+});
