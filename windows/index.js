@@ -1,11 +1,9 @@
-if (require('electron-squirrel-startup')) return; // eslint-disable-line global-require
-
 const electron = require('electron');
-
 const { version } = require('./package');
 const Positioner = require('electron-positioner');
 const { exec } = require('child_process');
 const windowStateKeeper = require('electron-window-state');
+const squirrel = require('electron-squirrel-startup');
 
 const {
   app,
@@ -28,7 +26,7 @@ const shouldQuit = app.makeSingleInstance(() => {
   }
 });
 
-if (shouldQuit) {
+if (shouldQuit || squirrel) {
   app.quit();
   return;
 }
@@ -67,7 +65,7 @@ const start = () => {
       maximizable: true,
     });
 
-    const positioner = new Positioner(player).move('bottomCenter'); // eslint-disable-line no-unused-vars
+    new Positioner(player).move('bottomCenter');
 
     setTimeout(() => {
       player.minimize();

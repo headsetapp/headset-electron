@@ -6,7 +6,7 @@ const resultPromise = electronInstaller.createWindowsInstaller({
   authors: 'Alignment Digital',
   exe: 'Headset.exe',
   noMsi: true,
-  iconUrl: `file://${__dirname}/Headset.ico`,
+  iconUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/windows/Headset.ico',
   loadingGif: './loading.gif',
 });
 
