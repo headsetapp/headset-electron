@@ -36,8 +36,8 @@ const start = () => {
   win = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
-    width: 391,
-    height: 706,
+    width: 381,
+    height: 696,
     resizable: false,
     title: 'Headset',
     maximizable: false,

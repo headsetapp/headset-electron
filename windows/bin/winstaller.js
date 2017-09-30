@@ -7,7 +7,7 @@ const resultPromise = electronInstaller.createWindowsInstaller({
   exe: 'Headset.exe',
   noMsi: true,
   iconUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/windows/Headset.ico',
-  loadingGif: './loading.gif',
+  loadingGif: './source.gif',
 });
 
 resultPromise.then(() => console.log('It worked!'), e => console.log(`No dice: ${e.message}`));
