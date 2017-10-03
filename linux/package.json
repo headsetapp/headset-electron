@@ -17,6 +17,7 @@
     "dist": "NODE_ENV=production ./bin/build_installers.sh",
     "build": "npm run pack && npm run dist",
     "postinstall": "electron-rebuild",
+    "repo": "NEW_VERSION=$npm_package_version ./bin/linux_repo.sh",
     "test": "npm run pack && mocha test/app.test.js && npm run dist && mocha test/installers.test.js"
   },
   "dependencies": {
