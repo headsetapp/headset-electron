@@ -66,4 +66,4 @@ deploy:
   local_dir: gh-pages
   github_token: "$GITHUB_TOKEN"
   on:
-    branch: repo
+    branch: master
