@@ -1,0 +1,21 @@
+environment:
+  nodejs_version: "6"
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - npm i -g  npm@5.4.2
+  - npm install
+  - cd windows && npm install && cd..
+
+test_script:
+  - npm run lint windows
+  - cd windows
+  - npm run pack
+  - npm run mocha
+  - npm run dist
+
+build: off
+
+cache:
+  - node_modules
+  - windows\node_modules
