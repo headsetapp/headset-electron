@@ -3,7 +3,7 @@
     "darwin": "cd darwin && npm install && cd ..",
     "linux": "cd linux && npm install && cd ..",
     "windows": "cd windows && npm install && cd ..",
-    "lint": "eslint ."
+    "lint": "eslint"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

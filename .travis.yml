@@ -52,6 +52,10 @@ before_deploy:
 - npm run repo
 
 
+branches:
+  only:
+    - master
+
 deploy:
 - provider: releases
   skip_cleanup: true
