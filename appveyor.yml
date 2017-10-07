@@ -31,5 +31,6 @@ deploy:
     artifact: HeadsetApp
     auth_token: $(GITHUB_TOKEN)
     draft: true
+    description: ''
     on:
-      branch: appveyor
+      appveyor_repo_tag: true
