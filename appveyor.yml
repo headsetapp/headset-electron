@@ -21,9 +21,10 @@ build: off
 cache:
   - node_modules
   - windows\node_modules
+  - '%APPDATA%\npm-cache'
 
 artifacts:
-  - path: windows\build\installer\*.exe
+  - path: windows\build\installers\*.exe
     name: HeadsetApp
 
 deploy:
