@@ -6,3 +6,8 @@ config.js
 .sass-cache
 *.map
 .storage/**/
+*/gh-pages/debian/db
+*/gh-pages/debian/dists
+*/gh-pages/debian/pool
+*/gh-pages/redhat/repodata
+*/gh-pages/redhat/*.rpm

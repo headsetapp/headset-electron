@@ -4,7 +4,13 @@
   "productDescription": "Headset is a desktop app that turns YouTube into a world class music streaming service. Create collections, tune-in to a music subreddit or quickly play that song you’ve had stuck in your head all day!",
   "depends": [
     "dbus",
-    "libc6"
+    "libc6",
+    "libgconf2-4",
+    "libgtk2.0-0",
+    "libnotify4",
+    "libnss3",
+    "libxtst6",
+    "xdg-utils"
   ],
   "section": "sound",
   "categories": [
