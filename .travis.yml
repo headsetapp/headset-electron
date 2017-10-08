@@ -48,8 +48,7 @@ before_cache:
 
 before_deploy:
 - cd linux/
-- openssl aes-256-cbc -K $encrypted_11c7bd8d9231_key -iv $encrypted_11c7bd8d9231_iv
-  -in headset_priv.asc.enc -out headset_priv.asc -d
+- openssl aes-256-cbc -K $encrypted_6866d25ad40b_key -iv $encrypted_6866d25ad40b_iv -in headset_priv.asc.enc -out headset_priv.asc -d
 - npm run repo
 
 
