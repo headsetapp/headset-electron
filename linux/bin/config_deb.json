@@ -19,6 +19,10 @@
     "Player",
     "Music"
   ],
+  "scripts": {
+    "postinst": "bin/debian_scripts/postinst",
+    "postrm": "bin/debian_scripts/postrm"
+  },
   "lintianOverrides": [
     "binary-without-manpage",
     "embedded-library",
