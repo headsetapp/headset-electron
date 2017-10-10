@@ -12,9 +12,10 @@
     "start": "nf start",
     "electron": "electron .",
     "production": "NODE_ENV=production electron .",
-    "build": "electron-packager ./ Headset --overwrite --platform=win32 --asar --arch=ia32 --ignore=node_modules/electron-prebuilt --ignore=node_modules/electron-packager --out=build --icon=./Headset.ico --version-string.ProductName=\"Headset\"",
-    "installer": "node bin/winstaller.js",
-    "ship": "npm run build && npm run installer"
+    "pack": "electron-packager . Headset --overwrite --platform=win32 --asar --arch=ia32 --prune --ignore=bin --ignore=test --out=build --icon=Headset.ico --version-string.ProductName=\"Headset\"",
+    "dist": "node bin/winstaller.js",
+    "build": "npm run pack && npm run dist",
+    "mocha": "mocha"
   },
   "dependencies": {
     "electron-positioner": "^3.0.0",
@@ -27,7 +28,7 @@
     "electron-winstaller": "^2.6.3",
     "foreman": "^2.0.0",
     "http-server": "^0.10.0",
-    "mocha": "^3.5.3",
+    "mocha": "^4.0.1",
     "spectron": "^3.7.2"
   }
 }

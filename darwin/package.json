@@ -27,7 +27,7 @@
     "foreman": "^2.0.0",
     "http-server": "^0.10.0",
     "iconutil": "^1.0.2",
-    "mocha": "^3.5.3",
+    "mocha": "^4.0.1",
     "spectron": "^3.7.2"
   }
 }
