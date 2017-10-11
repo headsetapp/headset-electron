@@ -2,7 +2,7 @@
 
 set -e
 
-REPOCONFIG="deb [arch=amd64] https://headsetapp.co/headset-electron/debian stable non-free"
+REPOCONFIG="deb [arch=amd64] http://headsetapp.co/headset-electron/debian stable non-free"
 APT_SOURCESDIR="/etc/apt/sources.list.d/"
 SOURCELIST="$APT_SOURCESDIR/headset.list"
 
