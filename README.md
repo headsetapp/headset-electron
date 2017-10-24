@@ -7,7 +7,18 @@ Windows: [![Build status](https://ci.appveyor.com/api/projects/status/8mpmtejnut
 
 Have a question? Join our Slack workspace: https://tinyurl.com/y7m8y5x4
 
-## Linux Installation
+# Installation
+
+## Using Homebrew (macOS)
+
+Update Homebrew and install `headset` using Hombrew Cask
+
+```
+brew update
+brew cask install headset
+```
+
+## Linux
 As an alternative to `.deb` and `.rpm` packages on the website, you can also install it directly from the command-line:
 
 ### Debian
