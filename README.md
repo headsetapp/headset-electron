@@ -7,9 +7,9 @@ Windows: [![Build status](https://ci.appveyor.com/api/projects/status/8mpmtejnut
 
 Have a question? Join our Slack workspace: https://tinyurl.com/y7m8y5x4
 
-# Installation
+## Installation
 
-## Using Homebrew (macOS)
+### Using Homebrew (macOS)
 
 Update Homebrew and install `headset` using Hombrew Cask
 
@@ -18,10 +18,10 @@ brew update
 brew cask install headset
 ```
 
-## Linux
+### Linux
 As an alternative to `.deb` and `.rpm` packages on the website, you can also install it directly from the command-line:
 
-### Debian
+#### Debian
 ```
 wget -q http://headsetapp.co/headset-electron/debian/headset.asc -O- | sudo apt-key add -
 echo "deb [arch=amd64] http://headsetapp.co/headset-electron/debian stable non-free" | sudo tee /etc/apt/sources.list.d/headset.list
@@ -29,7 +29,7 @@ sudo apt-get update
 sudo apt-get install headset
 ```
 
-### Redhat
+#### Redhat
 ```
 sudo dnf config-manager --add-repo http://headsetapp.co/headset-electron/redhat/headset.repo
 sudo dnf install headset
@@ -40,7 +40,7 @@ sudo yum-config-manager --add-repo http://headsetapp.co/headset-electron/redhat/
 sudo yum install headset
 ```
 
-### Build from source
+#### Build from source
 
 If you would like to create a build for a different environment (e.g Manjaro or Aur, etc.) please follow these steps:
 
