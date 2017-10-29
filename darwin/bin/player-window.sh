@@ -2,5 +2,5 @@
 
 set -e
 
-rm -R ~/Library/Application\ Support/Headset/Cache
+rm -Rf ~/Library/Application\ Support/Headset/Cache
 http-server ../shared/player -p 3001
