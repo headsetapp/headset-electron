@@ -1,0 +1,37 @@
+version: "{build}"
+
+environment:
+  nodejs_version: "6"
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - npm i -g  npm@5.4.2
+  - npm install
+  - cd windows && npm install && cd..
+
+test_script:
+  - npm run lint windows
+  - cd windows
+  - npm run pack
+  - npm run mocha
+  - npm run dist
+
+build: off
+
+cache:
+  - node_modules
+  - windows\node_modules
+  - '%APPDATA%\npm-cache'
+
+artifacts:
+  - path: windows\build\installers\*.exe
+    name: HeadsetApp
+
+deploy:
+  - provider: GitHub
+    artifact: HeadsetApp
+    auth_token: $(GITHUB_TOKEN)
+    draft: true
+    description: ''
+    on:
+      appveyor_repo_tag: true

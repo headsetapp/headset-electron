@@ -1,0 +1,6 @@
+Codename: stable
+Components: non-free
+Architectures: amd64
+Origin: headsetapp.co
+Description: Apt repository for Headset
+SignWith: 9D782F91

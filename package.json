@@ -1,14 +1,17 @@
 {
+  "version": "1.6.1",
   "scripts": {
     "darwin": "cd darwin && npm install && cd ..",
     "linux": "cd linux && npm install && cd ..",
     "windows": "cd windows && npm install && cd ..",
-    "lint": "eslint ."
+    "lint": "eslint",
+    "version": "npm-publish-all bump --bumpType=$npm_package_version && git add ."
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "eslint": "^4.7.2",
-    "eslint-config-airbnb-base": "^12.0.1",
-    "eslint-plugin-import": "^2.7.0"
+    "babel-eslint": "^8.0.1",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-plugin-import": "^2.7.0",
+    "npm-publish-all": "0.0.3"
   }
 }

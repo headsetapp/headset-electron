@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+KEYID="9D782F91"
+
+action=$1
+
+# Only do complete clean-up on purge.
+if [ "$action" != "purge" ] ; then
+  exit 0
+fi
+
+APT_SOURCESDIR="/etc/apt/sources.list.d/"
+SOURCELIST="$APT_SOURCESDIR/headset.list"
+
+# Clean sources lists
+rm -f "$SOURCELIST"*
+
+# Remove key
+APT_KEY="$(which apt-key 2> /dev/null)"
+if [ -x "$APT_KEY" ]; then
+  "$APT_KEY" remove "$KEYID" >/dev/null 2>&1
+fi
+
+# TODO: Remove config?

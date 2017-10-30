@@ -34,11 +34,11 @@ class YTPlayer {
   }
 
   playVideo() {
-    this.ytPlayer.playVideo();
+    ytPlayer.playVideo();
   }
 
   unMute() {
-    this.ytPlayer.unMute();
+    ytPlayer.unMute();
   }
 
   seekTo(value) {
