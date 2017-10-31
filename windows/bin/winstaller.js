@@ -12,7 +12,7 @@ const resultPromise = electronInstaller.createWindowsInstaller({
   exe: 'Headset.exe',
   noMsi: true,
   iconUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/windows/Headset.ico',
-  loadingGif: 'loading.gif',
+  loadingGif: 'source.gif',
 });
 
 resultPromise.then(() => {
