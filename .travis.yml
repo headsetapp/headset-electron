@@ -6,6 +6,9 @@ os:
   - linux
   - osx
 
+git:
+  depth: 1
+
 addons:
   apt:
     packages:
@@ -42,8 +45,8 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd darwin; fi
 - npm run test
 
-git:
-  depth: 1
+before_cache:
+- cd ..
 
 cache:
   directories:
@@ -51,9 +54,6 @@ cache:
   - darwin/node_modules
   - linux/node_modules
   - windows/node_modules
-
-before_cache:
-- cd ..
 
 after_success:
 - if [[ "$TRAVIS_OS_NAME" == "linux" && -n "$TRAVIS_TAG" ]]; then
