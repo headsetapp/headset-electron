@@ -13,7 +13,7 @@ Tell us what happens instead. Provide an error message if relevant.
 ### Your Environment
 
 - What OS are you using?
-- What version of Headset?
+- What version of Headset? (copy and paste from the user profile page if possible)
 
 ### Screenshots
 
