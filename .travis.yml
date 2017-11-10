@@ -6,6 +6,9 @@ os:
   - linux
   - osx
 
+git:
+  depth: 1
+
 addons:
   apt:
     packages:
@@ -42,8 +45,8 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd darwin; fi
 - npm run test
 
-git:
-  depth: 1
+before_cache:
+- cd ..
 
 cache:
   directories:
@@ -52,17 +55,13 @@ cache:
   - linux/node_modules
   - windows/node_modules
 
-before_cache:
-- cd ..
-
-before_deploy:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+after_success:
+- if [[ "$TRAVIS_OS_NAME" == "linux" && -n "$TRAVIS_TAG" ]]; then
     cd linux;
     openssl aes-256-cbc -K $encrypted_6866d25ad40b_key -iv $encrypted_6866d25ad40b_iv -in headset_priv.asc.enc -out headset_priv.asc -d;
     npm run repo;
     cd ..;
   fi
-
 
 deploy:
 - provider: releases
