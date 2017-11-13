@@ -17,6 +17,7 @@ class YTPlayer {
       this.send('onEnd');
       this.sendCurrentTime();
     }
+    this.send('onStateChange', this.playerState);
     return false;
   }
 
