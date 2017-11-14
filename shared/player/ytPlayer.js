@@ -58,6 +58,10 @@ class YTPlayer {
     ytPlayer.setVolume(value);
   }
 
+  logout() {
+    window.location.replace('');
+  }
+
   waitToBuffer() {
     let timeOut = 100; // 100mil * 100 tries = 10sec
     return new Promise((resolve, reject) => {
