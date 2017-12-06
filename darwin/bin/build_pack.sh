@@ -19,6 +19,7 @@ rm -R Icon.iconset
 ignoring="(bin|test|Procfile)"
 
 electron-packager . \
+  --executable-name headset \
   --platform=darwin \
   --arch=x64 \
   --asar \

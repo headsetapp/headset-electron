@@ -2,7 +2,7 @@
 
 set -e
 
-source="build/headset-linux-x64"
+source="build/Headset-linux-x64"
 destination="build/installers"
 
 echo -e '\n\033[1mPackaging deb installer: \033[01;0m'
