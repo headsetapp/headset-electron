@@ -1,11 +1,11 @@
 const DBus = require('dbus');
 const { ipcMain } = require('electron');
 
-let status = 'Stopped';
+let track = null;
 
 ipcMain.on('win2Player', (e, args) => {
-  if (args[0] === 'playVideo') {
-    status = 'Playing';
+  if (args[0] === 'trackInfo') {
+    track = args[1];
   }
 });
 
@@ -34,7 +34,7 @@ function registerBindings(win, desktopEnv, bus) {
           executeMediaKey(win, 'play-previous');
           break;
         case 'Play':
-          if (status !== 'Stopped') {
+          if (track !== null) {
             executeMediaKey(win, 'play-pause');
           }
           break;
