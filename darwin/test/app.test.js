@@ -2,7 +2,7 @@ const { Application } = require('spectron');
 const assert = require('assert');
 const path = require('path');
 
-const appPath = path.join(__dirname, '..', 'build/Headset-darwin-x64/Headset.app/Contents/MacOS', 'Headset');
+const appPath = path.join(__dirname, '..', 'build/Headset-darwin-x64/Headset.app/Contents/MacOS', 'headset');
 
 describe('application', function () {
   this.timeout(10000);
