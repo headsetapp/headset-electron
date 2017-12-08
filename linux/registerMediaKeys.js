@@ -1,4 +1,13 @@
 const DBus = require('dbus');
+const { ipcMain } = require('electron');
+
+let track = null;
+
+ipcMain.on('win2Player', (e, args) => {
+  if (args[0] === 'trackInfo') {
+    track = args[1];
+  }
+});
 
 function executeMediaKey(win, key) {
   win.webContents.executeJavaScript(`
@@ -25,7 +34,9 @@ function registerBindings(win, desktopEnv, bus) {
           executeMediaKey(win, 'play-previous');
           break;
         case 'Play':
-          executeMediaKey(win, 'play-pause');
+          if (track !== null) {
+            executeMediaKey(win, 'play-pause');
+          }
           break;
         default:
       }
