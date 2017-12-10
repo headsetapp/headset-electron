@@ -2,10 +2,11 @@
 
 set -e
 
-source="build/headset-linux-x64"
+source="build/Headset-linux-x64"
 ignoring="(bin|test|Procfile)"
 
-electron-packager . headset \
+electron-packager . \
+  --executable-name headset \
   --ignore $ignoring \
   --prune true \
   --out build/ \

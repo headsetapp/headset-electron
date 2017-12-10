@@ -29,7 +29,7 @@
     "electron": "^1.7.9",
     "electron-installer-debian": "^0.7.1",
     "electron-installer-redhat": "^0.5.0",
-    "electron-packager": "^9.1.0",
+    "electron-packager": "^10.1.0",
     "electron-rebuild": "^1.6.0",
     "foreman": "^2.0.0",
     "http-server": "^0.10.0",
