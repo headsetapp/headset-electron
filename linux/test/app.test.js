@@ -10,6 +10,9 @@ describe('application', function () {
   before(() => {
     this.app = new Application({
       path: appPath,
+      env: {
+        DEBUG: 'headset*',
+      },
     });
     return this.app.start();
   });
@@ -27,5 +30,14 @@ describe('application', function () {
         assert.equal(count, 2);
       });
     }
+    // Prints all the logs produced by DEBUG
+    this.app.client.getMainProcessLogs().then((logs) => {
+      logs.forEach((log) => {
+        if (log[0] !== '[') {
+          log = log.split(' ');
+          console.log('\t\x1b[33m%s \x1b[34m%s\x1b[0m', log[0], log[1], log.splice(2).join(' '));
+        }
+      });
+    });
   });
 });
