@@ -1,5 +1,8 @@
 const DBus = require('dbus');
+const debug = require('debug');
 const { ipcMain } = require('electron');
+
+const logger = debug('headset:mediaKeys');
 
 let track = null;
 
@@ -10,6 +13,7 @@ ipcMain.on('win2Player', (e, args) => {
 });
 
 function executeMediaKey(win, key) {
+  logger('Executing %o media key command', key);
   win.webContents.executeJavaScript(`
     window.electronConnector.emit('${key}')
   `);
@@ -26,6 +30,7 @@ function registerBindings(win, desktopEnv, bus) {
       return;
     }
     iface.on('MediaPlayerKeyPressed', (n, keyName) => {
+      logger('Media key pressed: %o', keyName);
       switch (keyName) {
         case 'Next':
           executeMediaKey(win, 'play-next');
@@ -47,6 +52,7 @@ function registerBindings(win, desktopEnv, bus) {
 }
 
 module.exports = (win) => {
+  logger('Registering media Keys');
   const dbus = new DBus();
   const bus = dbus.getBus('session');
 

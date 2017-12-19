@@ -1,9 +1,15 @@
-const electron = require('electron');
-const { version } = require('./package');
 const { exec } = require('child_process');
+const debug = require('debug');
+const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
-const registerMediaKeys = require('./registerMediaKeys.js');
+
 const mprisService = require('./mprisService.js');
+const { version } = require('./package');
+const registerMediaKeys = require('./registerMediaKeys.js');
+
+const logger = debug('headset');
+const logPlayer2Win = debug('headset:player');
+const logWin2Player = debug('headset:win');
 
 const {
   app,
@@ -17,8 +23,11 @@ let player;
 
 const isDev = false;
 
+logger('Running as developer: %o', isDev);
+
 const shouldQuit = app.makeSingleInstance(() => {
   // Someone tried to run a second instance, we should focus our window.
+  logger('Second instance of Headset found');
   if (win) {
     if (win.isMinimized()) win.restore();
     win.focus();
@@ -31,6 +40,7 @@ if (shouldQuit) {
 }
 
 const start = () => {
+  logger('Starting Headset');
   const mainWindowState = windowStateKeeper();
 
   win = new BrowserWindow({
@@ -66,6 +76,7 @@ const start = () => {
 
     setTimeout(() => {
       try {
+        logger('Minimizing player window');
         player.minimize();
       } catch (err) {
         // this prevents a js error if user closes the window too quickly.
@@ -80,15 +91,18 @@ const start = () => {
 
     player.on('close', (e) => {
       if (win) {
+        logger('Attempted to close Player window while Headset running');
         dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
         e.preventDefault();
       } else {
+        logger('Closing Player window and killing Headset');
         player = null;
         exec('kill -9 $(pgrep headset) &> /dev/null');
       }
     });
 
     try {
+      logger('Initializing MPRIS and registering MediaKeys');
       mprisService(win, player);
       registerMediaKeys(win);
     } catch (err) {
@@ -105,6 +119,7 @@ const start = () => {
   }); // end did-finish-load
 
   win.on('close', () => {
+    logger('Closing Headset');
     win = null;
     player.close();
   });
@@ -128,13 +143,13 @@ app.on('browser-window-created', (e, window) => {
  * and send them to the other renderrer
 */
 ipcMain.on('win2Player', (e, args) => {
-  if (isDev) { console.log('win2Player', args); }
+  logWin2Player('win2Player %O', args);
 
   player.webContents.send('win2Player', args);
 });
 
 ipcMain.on('player2Win', (e, args) => {
-  if (isDev) { console.log('player2Win', args); }
+  logPlayer2Win('player2Win %o', args);
 
   try {
     win.webContents.send('player2Win', args);
