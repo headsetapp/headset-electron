@@ -20,9 +20,15 @@ function executeMediaKey(win, key) {
 }
 
 function registerBindings(win, desktopEnv, bus) {
-  const serviceName = `org.${desktopEnv}.SettingsDaemon`;
-  const objectPath = `/org/${desktopEnv}/SettingsDaemon/MediaKeys`;
-  const interfaceName = `org.${desktopEnv}.SettingsDaemon.MediaKeys`;
+  let serviceName = `org.${desktopEnv}.SettingsDaemon`;
+  let objectPath = `/org/${desktopEnv}/SettingsDaemon/MediaKeys`;
+  let interfaceName = `org.${desktopEnv}.SettingsDaemon.MediaKeys`;
+
+  if (desktopEnv === 'gnome3') {
+    serviceName = 'org.gnome.SettingsDaemon.MediaKeys';
+    objectPath = '/org/gnome/SettingsDaemon/MediaKeys';
+    interfaceName = 'org.gnome.SettingsDaemon.MediaKeys';
+  }
 
   bus.getInterface(serviceName, objectPath, interfaceName, (err, iface) => {
     if (err) {
@@ -47,7 +53,8 @@ function registerBindings(win, desktopEnv, bus) {
       }
     });
 
-    iface.GrabMediaPlayerKeys(0, interfaceName);
+    iface.GrabMediaPlayerKeys('headset', 0);
+    logger('Grabbed media keys for %o', desktopEnv);
   });
 }
 
@@ -57,5 +64,6 @@ module.exports = (win) => {
   const bus = dbus.getBus('session');
 
   registerBindings(win, 'gnome', bus);
+  registerBindings(win, 'gnome3', bus);
   registerBindings(win, 'mate', bus);
 };

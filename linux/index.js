@@ -8,8 +8,8 @@ const { version } = require('./package');
 const registerMediaKeys = require('./registerMediaKeys.js');
 
 const logger = debug('headset');
-const logPlayer2Win = debug('headset:player');
-const logWin2Player = debug('headset:win');
+const logPlayer2Win = debug('headset:player2Win');
+const logWin2Player = debug('headset:win2Player');
 
 const {
   app,
@@ -143,13 +143,13 @@ app.on('browser-window-created', (e, window) => {
  * and send them to the other renderrer
 */
 ipcMain.on('win2Player', (e, args) => {
-  logWin2Player('win2Player %O', args);
+  logWin2Player('%O', args);
 
   player.webContents.send('win2Player', args);
 });
 
 ipcMain.on('player2Win', (e, args) => {
-  logPlayer2Win('player2Win %o', args);
+  logPlayer2Win('%o', args);
 
   try {
     win.webContents.send('player2Win', args);
