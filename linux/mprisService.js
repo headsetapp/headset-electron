@@ -80,11 +80,11 @@ module.exports = (win, player) => {
   });
 
   mprisPlayer.on('volume', (volume) => {
-    logger('Volume received');
-    if (volume > 1) { volume = 1; }
-    if (volume < 0) { volume = 0; }
+    if (volume >= 1) { volume = 1 - 1e-15; }
+    if (volume <= 0) { volume = 1e-15; }
+    logger('Volume received, set to: %d', volume);
     player.webContents.send('win2Player', ['setVolume', volume * 100]);
-    mprisPlayer.volume = volume + 1e-15;
+    mprisPlayer.volume = volume;
   });
 
   ipcMain.on('win2Player', (e, args) => {
