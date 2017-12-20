@@ -64,6 +64,7 @@ const start = () => {
   }
 
   win.webContents.on('did-finish-load', () => {
+    logger('Main window finished loading');
     if (player) return;
 
     player = new BrowserWindow({

@@ -30,11 +30,11 @@ describe('application', function () {
         assert.equal(count, 2);
       });
     }
-    // Prints all the logs produced by DEBUG
+    // Prints the logs produced only by DEBUG
     this.app.client.getMainProcessLogs().then((logs) => {
       logs.forEach((log) => {
-        if (log[0] !== '[') {
-          log = log.split(' ');
+        log = log.split(' ');
+        if (!Number.isNaN(Date.parse(log[0]))) {
           console.log('\t\x1b[33m%s \x1b[34m%s\x1b[0m', log[0], log[1], log.splice(2).join(' '));
         }
       });
