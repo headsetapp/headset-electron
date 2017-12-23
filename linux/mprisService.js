@@ -1,6 +1,9 @@
 const { ipcMain } = require('electron');
 const { exec } = require('child_process');
+const debug = require('debug');
 const mpris = require('mpris-service');
+
+const logger = debug('headset:mpris');
 
 function executeMediaKey(win, key) {
   win.webContents.executeJavaScript(`
@@ -24,18 +27,22 @@ module.exports = (win, player) => {
   mprisPlayer.volume = 0.75;
 
   mprisPlayer.on('raise', () => {
+    logger('Window raised');
     win.show();
   });
 
   mprisPlayer.on('quit', () => {
+    logger('Quitting Headset');
     exec('kill -9 $(pgrep headset) &> /dev/null');
   });
 
   mprisPlayer.on('rate', () => {
+    logger('Changing rate');
     mprisPlayer.rate = 1 + 1e-15;
   });
 
   mprisPlayer.on('playpause', () => {
+    logger('Play-Pause received');
     if (mprisPlayer.playbackStatus === 'Playing' ||
         mprisPlayer.playbackStatus === 'Paused') {
       executeMediaKey(win, 'play-pause');
@@ -43,18 +50,21 @@ module.exports = (win, player) => {
   });
 
   mprisPlayer.on('play', () => {
+    logger('Play received');
     if (mprisPlayer.playbackStatus === 'Paused') {
       executeMediaKey(win, 'play-pause');
     }
   });
 
   mprisPlayer.on('pause', () => {
+    logger('Pause received');
     if (mprisPlayer.playbackStatus === 'Playing') {
       executeMediaKey(win, 'play-pause');
     }
   });
 
   mprisPlayer.on('next', () => {
+    logger('Next received');
     if (mprisPlayer.playbackStatus === 'Playing' ||
         mprisPlayer.playbackStatus === 'Paused') {
       executeMediaKey(win, 'play-next');
@@ -62,6 +72,7 @@ module.exports = (win, player) => {
   });
 
   mprisPlayer.on('previous', () => {
+    logger('Previous received');
     if (mprisPlayer.playbackStatus === 'Playing' ||
         mprisPlayer.playbackStatus === 'Paused') {
       executeMediaKey(win, 'play-previous');
@@ -69,10 +80,11 @@ module.exports = (win, player) => {
   });
 
   mprisPlayer.on('volume', (volume) => {
-    if (volume > 1) { volume = 1; }
-    if (volume < 0) { volume = 0; }
+    if (volume >= 1) { volume = 1 - 1e-15; }
+    if (volume <= 0) { volume = 1e-15; }
+    logger('Volume received, set to: %d', volume);
     player.webContents.send('win2Player', ['setVolume', volume * 100]);
-    mprisPlayer.volume = volume + 1e-15;
+    mprisPlayer.volume = volume;
   });
 
   ipcMain.on('win2Player', (e, args) => {
@@ -95,6 +107,7 @@ module.exports = (win, player) => {
           'mpris:artUrl': args[1].thumbnail,
           'mpris:length': args[1].duration * 1e6, // in microseconds
         };
+        logger(`Track Info:\n ${JSON.stringify(mprisPlayer.metadata, null, 2)}`);
         break;
       case 'seekTo': {
         const delta = Math.round(args[1] * 1e6) - mprisPlayer.position;
@@ -103,6 +116,7 @@ module.exports = (win, player) => {
       }
       default:
     }
+    logger('Playback status: %o', mprisPlayer.playbackStatus);
   });
 
   ipcMain.on('player2Win', (e, args) => {
