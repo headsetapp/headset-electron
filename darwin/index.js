@@ -5,6 +5,8 @@ const { NODE_ENV } = process.env;
 const { version } = require('./package');
 const windowStateKeeper = require('electron-window-state');
 
+require('../shared/autoUpdater')
+
 const {
   app,
   BrowserWindow,
@@ -22,6 +24,7 @@ let willQuitApp = false;
 const isDev = (NODE_ENV === 'development');
 
 const start = () => {
+  console.log('version is', app.getVersion())
   const mainWindowState = windowStateKeeper();
   win = new BrowserWindow({
     x: mainWindowState.x,
