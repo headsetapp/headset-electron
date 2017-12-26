@@ -3,7 +3,7 @@ const defaultMenu = require('electron-default-menu');
 const isDev = require('electron-is-dev');
 const { version } = require('./package');
 const windowStateKeeper = require('electron-window-state');
-const AutoUpdater = require('./lib/AutoUpdater')
+const AutoUpdater = require('headset-autoupdater');
 
 const {
   app,
@@ -40,11 +40,11 @@ const start = () => {
   } else {
     win.loadURL('https://danielravina.github.io/headset/app/');
   }
-  
+
   new AutoUpdater({
-    onBeforeQuit: () => { willQuitApp = true }
-  })
-  
+    onBeforeQuit: () => { willQuitApp = true; },
+  });
+
   win.webContents.on('did-finish-load', () => {
     if (player) return;
 
