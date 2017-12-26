@@ -9,7 +9,7 @@
   "bugs": "https://github.com/headsetapp/headset-electron/issues",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development nf start",
+    "start": "nf start",
     "electron": "electron .",
     "player": "./bin/player-window.sh",
     "production": "NODE_ENV=production electron .",
@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "electron-default-menu": "^1.0.1",
+    "electron-gh-releases": "^2.0.4",
+    "electron-is-dev": "^0.3.0",
     "electron-window-state": "^4.1.1"
   },
   "devDependencies": {

@@ -1,11 +1,9 @@
 const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
-
-const { NODE_ENV } = process.env;
+const isDev = require('electron-is-dev');
 const { version } = require('./package');
 const windowStateKeeper = require('electron-window-state');
-
-require('../shared/autoUpdater')
+const AutoUpdater = require('./lib/AutoUpdater')
 
 const {
   app,
@@ -21,10 +19,7 @@ let win;
 let player;
 let willQuitApp = false;
 
-const isDev = (NODE_ENV === 'development');
-
 const start = () => {
-  console.log('version is', app.getVersion())
   const mainWindowState = windowStateKeeper();
   win = new BrowserWindow({
     x: mainWindowState.x,
@@ -45,7 +40,11 @@ const start = () => {
   } else {
     win.loadURL('https://danielravina.github.io/headset/app/');
   }
-
+  
+  new AutoUpdater({
+    onBeforeQuit: () => { willQuitApp = true }
+  })
+  
   win.webContents.on('did-finish-load', () => {
     if (player) return;
 
