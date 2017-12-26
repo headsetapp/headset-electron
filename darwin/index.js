@@ -42,6 +42,7 @@ const start = () => {
   }
 
   new AutoUpdater({
+    // allows the updater to close the app
     onBeforeQuit: () => { willQuitApp = true; },
   });
 
