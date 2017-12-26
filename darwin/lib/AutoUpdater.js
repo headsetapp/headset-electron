@@ -37,10 +37,6 @@ class AutoUpdater {
 
   checkForUpdates() {
     this.updater.check((err, status) => {
-      const log = JSON.stringify([err, status])
-      
-      fs.writeFile("/Users/danielravina/Desktop/log.log", log)
-      
       if (!err && status) {
         // Download the update
         this.updater.download()

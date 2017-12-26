@@ -9,7 +9,7 @@
   "bugs": "https://github.com/headsetapp/headset-electron/issues",
   "main": "index.js",
   "scripts": {
-    "start": "nf start",
+    "start": "NODE_ENV=development nf start",
     "electron": "electron .",
     "player": "./bin/player-window.sh",
     "production": "NODE_ENV=production electron .",
