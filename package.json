@@ -13,8 +13,5 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
     "npm-publish-all": "0.0.3"
-  },
-  "dependencies": {
-    "electron-gh-releases": "^2.0.4"
   }
 }
