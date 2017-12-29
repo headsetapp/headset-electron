@@ -18,7 +18,9 @@ rm -R Icon.iconset
 
 ignoring="(bin|test|Procfile)"
 
-if [[ "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_REPO_SLUG" == "headsetapp/headset-electron" ]]; then
+REPO="headsetapp/headset-electron"
+
+if [[ "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_REPO_SLUG" == "$REPO" && "$TRAVIS_PULL_REQUEST_SLUG" == "$REPO" ]]; then
   KEY_CHAIN=mac-build.keychain
   security create-keychain -p travis $KEY_CHAIN
   # Make the keychain the default so identities are found
