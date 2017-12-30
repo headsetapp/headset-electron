@@ -1,11 +1,12 @@
 {
-  "version": "1.6.3",
+  "version": "1.6.4",
   "scripts": {
     "darwin": "cd darwin && npm install && cd ..",
     "linux": "cd linux && npm install && cd ..",
     "windows": "cd windows && npm install && cd ..",
     "lint": "eslint",
-    "version": "npm-publish-all bump --bumpType=$npm_package_version && git add ."
+    "version": "npm-publish-all bump --bumpType=$npm_package_version && git add . && npm run bump_auto_updater",
+    "bump_auto_updater": "TAG_NO_V=$npm_package_version ./bin/bump_auto_updater.sh"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
