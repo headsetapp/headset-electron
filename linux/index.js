@@ -2,10 +2,9 @@ const { exec } = require('child_process');
 const debug = require('debug');
 const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
-
-const mprisService = require('./mprisService.js');
+const mprisService = require('./lib/mprisService.js');
+const registerMediaKeys = require('./lib/registerMediaKeys.js');
 const { version } = require('./package');
-const registerMediaKeys = require('./registerMediaKeys.js');
 
 const logger = debug('headset');
 const logPlayer2Win = debug('headset:player2Win');

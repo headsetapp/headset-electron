@@ -41,7 +41,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_REPO_SLUG" == "headsetapp/headset-e
 fi
 
 electron-packager . \
-  --executable-name headset \
+  --executable-name Headset \
   --platform=darwin \
   --arch=x64 \
   --asar \

@@ -18,6 +18,7 @@
     "YT": true,
   },
   rules: {
+    "no-new": "off",
     "new-cap": 'off',
     "max-len": ["error", 120],
     "no-underscore-dangle": "off",
