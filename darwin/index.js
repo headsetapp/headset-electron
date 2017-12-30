@@ -1,6 +1,5 @@
 const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
-const isDev = require('electron-is-dev');
 const { version } = require('./package');
 const windowStateKeeper = require('electron-window-state');
 const AutoUpdater = require('headset-autoupdater');
@@ -18,6 +17,8 @@ const {
 let win;
 let player;
 let willQuitApp = false;
+
+const isDev = (process.env.NODE_ENV === 'development');
 
 const start = () => {
   const mainWindowState = windowStateKeeper();
