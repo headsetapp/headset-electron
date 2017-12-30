@@ -71,6 +71,7 @@ deploy:
   file:
     - linux/build/installers/*
     - darwin/build/installers/*.dmg
+    - darwin/build/installers/*.zip
   name: $TRAVIS_TAG
   tag_name: $TRAVIS_TAG
   draft: true
