@@ -5,7 +5,8 @@
     "linux": "cd linux && npm install && cd ..",
     "windows": "cd windows && npm install && cd ..",
     "lint": "eslint",
-    "version": "npm-publish-all bump --bumpType=$npm_package_version && git add ."
+    "version": "npm-publish-all bump --bumpType=$npm_package_version && npm run bump_auto_updater && git add .",
+    "bump_auto_updater": "VERSION=$npm_package_version ./bin/bump_auto_updater.sh"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
