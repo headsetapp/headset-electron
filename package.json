@@ -1,5 +1,5 @@
 {
-  "version": "1.6.3",
+  "version": "1.6.4",
   "scripts": {
     "darwin": "cd darwin && npm install && cd ..",
     "linux": "cd linux && npm install && cd ..",
