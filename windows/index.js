@@ -16,7 +16,7 @@ const {
 let win;
 let player;
 
-const isDev = false;
+const isDev = (process.env.NODE_ENV === 'development');
 
 const shouldQuit = app.makeSingleInstance(() => {
   // Someone tried to run a second instance, we should focus our window.
