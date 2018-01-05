@@ -10,6 +10,9 @@ describe('application', function () {
   before(() => {
     this.app = new Application({
       path: appPath,
+      env: {
+        DEBUG: 'headset*',
+      },
     });
     return this.app.start();
   });
