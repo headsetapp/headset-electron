@@ -9,8 +9,8 @@
     "bump_auto_updater": "VERSION=$npm_package_version ./bin/bump_auto_updater.sh"
   },
   "devDependencies": {
-    "babel-eslint": "^8.0.3",
-    "eslint": "^4.13.1",
+    "babel-eslint": "^8.1.2",
+    "eslint": "^4.14.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
     "npm-publish-all": "0.0.3"

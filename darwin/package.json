@@ -25,13 +25,13 @@
   },
   "devDependencies": {
     "create-dmg": "^2.0.0",
-    "electron": "^1.7.9",
+    "electron": "^1.7.10",
     "electron-osx-sign": "^0.4.7",
-    "electron-packager": "^10.1.0",
+    "electron-packager": "^10.1.1",
     "foreman": "^2.0.0",
     "http-server": "^0.10.0",
     "iconutil": "^1.0.2",
-    "mocha": "^4.0.1",
+    "mocha": "^4.1.0",
     "spectron": "^3.7.2"
   }
 }

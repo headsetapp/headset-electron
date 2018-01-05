@@ -23,12 +23,12 @@
     "electron-window-state": "^4.1.1"
   },
   "devDependencies": {
-    "electron": "^1.7.9",
-    "electron-packager": "^10.1.0",
+    "electron": "^1.7.10",
+    "electron-packager": "^10.1.1",
     "electron-winstaller": "^2.6.3",
     "foreman": "^2.0.0",
     "http-server": "^0.10.0",
-    "mocha": "^4.0.1",
+    "mocha": "^4.1.0",
     "spectron": "^3.7.2"
   }
 }
