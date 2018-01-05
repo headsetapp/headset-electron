@@ -4,6 +4,11 @@ const Positioner = require('electron-positioner');
 const { exec } = require('child_process');
 const windowStateKeeper = require('electron-window-state');
 const squirrel = require('electron-squirrel-startup');
+const debug = require('debug');
+
+const logger = debug('headset');
+const logPlayer2Win = debug('headset:player2Win');
+const logWin2Player = debug('headset:win2Player');
 
 const {
   app,
@@ -18,8 +23,11 @@ let player;
 
 const isDev = (process.env.NODE_ENV === 'development');
 
+logger('Running as developer: %o', isDev);
+
 const shouldQuit = app.makeSingleInstance(() => {
   // Someone tried to run a second instance, we should focus our window.
+  logger('Second instance of Headset found');
   if (win) {
     if (win.isMinimized()) win.restore();
     win.focus();
@@ -32,7 +40,9 @@ if (shouldQuit || squirrel) {
 }
 
 const start = () => {
+  logger('Starting Headset');
   const mainWindowState = windowStateKeeper();
+
   win = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
@@ -55,6 +65,7 @@ const start = () => {
   }
 
   win.webContents.on('did-finish-load', () => {
+    logger('Main window finished loading');
     if (player) return;
 
     player = new BrowserWindow({
@@ -68,6 +79,7 @@ const start = () => {
     new Positioner(player).move('bottomCenter');
 
     setTimeout(() => {
+      logger('Minimizing player window');
       player.minimize();
     }, 2000);
 
@@ -79,9 +91,11 @@ const start = () => {
 
     player.on('close', (e) => {
       if (win) {
+        logger('Attempted to close Player window while Headset running');
         dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
         e.preventDefault();
       } else {
+        logger('Closing Player window and killing Headset');
         exec('taskkill /F /IM Headset.exe');
       }
     });
@@ -90,8 +104,10 @@ const start = () => {
       window.electronVersion = "v${version}"
     `);
 
+    logger('Registering MediaKeys');
     globalShortcut.register('MediaPlayPause', () => {
       if (win === null) return;
+      logger('Executing %o media key command', 'MediaPlayPause');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
       `);
@@ -99,6 +115,7 @@ const start = () => {
 
     globalShortcut.register('MediaNextTrack', () => {
       if (win === null) return;
+      logger('Executing %o media key command', 'MediaNextTrack');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-next')
       `);
@@ -106,6 +123,7 @@ const start = () => {
 
     globalShortcut.register('MediaPreviousTrack', () => {
       if (win === null) return;
+      logger('Executing %o media key command', 'MediaPreviousTrack');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-previous')
       `);
@@ -117,6 +135,7 @@ const start = () => {
   }); // end did-finish-load
 
   win.on('close', () => {
+    logger('Closing Headset');
     win = null;
     // after app closes in Win, the global shourtcuts are still up, disabling it here.
     globalShortcut.unregisterAll();
@@ -142,13 +161,13 @@ app.on('browser-window-created', (e, window) => {
  * and send them to the other renderrer
 */
 ipcMain.on('win2Player', (e, args) => {
-  if (isDev) { console.log('win2Player', args); }
+  logWin2Player('%O', args);
 
   player.webContents.send('win2Player', args);
 });
 
 ipcMain.on('player2Win', (e, args) => {
-  if (isDev) { console.log('player2Win', args); }
+  logPlayer2Win('%o', args);
 
   try {
     win.webContents.send('player2Win', args);

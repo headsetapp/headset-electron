@@ -18,6 +18,7 @@
     "mocha": "mocha"
   },
   "dependencies": {
+    "debug": "^3.1.0",
     "electron-positioner": "^3.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^4.1.1"
