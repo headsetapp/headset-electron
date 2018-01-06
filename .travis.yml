@@ -20,6 +20,7 @@ addons:
     - libglib2.0-dev
     - reprepro
     - createrepo
+    - xdotool
 
 before_install:
 - npm i -g npm@5.6.0
