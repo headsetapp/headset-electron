@@ -25,6 +25,7 @@
     "headset-autoupdater": "0.0.1"
   },
   "devDependencies": {
+    "child-process-promise": "^2.2.1",
     "create-dmg": "^2.0.0",
     "electron": "^1.7.10",
     "electron-osx-sign": "^0.4.7",
