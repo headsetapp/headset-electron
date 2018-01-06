@@ -51,7 +51,7 @@ describe('application', function () {
     exec('xdotool key XF86AudioNext')])
     .then((output) => {
       output.forEach((out) => {
-        if (out.stderr) { throw new Error(out.stderr); }
+        assert(!out.stderr, out.stderr);
       });
     }));
 });
