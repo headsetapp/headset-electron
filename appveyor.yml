@@ -1,5 +1,7 @@
 version: "{build}"
 
+os: unstable
+
 environment:
   nodejs_version: "6"
 
