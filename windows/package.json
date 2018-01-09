@@ -12,10 +12,11 @@
     "start": "nf start",
     "electron": "electron .",
     "production": "NODE_ENV=production electron .",
+    "lint": "cd .. && npm run lint windows && cd windows",
     "pack": "electron-packager . --executable-name headset --overwrite --platform=win32 --asar --arch=ia32 --prune --ignore=bin --ignore=test --out=build --icon=Headset.ico --version-string.ProductName=\"Headset\"",
     "dist": "node bin/winstaller.js",
     "build": "npm run pack && npm run dist",
-    "mocha": "mocha"
+    "test": "npm run pack && mocha test/app.test.js && npm run dist"
   },
   "dependencies": {
     "debug": "^3.1.0",
