@@ -14,9 +14,7 @@ install:
 test_script:
   - npm run lint windows
   - cd windows
-  - npm run pack
-  - npm run mocha
-  - npm run dist
+  - npm run test
 
 build: off
 
