@@ -1,19 +1,22 @@
 {
   "version": "1.6.4",
   "scripts": {
-    "darwin": "cd darwin && npm install && cd ..",
-    "linux": "cd linux && npm install && cd ..",
-    "windows": "cd windows && npm install && cd ..",
     "lint": "eslint",
     "version": "npm-publish-all bump --bumpType=$npm_package_version && npm run bump_auto_updater && git add .",
-    "bump_auto_updater": "VERSION=$npm_package_version ./bin/bump_auto_updater.sh"
+    "bump_auto_updater": "VERSION=$npm_package_version ./bin/bump_auto_updater.sh",
+    "test:darwin": "mocha test/*.js",
+    "test:linux": "mocha test/*.js test/linux/*.js",
+    "test:windows": "mocha test/*.js"
   },
   "devDependencies": {
-    "babel-eslint": "^8.1.2",
-    "eslint": "^4.14.0",
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.15.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-promise": "^3.6.0",
-    "npm-publish-all": "0.0.3"
+    "mocha": "^4.1.0",
+    "npm-publish-all": "0.0.3",
+    "spectron": "^3.7.2",
+    "timeout-as-promise": "^1.0.0"
   }
 }

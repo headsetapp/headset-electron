@@ -11,12 +11,10 @@
   "scripts": {
     "start": "nf start",
     "electron": "electron .",
-    "production": "NODE_ENV=production electron .",
-    "lint": "cd .. && npm run lint windows && cd windows",
-    "pack": "electron-packager . --executable-name headset --overwrite --platform=win32 --asar --arch=ia32 --prune --ignore=bin --ignore=test --out=build --icon=Headset.ico --version-string.ProductName=\"Headset\"",
+    "production-like": "NODE_ENV=production electron .",
+    "pack": "electron-packager . --executable-name headset --overwrite --platform=win32 --asar --arch=ia32 --prune --ignore=\"(bin|Procfile)\" --out=build --icon=Headset.ico --version-string.ProductName=\"Headset\"",
     "dist": "node bin/winstaller.js",
-    "build": "npm run pack && npm run dist",
-    "test": "npm run pack && mocha test/app.test.js && npm run dist"
+    "build": "npm run pack && npm run dist"
   },
   "dependencies": {
     "debug": "^3.1.0",
@@ -29,8 +27,6 @@
     "electron-packager": "^10.1.1",
     "electron-winstaller": "^2.6.3",
     "foreman": "^2.0.0",
-    "http-server": "^0.10.0",
-    "mocha": "^4.1.0",
-    "spectron": "^3.7.2"
+    "http-server": "^0.11.1"
   }
 }

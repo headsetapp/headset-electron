@@ -12,14 +12,12 @@
     "start": "NODE_ENV=development nf start",
     "electron": "electron .",
     "player": "./bin/player-window.sh",
-    "production": "NODE_ENV=production electron .",
+    "production-like": "NODE_ENV=production electron .",
     "pack": "NODE_ENV=production ./bin/build_package.sh",
     "dist": "NODE_ENV=production ./bin/build_installers.sh",
     "build": "npm run pack && npm run dist",
     "postinstall": "electron-rebuild",
-    "lint": "cd .. && npm run lint linux && cd linux",
-    "repo": "NEW_VERSION=$npm_package_version ./bin/linux_repo.sh",
-    "test": "npm run pack && mocha test/app.test.js && npm run dist && mocha test/installers.test.js"
+    "repo": "NEW_VERSION=$npm_package_version ./bin/linux_repo.sh"
   },
   "dependencies": {
     "dbus": "^0.2.23",
@@ -32,10 +30,8 @@
     "electron-installer-debian": "^0.7.1",
     "electron-installer-redhat": "^0.5.0",
     "electron-packager": "^10.1.1",
-    "electron-rebuild": "^1.6.0",
+    "electron-rebuild": "^1.7.3",
     "foreman": "^2.0.0",
-    "http-server": "^0.10.0",
-    "mocha": "^4.1.0",
-    "spectron": "^3.7.2"
+    "http-server": "^0.11.1"
   }
 }
