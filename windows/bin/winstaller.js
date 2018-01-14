@@ -15,5 +15,6 @@ const resultPromise = electronInstaller.createWindowsInstaller({
   loadingGif: 'source.gif',
 });
 
-resultPromise.then(() => console.log(`Successfully created installer at ${output}`))
+resultPromise
+  .then(() => console.log(`Successfully created installer at ${output}`))
   .catch(error => console.error('\x1b[31m%s\x1b[0m', `Error creating installer: ${error.message}`));
