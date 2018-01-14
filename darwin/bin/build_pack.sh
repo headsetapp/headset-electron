@@ -16,7 +16,7 @@ cp Icon.png Icon.iconset/icon_512x512@2x.png
 iconutil -c icns Icon.iconset
 rm -R Icon.iconset
 
-ignoring="(bin|test|Procfile)"
+ignoring="(bin|Procfile|sig)"
 
 if [[ "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_REPO_SLUG" == "headsetapp/headset-electron" && -n "$TRAVIS_TAG" ]]; then
   KEY_CHAIN=mac-build.keychain
