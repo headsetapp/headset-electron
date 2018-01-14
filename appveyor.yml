@@ -11,12 +11,16 @@ install:
   - npm install
   - cd windows && npm install && cd..
 
-test_script:
+before_build:
   - npm run lint windows
-  - cd windows
-  - npm run test
 
-build: off
+build_script:
+  - cd windows
+  - npm run build
+
+test_script:
+  - cd ..
+  - npm run test:windows
 
 cache:
   - node_modules

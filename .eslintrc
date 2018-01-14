@@ -25,7 +25,7 @@
   },
   "settings": {
     "import/core-modules": [
-      "electron",
+      electron,
       electron-winstaller
       ]
   },
@@ -38,7 +38,6 @@
     "no-console": "off",
     "func-names": "off",
     "class-methods-use-this": "off",
-    "prefer-destructuring": ["error", {"array": false}],
-    "promise/no-callback-in-promise": "off"
+    "prefer-destructuring": ["error", {"array": false}]
   }
 }
