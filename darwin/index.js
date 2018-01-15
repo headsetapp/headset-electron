@@ -1,8 +1,13 @@
+const debug = require('debug');
 const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
 const { version } = require('./package');
 const windowStateKeeper = require('electron-window-state');
 const AutoUpdater = require('headset-autoupdater');
+
+const logger = debug('headset');
+const logPlayer2Win = debug('headset:player2Win');
+const logWin2Player = debug('headset:win2Player');
 
 const {
   app,
@@ -19,9 +24,12 @@ let player;
 let willQuitApp = false;
 
 const isDev = (process.env.NODE_ENV === 'development');
+logger('Running as developer: %o', isDev);
 
 const start = () => {
+  logger('Starting Headset');
   const mainWindowState = windowStateKeeper();
+
   win = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
@@ -48,6 +56,7 @@ const start = () => {
   });
 
   win.webContents.on('did-finish-load', () => {
+    logger('Main window finished loading');
     if (player) return;
 
     player = new BrowserWindow({
@@ -59,6 +68,7 @@ const start = () => {
     });
 
     setTimeout(() => {
+      logger('Minimizing player window');
       player.minimize();
     }, 2000);
 
@@ -70,6 +80,7 @@ const start = () => {
 
     player.on('close', (e) => {
       if (!willQuitApp) {
+        logger('Attempted to close Player window while Headset running');
         dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
         e.preventDefault();
       }
@@ -79,19 +90,23 @@ const start = () => {
       window.electronVersion = "v${version}"
     `);
 
+    logger('Registering MediaKeys');
     globalShortcut.register('MediaPlayPause', () => {
+      logger('Executing %o media key command', 'MediaPlayPause');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
       `);
     });
 
     globalShortcut.register('MediaNextTrack', () => {
+      logger('Executing %o media key command', 'MediaNextTrack');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-next')
       `);
     });
 
     globalShortcut.register('MediaPreviousTrack', () => {
+      logger('Executing %o media key command', 'MediaPreviousTrack');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-previous')
       `);
@@ -108,6 +123,7 @@ const start = () => {
   }); // end did-finish-load
 
   win.on('close', (e) => {
+    logger('Closing Headset');
     if (willQuitApp) {
       // the user tried to quit the app
       player = null;
@@ -135,13 +151,13 @@ app.on('ready', start);
  * and send them to the other renderrer
 */
 ipcMain.on('win2Player', (e, args) => {
-  if (isDev) { console.log('win2Player', args); }
+  logWin2Player('%O', args);
 
   player.webContents.send('win2Player', args);
 });
 
 ipcMain.on('player2Win', (e, args) => {
-  if (isDev) { console.log('player2Win', args); }
+  logPlayer2Win('%o', args);
 
   try {
     win.webContents.send('player2Win', args);

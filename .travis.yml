@@ -26,34 +26,34 @@ before_install:
 
 install:
 - npm install
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run darwin; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run linux; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run windows; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd darwin && npm i && cd ..; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd linux && npm i && cd ..; fi
 
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     export DISPLAY=:99.0;
     sh -e /etc/init.d/xvfb start;
     sleep 3;
+    npm run lint linux;
+    npm run lint shared;
+    npm run lint test;
+    cd linux;
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    npm run lint darwin;
+    cd darwin;
   fi
 
 script:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run lint linux; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run lint shared; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd linux; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run lint darwin; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd darwin; fi
-- npm run test
-
-before_cache:
-- cd ..
+- npm run build && cd ..
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run test:linux; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run test:darwin; fi
 
 cache:
   directories:
   - node_modules
   - darwin/node_modules
   - linux/node_modules
-  - windows/node_modules
 
 after_success:
 - if [[ "$TRAVIS_OS_NAME" == "linux" && -n "$TRAVIS_TAG" ]]; then
@@ -87,3 +87,7 @@ deploy:
 env:
   global:
     secure: nRtG4v+jNQbCQg/qhYwrPaBMuwGxG8z2+kfiV86dOzNy9+th5UTvcFWYFj05J024CBlqNuc6aykCQ3aBIngAWw5NMl9coAfcBh1z64FXZO4KPjk2rPJIm8E2v/wpISjB0GZOf4Vr6rHBrggXGjkDX+YGF4bd+xCylS6K1hVKbvGlnYf1HBx6ewWp9zqkqyYyB9Vif7AGe/dH5jTzqPNYtt+q4fffxlFTEMvz0L/60szlWFrCfMKLAjA/YY24FvWBExJZ/SqFqugHS9zlhwlLbCoN/sKBG7JlJJIlQvGUxX5upgJI1QJ/RMWLWg+6gkUgk2xNhBMNWF1Ys8kvzBLFLhWrVOH7QknwObJkc3SJkMz5J/rIkt1VrwG0vAymiVUAfSLGTwvuwoMfA8tkAF7zQtMwWUwU5E2CDfh0grPBF/VPQGCKX2VO425Yuw/S2FokeV7bDRyQP3yPnusSZlTX45XyE8EkssK7j+lOZnl0bjbENZJEH0qlh2orRsC/xihBpo4M49G/Xae3lAlDBp9si7tzRCoyTo4v2KzW/r5rdmrqrfgrSFugpLYJpQsUZVM7d2vU9sJB5TTQ2tZuEAB8UAQprgNQF7IS1xkPafq321KYv21YQbPiqi6nBIzRzDbEEbl4qavS9MnfXgAC4z+RYQiv3XM6FRABsHJhwiK7UuE=
+
+notifications:
+  slack:
+    secure: gW5Z24CAFGHsCx7G6OexqcYsGL6vi+68X590Z4ISNpu5nM1sQVcbafcVKyswkH3cS5FQmcTlETrBk5mIekSQNKlPRi4oV8/DqXN9GUI8aoRV+sbsmH8S6B8KRT0MAzqJSGVJSpgQgbGhfba/BKx2dYz/km52+IVwB1/yPToANqeqbmwDffAsisW/I6gBh70tagRBumGCJ6tfRRUE0F6KNTxyiuB3WBvWC55mLCxz2A7ztk7/AkG3I44w909fULDfduMiW/dj/dc+sJm17SjfNyH7bjjWpUuYfsRw5xqVOBge0EIjo3E+9BGbfy43ajEdMRGwRuxfsPgxGcCR7MLFs2F98tyQs5fRXl9Un99LFLiIwMkwSwOJvhR1Oru7uRkEHKyNwPbtGk2CM1kwMkHJQr9xfgX63OuHkI5Srt2a4l6FZsG+jw9cc08c6UxAZGOayx7vu3fZjt84SqJuYrLyUtQxMVOPcoNftZlvdl06VZvk+Mdxu6Ry2bPgjI9rE94vWUZgp3NkAnkRH+upZXsQc5ixlK8DVYBBRNvvgf7gmN5N0HEoIqizGH7ISB9npomqxHrxxARBBzWwdL1ypwwAaEoaY8sxy18CyYkKh7XC9KlQBkAuiP3yzD0dLkBdWCTb1OcK7mU3WtGpCJWlM1MeO4ZoC5CbTPSPXtxm1fig2OA=

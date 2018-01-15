@@ -5,7 +5,13 @@
     mocha: true,
     browser: true,
   },
-  extends: "airbnb-base",
+  "plugins": [
+    "promise"
+  ],
+  extends: [
+    "airbnb-base",
+    "plugin:promise/recommended"
+  ],
   parser: "babel-eslint",
   parserOptions: {
     ecmaVersion: 6,
@@ -17,16 +23,21 @@
   "globals": {
     "YT": true,
   },
+  "settings": {
+    "import/core-modules": [
+      electron,
+      electron-winstaller
+      ]
+  },
   rules: {
     "no-new": "off",
-    "new-cap": 'off',
+    "new-cap": "off",
     "max-len": ["error", 120],
     "no-underscore-dangle": "off",
     "no-param-reassign": "off",
     "no-console": "off",
     "func-names": "off",
     "class-methods-use-this": "off",
-    "import/no-extraneous-dependencies": "off",
     "prefer-destructuring": ["error", {"array": false}]
   }
 }

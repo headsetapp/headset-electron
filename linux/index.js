@@ -20,7 +20,7 @@ const {
 let win;
 let player;
 
-const isDev = false;
+const isDev = (process.env.NODE_ENV === 'development');
 
 logger('Running as developer: %o', isDev);
 
