@@ -107,7 +107,7 @@ module.exports = (win, player) => {
           'mpris:artUrl': args[1].thumbnail,
           'mpris:length': args[1].duration * 1e6, // in microseconds
         };
-        logger(`Track Info:\n ${JSON.stringify(mprisPlayer.metadata, null, 2)}`);
+        logger(['Track Info:', mprisPlayer.metadata]);
         break;
       case 'seekTo': {
         const delta = Math.round(args[1] * 1e6) - mprisPlayer.position;

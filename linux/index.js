@@ -50,7 +50,7 @@ const start = () => {
     resizable: false,
     title: 'Headset',
     maximizable: false,
-    titleBarStyle: 'hidden-inset',
+    titleBarStyle: 'hiddenInset',
     icon: 'icon.png',
     frame: true,
   });

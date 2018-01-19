@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "electron": "^1.7.10",
-    "electron-installer-debian": "^0.7.1",
+    "electron-installer-debian": "^0.7.2",
     "electron-installer-redhat": "^0.5.0",
     "electron-packager": "^10.1.1",
     "electron-rebuild": "^1.7.3",

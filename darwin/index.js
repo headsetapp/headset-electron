@@ -38,7 +38,7 @@ const start = () => {
     resizable: false,
     title: 'Headset',
     maximizable: false,
-    titleBarStyle: 'hidden-inset',
+    titleBarStyle: 'hiddenInset',
     icon: `file://${__dirname}/Icon.icns`,
   });
 
@@ -92,21 +92,21 @@ const start = () => {
 
     logger('Registering MediaKeys');
     globalShortcut.register('MediaPlayPause', () => {
-      logger('Executing %o media key command', 'MediaPlayPause');
+      logger('Executing %o media key command', 'play-pause');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
       `);
     });
 
     globalShortcut.register('MediaNextTrack', () => {
-      logger('Executing %o media key command', 'MediaNextTrack');
+      logger('Executing %o media key command', 'play-next');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-next')
       `);
     });
 
     globalShortcut.register('MediaPreviousTrack', () => {
-      logger('Executing %o media key command', 'MediaPreviousTrack');
+      logger('Executing %o media key command', 'play-previous');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-previous')
       `);

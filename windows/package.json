@@ -25,7 +25,7 @@
   "devDependencies": {
     "electron": "^1.7.10",
     "electron-packager": "^10.1.1",
-    "electron-winstaller": "^2.6.3",
+    "electron-winstaller": "^2.6.4",
     "foreman": "^2.0.0",
     "http-server": "^0.11.1"
   }

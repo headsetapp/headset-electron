@@ -51,7 +51,7 @@ const start = () => {
     resizable: false,
     title: 'Headset',
     maximizable: false,
-    titleBarStyle: 'hidden-inset',
+    titleBarStyle: 'hiddenInset',
     icon: `file://${__dirname}/Headset.ico`,
     frame: true,
   });
@@ -107,7 +107,7 @@ const start = () => {
     logger('Registering MediaKeys');
     globalShortcut.register('MediaPlayPause', () => {
       if (win === null) return;
-      logger('Executing %o media key command', 'MediaPlayPause');
+      logger('Executing %o media key command', 'play-pause');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
       `);
@@ -115,7 +115,7 @@ const start = () => {
 
     globalShortcut.register('MediaNextTrack', () => {
       if (win === null) return;
-      logger('Executing %o media key command', 'MediaNextTrack');
+      logger('Executing %o media key command', 'play-next');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-next')
       `);
@@ -123,7 +123,7 @@ const start = () => {
 
     globalShortcut.register('MediaPreviousTrack', () => {
       if (win === null) return;
-      logger('Executing %o media key command', 'MediaPreviousTrack');
+      logger('Executing %o media key command', 'play-previous');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-previous')
       `);
