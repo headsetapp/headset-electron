@@ -55,14 +55,20 @@ $ git clone https://github.com/headsetapp/headset-electron.git
 $ cd headset-electron/linux
 $ npm install
 ```
+On Linux, the `dbus` module also has it's own [dependencies](https://github.com/Shouqun/node-dbus#dependencies) that need to be installed.
+
 4. Create your build:
 ```bash
-electron-packager . headset \
-  --ignore bin \
+electron-packager . \
+  --executable-name headset \
+  --ignore "(bin|Procfile|sig|gh-pages)" \
   --prune true \
   --out build/ \
-  --overwrite  \
+  --overwrite \
+  --asar \
   --platform=linux \
   --arch=x64
 ```
+For Linux, a 32bit system is required in order to package Headset for `arch=ia32` due to `dbus` module own dependencies.
+
 5. [Optional] For the Ubuntu build, we're using `electron-installer-debian` and for the Fedora build, we're using `electron-installer-redhat`. There might be an installer for your specific version, just have to google it.
