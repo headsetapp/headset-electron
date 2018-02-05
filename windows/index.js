@@ -69,8 +69,8 @@ const start = () => {
     if (player) return;
 
     player = new BrowserWindow({
-      width: 285,
-      height: 480,
+      width: 427,
+      height: 300,
       resizable: true,
       title: 'Headset - Player',
       maximizable: true,
