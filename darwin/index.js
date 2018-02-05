@@ -4,6 +4,7 @@ const defaultMenu = require('electron-default-menu');
 const { version } = require('./package');
 const windowStateKeeper = require('electron-window-state');
 const AutoUpdater = require('headset-autoupdater');
+const Positioner = require('electron-positioner');
 
 const logger = debug('headset');
 const logPlayer2Win = debug('headset:player2Win');
@@ -67,10 +68,7 @@ const start = () => {
       maximizable: true,
     });
 
-    setTimeout(() => {
-      logger('Minimizing player window');
-      player.minimize();
-    }, 2000);
+    new Positioner(player).move('bottomRight');
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');

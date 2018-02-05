@@ -49,7 +49,7 @@ class YTPlayer {
   }
 
   loadVideoById(id) {
-    ytPlayer.loadVideoById({ videoId: id, suggestedQuality: 'small' });
+    ytPlayer.loadVideoById({ videoId: id, suggestedQuality: 'tiny' });
   }
 
   sendCurrentTime() {

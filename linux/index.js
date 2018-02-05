@@ -74,14 +74,7 @@ const start = () => {
       maximizable: true,
     });
 
-    setTimeout(() => {
-      try {
-        logger('Minimizing player window');
-        player.minimize();
-      } catch (err) {
-        // this prevents a js error if user closes the window too quickly.
-      }
-    }, 2000);
+    new Positioner(player).move('bottomRight');
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
