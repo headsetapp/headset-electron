@@ -78,11 +78,6 @@ const start = () => {
 
     new Positioner(player).move('bottomCenter');
 
-    setTimeout(() => {
-      logger('Minimizing player window');
-      player.minimize();
-    }, 2000);
-
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
     } else {
