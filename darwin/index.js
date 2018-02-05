@@ -61,14 +61,14 @@ const start = () => {
     if (player) return;
 
     player = new BrowserWindow({
-      width: 285,
-      height: 440,
-      resizable: true,
+      width: 427,
+      height: 300,
+      resizable: false,
       title: 'Headset - Player',
-      maximizable: true,
+      maximizable: false,
     });
 
-    new Positioner(player).move('bottomRight');
+    new Positioner(player).move('bottomCenter');
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
@@ -111,8 +111,8 @@ const start = () => {
     });
 
     if (isDev) {
-      win.webContents.openDevTools();
-      // player.webContents.openDevTools();
+      // win.webContents.openDevTools();
+      player.webContents.openDevTools();
     }
 
     const menu = defaultMenu(app, shell);
