@@ -5,7 +5,6 @@ const windowStateKeeper = require('electron-window-state');
 const mprisService = require('./lib/mprisService.js');
 const registerMediaKeys = require('./lib/registerMediaKeys.js');
 const { version } = require('./package');
-
 const logger = debug('headset');
 const logPlayer2Win = debug('headset:player2Win');
 const logWin2Player = debug('headset:win2Player');

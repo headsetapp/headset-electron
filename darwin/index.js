@@ -4,7 +4,6 @@ const defaultMenu = require('electron-default-menu');
 const { version } = require('./package');
 const windowStateKeeper = require('electron-window-state');
 const AutoUpdater = require('headset-autoupdater');
-
 const logger = debug('headset');
 const logPlayer2Win = debug('headset:player2Win');
 const logWin2Player = debug('headset:win2Player');
