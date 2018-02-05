@@ -71,9 +71,9 @@ const start = () => {
     player = new BrowserWindow({
       width: 427,
       height: 300,
-      resizable: true,
+      resizable: false,
       title: 'Headset - Player',
-      maximizable: true,
+      maximizable: false,
     });
 
     new Positioner(player).move('bottomCenter');
