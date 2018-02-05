@@ -112,8 +112,8 @@ window.onYouTubePlayerAPIReady = () => {
   let yt;
 
   ytPlayer = new YT.Player('ytplayer', {
-    width: '262',
-    height: '200',
+    width: '427',
+    height: '240',
     controls: 0,
     disablekb: 1,
     fs: 0,
