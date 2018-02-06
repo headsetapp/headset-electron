@@ -51,11 +51,12 @@ cache:
   - linux/node_modules
 
 after_success:
-- if [[ "$TRAVIS_OS_NAME" == "linux" && -n "$TRAVIS_TAG" ]]; then cd linux; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && -n "$TRAVIS_TAG" ]]; then
-    openssl aes-256-cbc -K $encrypted_6866d25ad40b_key -iv $encrypted_6866d25ad40b_iv -in sig/headset_priv.asc.enc -out headset_priv.asc -d;
+    cd linux &&
+    openssl aes-256-cbc -K $encrypted_6866d25ad40b_key -iv $encrypted_6866d25ad40b_iv -in sig/headset_priv.asc.enc -out headset_priv.asc -d &&
+    npm run repo &&
+    cd ..;
   fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" && -n "$TRAVIS_TAG" ]]; then npm run repo && cd ..; fi
 
 deploy:
 - provider: releases
