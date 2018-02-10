@@ -11,6 +11,12 @@ function executeMediaKey(win, key) {
   `);
 }
 
+function changeVolumeState(win, volume) {
+  win.webContents.executeJavaScript(`
+    window.changeVolumeSate(${volume})
+  `);
+}
+
 module.exports = (win, player) => {
   const mprisPlayer = mpris({
     name: 'headset',
@@ -80,11 +86,15 @@ module.exports = (win, player) => {
   });
 
   mprisPlayer.on('volume', (volume) => {
-    if (volume >= 1) { volume = 1 - 1e-15; }
-    if (volume <= 0) { volume = 1e-15; }
-    logger('Volume received, set to: %d', volume);
-    player.webContents.send('win2Player', ['setVolume', volume * 100]);
-    mprisPlayer.volume = volume;
+    if (mprisPlayer.playbackStatus !== 'Stopped') {
+      if (volume >= 1) { volume = 1 - 1e-15; }
+      if (volume <= 0) { volume = 1e-15; }
+
+      logger('Volume received, set to: %d', volume);
+      changeVolumeState(win, volume * 100);
+      player.webContents.send('win2Player', ['setVolume', volume * 100]);
+      mprisPlayer.volume = volume;
+    }
   });
 
   ipcMain.on('win2Player', (e, args) => {
