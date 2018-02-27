@@ -22,6 +22,7 @@
   "dependencies": {
     "dbus": "^0.2.23",
     "debug": "^3.1.0",
+    "electron-positioner": "^3.0.0",
     "electron-window-state": "^4.1.1",
     "mpris-service": "^1.1.3"
   },
