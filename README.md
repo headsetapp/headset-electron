@@ -3,7 +3,7 @@
 Linux: [![Build Status](https://travis-ci.org/headsetapp/headset-electron.svg?branch=master)](https://travis-ci.org/headsetapp/headset-electron)
 Windows: [![Build status](https://ci.appveyor.com/api/projects/status/8mpmtejnutifoybg/branch/master?svg=true)](https://ci.appveyor.com/project/danielravina/headset-electron/branch/master)
 
-[Headset](http://headsetapp.co) is a simple music player for Mac, Windows and Linux with integrated YouTube search, a home screen with popularity list by genres and eras, and best of all, a radio powered by Reddit. Headset takes the songs that are shared in over 80 music subreddits, categorize them and plays them automatically. It's a great way to find new music and a pretty unique one as it is chosen by other humans like you, not by algorithms.
+[Headset](http://headsetapp.co) is a simple music player for Mac, Windows and Linux with integrated YouTube search, a home screen with popularity list by genres and eras, and best of all, a radio powered by Reddit. Headset takes the songs that are shared in over 80 music subreddits, categorizes them and plays them automatically. It's a great and pretty unique way to find new music as it is chosen by other humans like you and not by algorithms.
 
 Have a question? Join our Slack workspace: https://tinyurl.com/y7m8y5x4
 
