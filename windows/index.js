@@ -81,7 +81,7 @@ const start = () => {
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
     } else {
-      player.loadURL('http://danielravina.github.io/headset/player');
+      player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
 
     player.on('close', (e) => {
