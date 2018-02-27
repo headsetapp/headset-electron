@@ -111,8 +111,8 @@ const start = () => {
     });
 
     if (isDev) {
-      // win.webContents.openDevTools();
-      player.webContents.openDevTools();
+      win.webContents.openDevTools();
+      // player.webContents.openDevTools();
     }
 
     const menu = defaultMenu(app, shell);

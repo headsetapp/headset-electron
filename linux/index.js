@@ -5,8 +5,8 @@ const windowStateKeeper = require('electron-window-state');
 const mprisService = require('./lib/mprisService.js');
 const registerMediaKeys = require('./lib/registerMediaKeys.js');
 const { version } = require('./package');
-
 const Positioner = require('electron-positioner');
+
 const logger = debug('headset');
 const logPlayer2Win = debug('headset:player2Win');
 const logWin2Player = debug('headset:win2Player');
@@ -75,7 +75,7 @@ const start = () => {
       title: 'Headset - Player',
     });
 
-    new Positioner(player).move('bottomRight');
+    new Positioner(player).move('bottomCenter');
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
