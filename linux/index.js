@@ -5,6 +5,7 @@ const windowStateKeeper = require('electron-window-state');
 const mprisService = require('./lib/mprisService.js');
 const registerMediaKeys = require('./lib/registerMediaKeys.js');
 const { version } = require('./package');
+const Positioner = require('electron-positioner');
 
 const logger = debug('headset');
 const logPlayer2Win = debug('headset:player2Win');
@@ -67,27 +68,24 @@ const start = () => {
     if (player) return;
 
     player = new BrowserWindow({
-      width: 285,
-      height: 440,
-      resizable: true,
+      width: 427,
+      height: 300,
+      minWidth: 427,
+      minHeight: 300,
       title: 'Headset - Player',
-      maximizable: true,
     });
 
-    setTimeout(() => {
-      try {
-        logger('Minimizing player window');
-        player.minimize();
-      } catch (err) {
-        // this prevents a js error if user closes the window too quickly.
-      }
-    }, 2000);
+    new Positioner(player).move('bottomCenter');
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
     } else {
-      player.loadURL('http://danielravina.github.io/headset/player');
+      player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
+
+    player.webContents.on('did-finish-load', () => {
+      logger('Player window finished loading');
+    });
 
     player.on('close', (e) => {
       if (win) {

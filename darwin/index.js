@@ -4,6 +4,7 @@ const defaultMenu = require('electron-default-menu');
 const { version } = require('./package');
 const windowStateKeeper = require('electron-window-state');
 const AutoUpdater = require('headset-autoupdater');
+const Positioner = require('electron-positioner');
 
 const logger = debug('headset');
 const logPlayer2Win = debug('headset:player2Win');
@@ -60,23 +61,24 @@ const start = () => {
     if (player) return;
 
     player = new BrowserWindow({
-      width: 285,
-      height: 440,
-      resizable: true,
+      width: 427,
+      height: 300,
+      minWidth: 427,
+      minHeight: 300,
       title: 'Headset - Player',
-      maximizable: true,
     });
 
-    setTimeout(() => {
-      logger('Minimizing player window');
-      player.minimize();
-    }, 2000);
+    new Positioner(player).move('bottomCenter');
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
     } else {
-      player.loadURL('http://danielravina.github.io/headset/player');
+      player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
+
+    player.webContents.on('did-finish-load', () => {
+      logger('Player window finished loading');
+    });
 
     player.on('close', (e) => {
       if (!willQuitApp) {
@@ -85,6 +87,7 @@ const start = () => {
         e.preventDefault();
       }
     });
+
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"

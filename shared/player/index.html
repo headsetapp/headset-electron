@@ -4,19 +4,14 @@
   <meta charset="UTF-8">
   <title>Headset - Player</title>
   <link rel="stylesheet" href="./style.css">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Satisfy" rel="stylesheet">
 </head>
 <body>
-  <h1 class="title">Hi There!</h1>
-  <p class>
-    This is where the music comes from. Due to a restriction in YouTube's policy,
-    we can't separate the audio from the video and the player must be visible at all times.
-  </p>
   <div class="player-wrapper">
     <div id="ytplayer"></div>
-    <div class="playBtn"></div>
   </div>
-  <p>To save you some bandwidth, we select the lowest possible video quality, Don't worry, this doesn't affect the audio in any way. Enjoy!</p>
+  <div class="info">
+    <a href="https://headsetapp.co/docs/player-window" target="_blank">What is this window?</a>
+  </div>
   <script type="text/javascript">
     const { ipcRenderer } = require('electron');
     window.ipcRenderer = ipcRenderer;

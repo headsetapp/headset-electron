@@ -69,25 +69,24 @@ const start = () => {
     if (player) return;
 
     player = new BrowserWindow({
-      width: 285,
-      height: 480,
-      resizable: true,
+      width: 427,
+      height: 300,
+      minWidth: 427,
+      minHeight: 300,
       title: 'Headset - Player',
-      maximizable: true,
     });
 
     new Positioner(player).move('bottomCenter');
 
-    setTimeout(() => {
-      logger('Minimizing player window');
-      player.minimize();
-    }, 2000);
-
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
     } else {
-      player.loadURL('http://danielravina.github.io/headset/player');
+      player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
+
+    player.webContents.on('did-finish-load', () => {
+      logger('Player window finished loading');
+    });
 
     player.on('close', (e) => {
       if (win) {
