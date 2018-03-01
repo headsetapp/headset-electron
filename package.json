@@ -1,5 +1,5 @@
 {
-  "version": "1.6.4",
+  "version": "1.7.0",
   "scripts": {
     "lint": "eslint",
     "version": "npm-publish-all bump --bumpType=$npm_package_version && npm run bump_auto_updater && git add .",
