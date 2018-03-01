@@ -76,6 +76,10 @@ const start = () => {
       player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
 
+    player.webContents.on('did-finish-load', () => {
+      logger('Player window finished loading');
+    });
+
     player.on('close', (e) => {
       if (!willQuitApp) {
         logger('Attempted to close Player window while Headset running');
@@ -83,6 +87,7 @@ const start = () => {
         e.preventDefault();
       }
     });
+
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
