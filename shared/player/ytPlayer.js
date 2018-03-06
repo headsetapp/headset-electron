@@ -114,9 +114,13 @@ window.onYouTubePlayerAPIReady = () => {
   ytPlayer = new YT.Player('ytplayer', {
     width: '427',
     height: '240',
-    controls: 0,
-    disablekb: 1,
-    fs: 0,
+    playerVars: {
+      'showinfo': 0,
+      'controls': 0,
+      'disablekb': 1,
+      'modestbranding': 1,
+      'widget_referrer': 'https://headsetapp.co'
+    },
     events: {
       onReady() {
         yt = new YTPlayer();
