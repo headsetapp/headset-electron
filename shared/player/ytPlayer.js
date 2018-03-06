@@ -117,7 +117,6 @@ window.onYouTubePlayerAPIReady = () => {
     playerVars: {
       'showinfo': 0,
       'controls': 0,
-      'color': 'white',
       'disablekb': 0,
       'modestbranding': 0,
       'widget_referrer': 'https://danielravina.github.io'
