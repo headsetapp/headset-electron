@@ -32,7 +32,7 @@
     "electron-installer-redhat": "^0.5.0",
     "electron-packager": "^10.1.1",
     "electron-rebuild": "^1.7.3",
-    "foreman": "^2.0.0",
+    "foreman": "lightboard/node-foreman",
     "http-server": "^0.11.1"
   }
 }
