@@ -26,7 +26,7 @@
   "settings": {
     "import/core-modules": [
       electron,
-      electron-winstaller
+      electron-installer-windows
       ]
   },
   rules: {
