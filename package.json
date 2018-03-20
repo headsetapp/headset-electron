@@ -9,14 +9,13 @@
     "test:windows": "mocha test/*.js"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.1",
-    "eslint": "^4.15.0",
+    "eslint": "^4.19.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-promise": "^3.6.0",
-    "mocha": "^5.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-promise": "^3.7.0",
+    "mocha": "^5.0.4",
     "npm-publish-all": "0.0.3",
-    "spectron": "^3.7.2",
+    "spectron": "^3.8.0",
     "timeout-as-promise": "^1.0.0"
   }
 }
