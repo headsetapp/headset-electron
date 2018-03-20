@@ -12,13 +12,9 @@
     "airbnb-base",
     "plugin:promise/recommended"
   ],
-  parser: "babel-eslint",
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 2016,
     sourceType: "module",
-    ecmaFeatures: {
-      experimentalObjectRestSpread: true,
-    }
   },
   "globals": {
     "YT": true,

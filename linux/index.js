@@ -34,10 +34,7 @@ const shouldQuit = app.makeSingleInstance(() => {
   }
 });
 
-if (shouldQuit) {
-  app.quit();
-  return;
-}
+if (shouldQuit) app.quit();
 
 const start = () => {
   logger('Starting Headset');
