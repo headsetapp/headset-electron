@@ -7,6 +7,8 @@ Windows: [![Build status](https://ci.appveyor.com/api/projects/status/8mpmtejnut
 
 Have a question? Join our Slack workspace: https://tinyurl.com/y7m8y5x4
 
+Want to start contributing? Check out our [contributing](./CONTRIBUTING.md) doc.
+
 ## Installation
 
 ### Using Homebrew (macOS)
