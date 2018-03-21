@@ -82,6 +82,7 @@ const start = () => {
 
     player.webContents.on('did-finish-load', () => {
       logger('Player window finished loading');
+      win.focus();
     });
 
     player.on('close', (e) => {
