@@ -5,7 +5,7 @@ os: unstable
 environment:
   nodejs_version: "6"
   CERT_PASSWORD:
-    secure: pbjvH7kU0tV7o66vMiDgmA==
+    secure: Cq7tg3FsEWOhCQtQwyVYqA==
 
 install:
   - ps: Install-Product node $env:nodejs_version
