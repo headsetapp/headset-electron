@@ -1,8 +1,12 @@
 const installer = require('electron-installer-windows');
 
-if (typeof process.env.CERT_PASSWORD !== 'string') {
+const { CERT_PASSWORD, APPVEYOR_REPO_TAG } = process.env;
+
+if (typeof CERT_PASSWORD !== 'string' && APPVEYOR_REPO_TAG === 'true') {
   console.log('Error: The certificate password is not a string');
   throw new Error('The certificate password is not a string');
+} else {
+  console.log('Warning: The package will not be signed');
 }
 
 const options = {
@@ -15,7 +19,7 @@ const options = {
   iconUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/windows/Headset.ico',
   licenseUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/LICENSE',
   certificateFile: 'sig/headset.pfx',
-  certificatePassword: process.env.CERT_PASSWORD,
+  certificatePassword: CERT_PASSWORD,
 };
 
 console.log('Creating package (this may take a while)');
