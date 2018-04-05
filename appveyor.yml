@@ -2,6 +2,8 @@ version: "{build}"
 
 os: unstable
 
+clone_depth: 1
+
 environment:
   nodejs_version: "6"
   CERT_PASSWORD:
