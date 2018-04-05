@@ -4,6 +4,8 @@ os: unstable
 
 environment:
   nodejs_version: "6"
+  CERT_PASSWORD:
+    secure: Cq7tg3FsEWOhCQtQwyVYqA==
 
 install:
   - ps: Install-Product node $env:nodejs_version
@@ -16,7 +18,8 @@ before_build:
 
 build_script:
   - cd windows
-  - npm run build
+  - npm run pack
+  - npm run dist 2> $null
 
 test_script:
   - cd ..
