@@ -11,7 +11,7 @@ const options = {
   iconUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/windows/Headset.ico',
   licenseUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/LICENSE',
   certificateFile: path.resolve(__dirname, '../sig/test123.pfx'),
-  certificatePassword: process.env.CERT_PASSWORD2,
+  certificatePassword: process.env.CERT_PASSWORD,
 };
 
 console.log('Creating package (this may take a while)');
