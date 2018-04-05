@@ -4,6 +4,8 @@ os: unstable
 
 environment:
   nodejs_version: "6"
+  CERT_PASSWORD:
+    secure: bGXeKiRGY1UBI4gzKnKUjQ==
 
 install:
   - ps: Install-Product node $env:nodejs_version
@@ -30,10 +32,6 @@ cache:
 artifacts:
   - path: windows\build\installers\*.exe
     name: HeadsetApp
-
-environment:
-  CERT_PASSWORD:
-    secure: bGXeKiRGY1UBI4gzKnKUjQ==
 
 deploy:
   - provider: GitHub
