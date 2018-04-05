@@ -16,6 +16,8 @@ const options = {
     'Create collections, tune-in to a music subreddit or quickly play that song ' +
     'you’ve had stuck in your head all day!',
   icon: 'Headset.ico',
+  noMsi: true,
+  tags: ['headset', 'youtube', 'player', 'radio', 'music'],
   iconUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/windows/Headset.ico',
   licenseUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/LICENSE',
   certificateFile: 'sig/headset.pfx',
