@@ -18,7 +18,8 @@ before_build:
 
 build_script:
   - cd windows
-  - npm run build
+  - npm run pack
+  - npm run dist 2> $null
 
 test_script:
   - cd ..
