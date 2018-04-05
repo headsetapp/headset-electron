@@ -31,6 +31,10 @@ artifacts:
   - path: windows\build\installers\*.exe
     name: HeadsetApp
 
+environment:
+  CERT_PASSWORD:
+    secure: bGXeKiRGY1UBI4gzKnKUjQ==
+
 deploy:
   - provider: GitHub
     artifact: HeadsetApp
