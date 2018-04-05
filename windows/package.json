@@ -13,7 +13,7 @@
     "electron": "electron .",
     "production-like": "NODE_ENV=production electron .",
     "pack": "electron-packager . --executable-name headset --overwrite --platform=win32 --asar --arch=ia32 --prune --ignore=\"(bin|Procfile)\" --out=build --icon=Headset.ico --version-string.ProductName=\"Headset\"",
-    "dist": "node bin/winstaller.js 2>&1 $null",
+    "dist": "node bin/winstaller.js 2>&1> null",
     "build": "npm run pack && npm run dist"
   },
   "dependencies": {
