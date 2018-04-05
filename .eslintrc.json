@@ -1,31 +1,31 @@
 {
-  env: {
-    es6: true,
-    node: true,
-    mocha: true,
-    browser: true,
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true,
+    "browser": true
   },
   "plugins": [
     "promise"
   ],
-  extends: [
+  "extends": [
     "airbnb-base",
     "plugin:promise/recommended"
   ],
-  parserOptions: {
-    ecmaVersion: 2016,
-    sourceType: "module",
+  "parserOptions": {
+    "ecmaVersion": 2016,
+    "sourceType": "module"
   },
   "globals": {
-    "YT": true,
+    "YT": true
   },
   "settings": {
     "import/core-modules": [
-      electron,
-      electron-installer-windows
+      "electron",
+      "electron-installer-windows"
       ]
   },
-  rules: {
+  "rules": {
     "no-new": "off",
     "new-cap": "off",
     "max-len": ["error", 120],
