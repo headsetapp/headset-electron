@@ -2,8 +2,12 @@ version: "{build}"
 
 os: unstable
 
+clone_depth: 1
+
 environment:
   nodejs_version: "6"
+  CERT_PASSWORD:
+    secure: BOXjWrY24hdw8EhsmLkP5RVxG/aY/16gnAt//DlVIHOadhfJWHgQfh+qI7oUkgP2
 
 install:
   - ps: Install-Product node $env:nodejs_version
@@ -16,7 +20,8 @@ before_build:
 
 build_script:
   - cd windows
-  - npm run build
+  - npm run pack
+  - npm run dist 2> $null
 
 test_script:
   - cd ..
