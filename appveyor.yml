@@ -22,6 +22,7 @@ build_script:
   - cd windows
   - npm run pack
   - npm run dist 2> $null
+  - npm run choco
 
 test_script:
   - cd ..
@@ -39,6 +40,8 @@ artifacts:
     name: HeadsetNupkg
   - path: windows\build\installers\RELEASES
     name: HeadsetReleases
+  - path: windows\build\headset.*.nupkg
+    name: HeadsetChoco
 
 deploy:
   - provider: GitHub
@@ -46,5 +49,12 @@ deploy:
     auth_token: $(GITHUB_TOKEN)
     draft: true
     description: ''
+    on:
+      appveyor_repo_tag: true
+  - provider: NuGet
+    server: https://push.chocolatey.org/
+    artifact: HeadsetChoco
+    skip_symbols: true
+    auth_token: $(CHOCO_TOKEN)
     on:
       appveyor_repo_tag: true
