@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>headset</id>
+    <version>1.7.0</version>
+    <title>Headset</title>
+    <authors>Daniel Ravina</authors>
+    <owners>Daniel Ravina</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://raw.githubusercontent.com/headsetapp/headset-electron/master/LICENSE</licenseUrl>
+    <projectUrl>http://headsetapp.co/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/headsetapp/headset-electron/master/windows/Headset.ico</iconUrl>
+    <description>Headset is a desktop app that turns YouTube into a world class music streaming service.Create collections, tune-in to a music subreddit or quickly play that song youâ€™ve had stuck in your head all day!</description>
+    <summary>Discover and collect music on YouTube</summary>
+    <copyright>Copyright © 2018 Daniel Ravina</copyright>
+    <tags>headset youtube player radio music</tags>
+  </metadata>
+</package>
