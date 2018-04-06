@@ -12,7 +12,7 @@ if (!(Test-Path -Path "$setup")) {
 $sha256 = (CertUtil -hashfile "$setup" SHA256)[1].Replace(' ', '')
 
 $choco = Get-Content $chocoInstall
-$choco[8] = "  checksum       = '$sha256'"
+$choco[11] = "  checksum       = '$sha256'"
 $choco | Out-File -filepath "$chocoInstall" -Encoding UTF8
 
 if (!(Test-Path -Path "$PWD\build")) {
