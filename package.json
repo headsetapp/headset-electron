@@ -2,8 +2,10 @@
   "version": "1.7.0",
   "scripts": {
     "lint": "eslint",
-    "version": "npm-publish-all bump --bumpType=$npm_package_version && npm run bump_auto_updater && git add .",
+    "version": "npm-publish-all bump --bumpType=$npm_package_version && npm run bumps && git add .",
+    "bumps": "npm run bump_auto_updater && npm run bump_choco_version",
     "bump_auto_updater": "VERSION=$npm_package_version ./bin/bump_auto_updater.sh",
+    "bump_choco_version": "VERSION=$npm_package_version ./bin/choco_version_bump.sh",
     "test:darwin": "mocha test/*.js",
     "test:linux": "mocha test/*.js test/linux/*.js",
     "test:windows": "mocha test/*.js"
