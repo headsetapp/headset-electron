@@ -1,13 +1,13 @@
 const installer = require('electron-installer-windows');
 
-const { CERT_PASSWORD, APPVEYOR_REPO_TAG } = process.env;
+const { CERT_PASSWORD } = process.env;
 
-if (typeof CERT_PASSWORD !== 'string' && APPVEYOR_REPO_TAG === 'true') {
-  console.log('Error: The certificate password is not a string');
-  throw new Error('The certificate password is not a string');
-} else {
-  console.log('Warning: The package will not be signed');
-}
+// if (typeof CERT_PASSWORD !== 'string' && APPVEYOR_REPO_TAG === 'true') {
+//   console.log('Error: The certificate password is not a string');
+//   throw new Error('The certificate password is not a string');
+// } else {
+//   console.log('Warning: The package will not be signed');
+// }
 
 const options = {
   src: 'build/Headset-win32-ia32',
