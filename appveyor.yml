@@ -33,12 +33,16 @@ cache:
   - '%APPDATA%\npm-cache'
 
 artifacts:
-  - path: windows\build\installers\*.exe
+  - path: windows\build\installers\headset-*-setup.exe
     name: HeadsetApp
+  - path: windows\build\installers\headset-*-full.nupkg
+    name: HeadsetNupkg
+  - path: windows\build\installers\RELEASES
+    name: HeadsetReleases
 
 deploy:
   - provider: GitHub
-    artifact: HeadsetApp
+    artifact: HeadsetApp, HeadsetNupkg, HeadsetReleases
     auth_token: $(GITHUB_TOKEN)
     draft: true
     description: ''
