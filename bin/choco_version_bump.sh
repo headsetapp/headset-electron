@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-file='windows/chocolatey/headset.nuspec'
+file='.chocolatey/headset.nuspec'
 
-sed -i "s|\(<version>\)\(.*\)\(</version>\)|\1$VERSION\3|g" $file
+sed -i.bak "s|\(<version>\)\(.*\)\(</version>\)|\1$VERSION\3|g" $file
+rm $file.bak
