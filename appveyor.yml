@@ -55,6 +55,6 @@ deploy:
     server: https://push.chocolatey.org/
     artifact: HeadsetChoco
     skip_symbols: true
-    auth_token: $(CHOCO_TOKEN)
+    api_key: $(CHOCO_TOKEN)
     on:
       appveyor_repo_tag: true
