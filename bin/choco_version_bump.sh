@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-file='.chocolatey/headset.nuspec'
+nuspec='.chocolatey/headset.nuspec'
+install='.chocolatey/tools/chocolateyInstall.ps1'
 
-sed -i.bak "s|\(<version>\)\(.*\)\(</version>\)|\1$VERSION\3|g" $file
-rm $file.bak
+sed -i.bak "s|\(<version>\)\(.*\)\(</version>\)|\1$VERSION\3|g" $nuspec
+sed -i.bak "1s|\('\)\(.*\)\('\)|\1$VERSION\3|" $install
+
+rm $nuspec.bak
+rm $install.bak
