@@ -13,7 +13,7 @@
     "electron": "electron .",
     "production-like": "NODE_ENV=production electron .",
     "choco": "@powershell ./bin/build_choco.ps1 -version %npm_package_version%",
-    "pack": "electron-packager . --executable-name headset --overwrite --platform=win32 --asar --arch=ia32 --prune --ignore=\"(bin|Procfile|sig)\" --out=build --icon=Headset.ico --version-string.ProductName=\"Headset\"",
+    "pack": "electron-packager . --executable-name headset --overwrite --platform=win32 --arch=ia32 --asar --prune --ignore=\"(/bin|Procfile|/sig)\" --out=build --icon=Headset.ico --version-string.ProductName=\"Headset\"",
     "dist": "node bin/winstaller.js",
     "build": "npm run pack && npm run dist"
   },
@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "electron": "^1.8.4",
-    "electron-installer-windows": "^1.0.2",
-    "electron-packager": "^11.1.0",
+    "electron-installer-windows": "^1.1.0",
+    "electron-packager": "^12.0.1",
     "foreman": "lightboard/node-foreman",
     "http-server": "^0.11.1"
   }
