@@ -22,11 +22,11 @@ addons:
     - createrepo
 
 before_install:
-- npm i -g npm@5.6.0
+- npm i -g npm@5.8.0
 
 install:
-- npm install
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd linux && npm i && cd ..; fi
+- npm ci
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd linux && npm ci && cd ..; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd darwin && npm i && cd ..; fi
 
 before_script:
@@ -46,9 +46,7 @@ script:
 
 cache:
   directories:
-  - node_modules
-  - darwin/node_modules
-  - linux/node_modules
+  - "$HOME/.npm"
 
 after_success:
 - if [[ "$TRAVIS_OS_NAME" == "linux" && -n "$TRAVIS_TAG" ]]; then

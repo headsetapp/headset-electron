@@ -11,9 +11,9 @@ environment:
 
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm i -g  npm@5.6.0
-  - npm install
-  - cd windows && npm install && cd..
+  - npm i -g  npm@5.8.0
+  - npm ci
+  - cd windows && npm ci && cd..
 
 before_build:
   - npm run lint windows
@@ -29,8 +29,6 @@ test_script:
   - npm run test:windows
 
 cache:
-  - node_modules
-  - windows\node_modules
   - '%APPDATA%\npm-cache'
 
 artifacts:
