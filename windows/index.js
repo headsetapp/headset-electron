@@ -1,11 +1,13 @@
 const electron = require('electron');
-const { version } = require('./package');
 const Positioner = require('electron-positioner');
 const { exec } = require('child_process');
 const windowStateKeeper = require('electron-window-state');
 const squirrel = require('electron-squirrel-startup');
 const debug = require('debug');
 const GhReleases = require('headset-autoupdater');
+const path = require('path');
+const { version } = require('./package');
+const headsetTray = require('./lib/headsetTray');
 
 const logger = debug('headset');
 const logPlayer2Win = debug('headset:player2Win');
@@ -17,10 +19,12 @@ const {
   globalShortcut,
   ipcMain,
   dialog,
+  Tray,
 } = electron;
 
 let win;
 let player;
+let tray;
 
 const isDev = (process.env.NODE_ENV === 'development');
 
@@ -50,7 +54,7 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hiddenInset',
-    icon: `file://${__dirname}/Headset.ico`,
+    icon: path.join(__dirname, 'icons', 'Headset.ico'),
     frame: true,
   });
 
@@ -74,6 +78,7 @@ const start = () => {
       minWidth: 427,
       minHeight: 300,
       title: 'Headset - Player',
+      icon: path.join(__dirname, 'icons', 'Headset.ico'),
     });
 
     new Positioner(player).move('bottomCenter');
@@ -128,6 +133,9 @@ const start = () => {
         window.electronConnector.emit('play-previous')
       `);
     });
+
+    tray = new Tray(path.join(__dirname, 'icons', 'Headset.ico'));
+    headsetTray(tray, win, player);
 
     if (isDev) {
       win.webContents.openDevTools();
