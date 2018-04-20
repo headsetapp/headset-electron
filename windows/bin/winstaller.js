@@ -19,7 +19,7 @@ const options = {
   icon: path.join(__dirname, '..', 'icons', 'Headset.ico'),
   noMsi: true,
   tags: ['headset', 'youtube', 'player', 'radio', 'music'],
-  iconUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/windows/icons/Headset-64x64.png',
+  iconUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/windows/icons/Headset-64px.png',
   licenseUrl: 'https://raw.githubusercontent.com/headsetapp/headset-electron/master/LICENSE',
   certificateFile: 'sig/headset.pfx',
   certificatePassword: CERT_PASSWORD,

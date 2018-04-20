@@ -6,8 +6,8 @@ const logger = debug('headset:tray');
 const executeMediaKey = (win, key) => {
   logger('Executing %o command from tray', key);
   win.webContents.executeJavaScript(`
-      window.electronConnector.emit('${key}')
-    `);
+    window.electronConnector.emit('${key}')
+  `);
 };
 
 module.exports = (tray, win, player) => {
