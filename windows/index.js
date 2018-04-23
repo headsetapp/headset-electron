@@ -75,8 +75,8 @@ const start = () => {
     player = new BrowserWindow({
       width: 427,
       height: 300,
-      minWidth: 427,
-      minHeight: 300,
+      minWidth: 430,
+      minHeight: 310,
       title: 'Headset - Player',
       icon: path.join(__dirname, 'icons', 'Headset.ico'),
     });
