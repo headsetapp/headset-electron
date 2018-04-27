@@ -18,7 +18,6 @@ const {
   BrowserWindow,
   globalShortcut,
   ipcMain,
-  dialog,
   Tray,
 } = electron;
 
@@ -97,7 +96,6 @@ const start = () => {
     player.on('close', (e) => {
       if (win) {
         logger('Attempted to close Player window while Headset running');
-        dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
         e.preventDefault();
       } else {
         logger('Closing Player window and killing Headset');
