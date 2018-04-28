@@ -21,7 +21,7 @@ if (Test-Path "$env:LOCALAPPDATA\$name\") {
       If (Test-Path "$env:LOCALAPPDATA\$name\.dead") {
         Remove-Item "$env:LOCALAPPDATA\$name" -Recurse -Force -ErrorAction 'SilentlyContinue'
       }
-    } Catch { 
+    } Catch {
       throw $_.Exception
     }
   }
