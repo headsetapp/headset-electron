@@ -3,7 +3,7 @@ const { Menu } = require('electron');
 
 const logger = debug('headset:tray');
 
-const executeMediaKey = (win, key) => {
+const executeTrayCommand = (win, key) => {
   logger('Executing %o command from tray', key);
   win.webContents.executeJavaScript(`
     window.electronConnector.emit('${key}')
@@ -23,9 +23,11 @@ module.exports = (tray, win, player) => {
       },
     },
     { type: 'separator' },
-    { label: 'Play/Pause', click: () => { executeMediaKey(win, 'play-pause'); } },
-    { label: 'Next', click: () => { executeMediaKey(win, 'play-next'); } },
-    { label: 'Previous', click: () => { executeMediaKey(win, 'play-previous'); } },
+    { label: 'Play/Pause', click: () => { executeTrayCommand(win, 'play-pause'); } },
+    { label: 'Next', click: () => { executeTrayCommand(win, 'play-next'); } },
+    { label: 'Previous', click: () => { executeTrayCommand(win, 'play-previous'); } },
+    { type: 'separator' },
+    { label: 'Like', click: () => { executeTrayCommand(win, 'like'); } },
     { type: 'separator' },
     { role: 'quit' },
   ]);
