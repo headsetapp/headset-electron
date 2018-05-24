@@ -11,7 +11,7 @@ Want to start contributing? Check out our [contributing](./CONTRIBUTING.md) doc.
 
 ## Installation
 
-### Using Homebrew (macOS)
+### macOS (Homebrew)
 
 Update Homebrew and install `headset` using Hombrew Cask
 
@@ -19,6 +19,20 @@ Update Homebrew and install `headset` using Hombrew Cask
 brew update
 brew cask install headset
 ```
+
+### Windows (Chocolatey)
+
+To install, run the following command from the command line or from PowerShell:
+```
+C:\> choco install headset
+```
+
+To upgrade, run the following command from the command line or from PowerShell:
+```
+C:\> choco upgrade headset
+```
+
+More details in the chocolatey page: https://chocolatey.org/packages/headset
 
 ### Linux
 As an alternative to `.deb` and `.rpm` packages on the website, you can also install it directly from the command-line:
