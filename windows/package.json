@@ -27,8 +27,8 @@
   "devDependencies": {
     "electron": "^1.8.4",
     "electron-installer-windows": "^1.1.0",
-    "electron-packager": "^12.0.1",
-    "foreman": "lightboard/node-foreman",
+    "electron-packager": "^12.1.0",
+    "foreman": "^3.0.0",
     "http-server": "^0.11.1"
   }
 }
