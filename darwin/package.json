@@ -25,11 +25,11 @@
     "headset-autoupdater": "0.0.1"
   },
   "devDependencies": {
-    "create-dmg": "^2.0.0",
-    "electron": "^1.8.4",
+    "create-dmg": "^3.1.0",
+    "electron": "^1.8.7",
     "electron-osx-sign": "^0.4.10",
-    "electron-packager": "^12.0.1",
-    "foreman": "lightboard/node-foreman",
+    "electron-packager": "^12.1.0",
+    "foreman": "^3.0.0",
     "http-server": "^0.11.1",
     "iconutil": "^1.0.2"
   }
