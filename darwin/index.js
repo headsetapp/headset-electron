@@ -121,7 +121,7 @@ const start = () => {
       `);
     });
 
-    tray = new Tray(path.join(__dirname, 'icons', 'Headset-16px.png'));
+    tray = new Tray(path.join(__dirname, 'icons', 'Headset-16px@4x.png'));
     headsetTray(tray, win, player);
 
     if (isDev) {
