@@ -22,7 +22,7 @@ addons:
     - createrepo
 
 before_install:
-- npm i -g npm@5.8.0
+- npm i -g npm@6.1.0
 
 install:
 - npm ci
