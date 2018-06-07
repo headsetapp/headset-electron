@@ -20,6 +20,8 @@
   "lintianOverrides": [
     "binary-without-manpage",
     "embedded-library",
+    "hardening-no-relro",
+    "hardening-no-pie",
     "debian-changelog-file-missing"
   ]
 }
