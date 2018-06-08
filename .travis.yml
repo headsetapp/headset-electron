@@ -1,6 +1,6 @@
 language: node_js
 
-node_js: "6"
+node_js: "8"
 
 os:
   - linux
@@ -22,7 +22,7 @@ addons:
     - createrepo
 
 before_install:
-- npm i -g npm@5.8.0
+- npm i -g npm@6.1.0
 
 install:
 - npm ci

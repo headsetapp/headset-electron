@@ -5,13 +5,13 @@ os: unstable
 clone_depth: 1
 
 environment:
-  nodejs_version: "6"
+  nodejs_version: "8"
   CERT_PASSWORD:
     secure: BOXjWrY24hdw8EhsmLkP5RVxG/aY/16gnAt//DlVIHOadhfJWHgQfh+qI7oUkgP2
 
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm i -g  npm@5.8.0
+  - npm i -g  npm@6.1.0
   - npm ci
   - cd windows && npm ci && cd..
 
