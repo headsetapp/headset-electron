@@ -60,7 +60,7 @@ sudo yum install headset
 
 If you would like to create a build for a different environment (e.g Manjaro or Aur, etc.) please follow these steps:
 
-1. Install _NodeJs_ 6.2.0 or later
+1. Install _NodeJs_ 8 or later
 
 2. Clone the Repo
 ```bash
