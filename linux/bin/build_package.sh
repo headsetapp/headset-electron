@@ -3,7 +3,7 @@
 set -e
 
 source="build/Headset-linux-x64"
-ignoring="(/bin|Procfile|/sig|/gh-pages)"
+ignoring="(^Procfile$|^/gh-pages$|^/sig$|^/bin$)"
 
 electron-packager . \
   --executable-name headset \

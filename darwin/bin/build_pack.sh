@@ -2,7 +2,7 @@
 
 set -e
 
-ignoring="(/bin|Procfile|/sig)"
+ignoring="(^Procfile$|^/sig$|^/bin$)"
 
 if [[ "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_REPO_SLUG" == "headsetapp/headset-electron" && -n "$TRAVIS_TAG" ]]; then
   KEY_CHAIN=mac-build.keychain
