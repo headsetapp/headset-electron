@@ -1,21 +1,13 @@
 const electron = require('electron');
-const logFile = require('electron-log');
 const Positioner = require('electron-positioner');
 const { exec } = require('child_process');
 const windowStateKeeper = require('electron-window-state');
 const squirrel = require('electron-squirrel-startup');
-const debug = require('debug');
 const AutoUpdater = require('headset-autoupdater');
 const path = require('path');
 const { version } = require('./package');
 const headsetTray = require('./lib/headsetTray');
-
-const logger = debug('headset');
-const logPlayer2Win = debug('headset:player2Win');
-const logWin2Player = debug('headset:win2Player');
-
-logFile.transports.file.level = true;
-logFile.transports.console.level = false;
+const logger = require('./lib/headset-logger');
 
 const {
   app,
@@ -30,15 +22,12 @@ let player;
 let tray;
 
 const isDev = (process.env.NODE_ENV === 'development');
-const isDebug = process.env.DEBUG.startsWith('headset');
 
-logger('Running as developer: %o', isDev);
-if (isDebug) logFile.info('Running as developer: %o', isDev);
+logger.info(`Running as developer: ${isDev}`);
 
 const shouldQuit = app.makeSingleInstance(() => {
   // Someone tried to run a second instance, we should focus our window.
-  logger('Second instance of Headset found');
-  if (isDebug) logFile.warn('Second instance of Headset found');
+  logger.info('Second instance of Headset found');
   if (win) {
     if (win.isMinimized()) win.restore();
     win.focus();
@@ -48,8 +37,7 @@ const shouldQuit = app.makeSingleInstance(() => {
 if (shouldQuit || squirrel) app.exit();
 
 const start = () => {
-  logger('Starting Headset');
-  if (isDebug) logFile.info('Starting Headset');
+  logger.info('Starting Headset');
   const mainWindowState = windowStateKeeper();
 
   win = new BrowserWindow({
@@ -76,8 +64,7 @@ const start = () => {
   new AutoUpdater();
 
   win.webContents.on('did-finish-load', () => {
-    logger('Main window finished loading');
-    if (isDebug) logFile.info('Main window finished loading');
+    logger.info('Main window finished loading');
     if (player) return;
 
     player = new BrowserWindow({
@@ -98,19 +85,16 @@ const start = () => {
     }
 
     player.webContents.on('did-finish-load', () => {
-      logger('Player window finished loading');
-      if (isDebug) logFile.info('Player window finished loading');
+      logger.info('Player window finished loading');
       win.focus();
     });
 
     player.on('close', (e) => {
       if (win) {
-        logger('Attempted to close Player window while Headset running');
-        if (isDebug) logFile.warn('Attempted to close Player window while Headset running');
+        logger.info('Attempted to close Player window while Headset running');
         e.preventDefault();
       } else {
-        logger('Closing Player window and killing Headset');
-        if (isDebug) logFile.info('Closing Player window and killing Headset');
+        logger.info('Closing Player window and killing Headset');
         exec('taskkill /F /IM Headset.exe');
       }
     });
@@ -119,12 +103,10 @@ const start = () => {
       window.electronVersion = "v${version}"
     `);
 
-    logger('Registering MediaKeys');
-    if (isDebug) logFile.info('Registering MediaKeys');
+    logger.info('Registering MediaKeys');
     globalShortcut.register('MediaPlayPause', () => {
       if (win === null) return;
-      logger('Executing %o media key command', 'play-pause');
-      if (isDebug) logFile.debug('Executing %o media key command', 'play-pause');
+      logger.info('Executing %o media key command', 'play-pause');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
       `);
@@ -132,8 +114,7 @@ const start = () => {
 
     globalShortcut.register('MediaNextTrack', () => {
       if (win === null) return;
-      logger('Executing %o media key command', 'play-next');
-      if (isDebug) logFile.debug('Executing %o media key command', 'play-next');
+      logger.info('Executing %o media key command', 'play-next');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-next')
       `);
@@ -141,8 +122,7 @@ const start = () => {
 
     globalShortcut.register('MediaPreviousTrack', () => {
       if (win === null) return;
-      logger('Executing %o media key command', 'play-previous');
-      if (isDebug) logFile.debug('Executing %o media key command', 'play-previous');
+      logger.info('Executing %o media key command', 'play-previous');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-previous')
       `);
@@ -157,10 +137,9 @@ const start = () => {
   }); // end did-finish-load
 
   win.on('close', () => {
-    logger('Closing Headset');
-    if (isDebug) logFile.info('Closing Headset');
+    logger.info('Closing Headset');
     win = null;
-    // after app closes in Win, the global shourtcuts are still up, disabling it here.
+    // after app closes in Win, the global shortcuts are still up, disabling it here.
     globalShortcut.unregisterAll();
     if (player === undefined) return;
     player.close();
@@ -180,19 +159,17 @@ app.on('browser-window-created', (e, window) => {
 });
 /*
  * This is the proxy between the 2 windows.
- * it receives messages from a renderrer
- * and send them to the other renderrer
+ * it receives messages from a renderer
+ * and send them to the other renderer
 */
 ipcMain.on('win2Player', (e, args) => {
-  logWin2Player('%O', args);
-  if (isDebug) logFile.verbose('%O', args);
+  logger.win2Player(args);
 
   player.webContents.send('win2Player', args);
 });
 
 ipcMain.on('player2Win', (e, args) => {
-  logPlayer2Win('%o', args);
-  if (isDebug) logFile.verbose('%o', args);
+  logger.player2Win(args);
 
   try {
     win.webContents.send('player2Win', args);
