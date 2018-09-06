@@ -1,5 +1,4 @@
 const electron = require('electron');
-const logFile = require('electron-log');
 const { exec } = require('child_process');
 const windowStateKeeper = require('electron-window-state');
 const squirrel = require('electron-squirrel-startup');
