@@ -1,7 +1,7 @@
 {
   "name": "headset",
   "productName": "Headset",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Discover and collect music on YouTube",
   "license": "MIT",
   "author": "Daniel Ravina",
@@ -20,7 +20,6 @@
   "dependencies": {
     "debug": "^3.1.0",
     "electron-default-menu": "^1.0.1",
-    "electron-positioner": "^3.0.0",
     "electron-window-state": "^4.1.1",
     "headset-autoupdater": "0.0.1"
   },
