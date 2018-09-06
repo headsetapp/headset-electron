@@ -3,7 +3,6 @@ const electron = require('electron');
 const defaultMenu = require('electron-default-menu');
 const windowStateKeeper = require('electron-window-state');
 const AutoUpdater = require('headset-autoupdater');
-const Positioner = require('electron-positioner');
 const path = require('path');
 const { version } = require('./package');
 const headsetTray = require('./lib/headsetTray');
@@ -73,7 +72,9 @@ const start = () => {
       icon: path.join(__dirname, 'icons', 'Icon.icns'),
     });
 
-    new Positioner(player).move('bottomCenter');
+    setTimeout(() => {
+      player.minimize();
+    }, 2000);
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');

@@ -1,6 +1,5 @@
 const electron = require('electron');
 const logFile = require('electron-log');
-const Positioner = require('electron-positioner');
 const { exec } = require('child_process');
 const windowStateKeeper = require('electron-window-state');
 const squirrel = require('electron-squirrel-startup');
@@ -89,7 +88,9 @@ const start = () => {
       icon: path.join(__dirname, 'icons', 'Headset.ico'),
     });
 
-    new Positioner(player).move('bottomCenter');
+    setTimeout(() => {
+      player.minimize();
+    }, 2000);
 
     if (isDev) {
       player.loadURL('http://127.0.0.1:3001');
