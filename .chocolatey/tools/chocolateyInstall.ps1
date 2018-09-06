@@ -1,4 +1,4 @@
-﻿$version = '2.0.2'
+﻿$version = '2.0.3'
 
 $url          = "https://github.com/headsetapp/headset-electron/releases/download/v$version/headset-$version-setup.exe"
 $autoStartKey = 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run\'
