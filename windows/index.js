@@ -71,6 +71,9 @@ const start = () => {
 
   new AutoUpdater();
 
+  tray = new Tray(path.join(__dirname, 'icons', 'Headset.ico'));
+  headsetTray(tray, win, player);
+
   win.webContents.on('did-finish-load', () => {
     logger.info('Main window finished loading');
 
@@ -112,9 +115,6 @@ const start = () => {
         window.electronConnector.emit('play-previous')
       `);
     });
-
-    tray = new Tray(path.join(__dirname, 'icons', 'Headset.ico'));
-    headsetTray(tray, win, player);
 
     if (isDev) {
       win.webContents.openDevTools();
