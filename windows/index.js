@@ -60,20 +60,19 @@ const start = () => {
     win.loadURL('https://danielravina.github.io/headset/app/');
   }
 
+  player = new BrowserWindow({
+    width: 427,
+    height: 300,
+    minWidth: 430,
+    minHeight: 310,
+    title: 'Headset - Player',
+    icon: path.join(__dirname, 'icons', 'Headset.ico'),
+  });
+
   new AutoUpdater();
 
   win.webContents.on('did-finish-load', () => {
     logger.info('Main window finished loading');
-    if (player) return;
-
-    player = new BrowserWindow({
-      width: 427,
-      height: 300,
-      minWidth: 430,
-      minHeight: 310,
-      title: 'Headset - Player',
-      icon: path.join(__dirname, 'icons', 'Headset.ico'),
-    });
 
     setTimeout(() => {
       player.minimize();
@@ -84,21 +83,6 @@ const start = () => {
     } else {
       player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
-
-    player.webContents.on('did-finish-load', () => {
-      logger.info('Player window finished loading');
-      win.focus();
-    });
-
-    player.on('close', (e) => {
-      if (win) {
-        logger.info('Attempted to close Player window while Headset running');
-        e.preventDefault();
-      } else {
-        logger.info('Closing Player window and killing Headset');
-        exec('taskkill /F /IM Headset.exe');
-      }
-    });
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
@@ -137,6 +121,21 @@ const start = () => {
     }
   }); // end did-finish-load
 
+  player.webContents.on('did-finish-load', () => {
+    logger.info('Player window finished loading');
+    win.focus();
+  });
+
+  player.on('close', (e) => {
+    if (win) {
+      logger.info('Attempted to close Player window while Headset running');
+      e.preventDefault();
+    } else {
+      logger.info('Closing Player window and killing Headset');
+      exec('taskkill /F /IM Headset.exe');
+    }
+  });
+
   win.on('close', () => {
     logger.info('Closing Headset');
     win = null;
@@ -160,8 +159,7 @@ app.on('browser-window-created', (e, window) => {
 });
 /*
  * This is the proxy between the 2 windows.
- * it receives messages from a renderer
- * and send them to the other renderer
+ * It receives messages from a renderer and send them to the other renderer
 */
 ipcMain.on('win2Player', (e, args) => {
   logger.win2Player(args);

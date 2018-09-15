@@ -59,17 +59,16 @@ const start = () => {
     win.loadURL('https://danielravina.github.io/headset/app/');
   }
 
+  player = new BrowserWindow({
+    width: 427,
+    height: 300,
+    minWidth: 427,
+    minHeight: 300,
+    title: 'Headset - Player',
+  });
+
   win.webContents.on('did-finish-load', () => {
     logger('Main window finished loading');
-    if (player) return;
-
-    player = new BrowserWindow({
-      width: 427,
-      height: 300,
-      minWidth: 427,
-      minHeight: 300,
-      title: 'Headset - Player',
-    });
 
     setTimeout(() => {
       try {
@@ -84,22 +83,6 @@ const start = () => {
     } else {
       player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
-
-    player.webContents.on('did-finish-load', () => {
-      logger('Player window finished loading');
-      win.focus();
-    });
-
-    player.on('close', (e) => {
-      if (win) {
-        logger('Attempted to close Player window while Headset running');
-        e.preventDefault();
-      } else {
-        logger('Closing Player window and killing Headset');
-        player = null;
-        exec('kill -9 $(pgrep headset) &> /dev/null');
-      }
-    });
 
     try {
       logger('Initializing MPRIS and registering MediaKeys');
@@ -117,6 +100,22 @@ const start = () => {
       win.webContents.openDevTools();
     }
   }); // end did-finish-load
+
+  player.webContents.on('did-finish-load', () => {
+    logger('Player window finished loading');
+    win.focus();
+  });
+
+  player.on('close', (e) => {
+    if (win) {
+      logger('Attempted to close Player window while Headset running');
+      e.preventDefault();
+    } else {
+      logger('Closing Player window and killing Headset');
+      player = null;
+      exec('kill -9 $(pgrep headset) &> /dev/null');
+    }
+  });
 
   win.on('close', () => {
     logger('Closing Headset');
@@ -139,8 +138,7 @@ app.on('browser-window-created', (e, window) => {
 
 /*
  * This is the proxy between the 2 windows.
- * it receives messages from a renderrer
- * and send them to the other renderrer
+ * It receives messages from a renderer and send them to the other renderer
 */
 ipcMain.on('win2Player', (e, args) => {
   logWin2Player('%O', args);

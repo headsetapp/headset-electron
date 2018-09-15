@@ -54,6 +54,15 @@ const start = () => {
     win.loadURL('https://danielravina.github.io/headset/app/');
   }
 
+  player = new BrowserWindow({
+    width: 427,
+    height: 300,
+    minWidth: 427,
+    minHeight: 300,
+    title: 'Headset - Player',
+    icon: path.join(__dirname, 'icons', 'Icon.icns'),
+  });
+
   new AutoUpdater({
     // allows the updater to close the app properly
     onBeforeQuit: () => { willQuitApp = true; },
@@ -61,16 +70,6 @@ const start = () => {
 
   win.webContents.on('did-finish-load', () => {
     logger('Main window finished loading');
-    if (player) return;
-
-    player = new BrowserWindow({
-      width: 427,
-      height: 300,
-      minWidth: 427,
-      minHeight: 300,
-      title: 'Headset - Player',
-      icon: path.join(__dirname, 'icons', 'Icon.icns'),
-    });
 
     setTimeout(() => {
       player.minimize();
@@ -81,20 +80,6 @@ const start = () => {
     } else {
       player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
-
-    player.webContents.on('did-finish-load', () => {
-      logger('Player window finished loading');
-      win.focus();
-    });
-
-    player.on('close', (e) => {
-      if (!willQuitApp) {
-        logger('Attempted to close Player window while Headset running');
-        dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
-        e.preventDefault();
-      }
-    });
-
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
@@ -135,6 +120,19 @@ const start = () => {
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
   }); // end did-finish-load
 
+  player.webContents.on('did-finish-load', () => {
+    logger('Player window finished loading');
+    win.focus();
+  });
+
+  player.on('close', (e) => {
+    if (!willQuitApp) {
+      logger('Attempted to close Player window while Headset running');
+      dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
+      e.preventDefault();
+    }
+  });
+
   win.on('close', (e) => {
     logger('Closing Headset');
     if (willQuitApp) {
@@ -160,8 +158,7 @@ app.on('ready', start);
 
 /*
  * This is the proxy between the 2 windows.
- * it receives messages from a renderrer
- * and send them to the other renderrer
+ * It receives messages from a renderer and send them to the other renderer
 */
 ipcMain.on('win2Player', (e, args) => {
   logWin2Player('%O', args);
