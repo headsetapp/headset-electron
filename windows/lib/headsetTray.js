@@ -8,27 +8,26 @@ const executeTrayCommand = (win, key) => {
   `);
 };
 
-module.exports = (tray, win, player) => {
-  logger.info('Setting tray');
+module.exports = (tray, win, player, i18n) => {
+  logger('Setting tray');
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Minimize to tray',
+      label: i18n.t('Minimize'),
       click: () => {
         logger.info('Minimizing to tray');
-
         win.isVisible() ? win.hide() : win.show();
         player.isVisible() ? player.hide() : player.show();
       },
     },
     { type: 'separator' },
-    { label: 'Play/Pause', click: () => { executeTrayCommand(win, 'play-pause'); } },
-    { label: 'Next', click: () => { executeTrayCommand(win, 'play-next'); } },
-    { label: 'Previous', click: () => { executeTrayCommand(win, 'play-previous'); } },
+    { label: i18n.t('Play/Pause'), click: () => { executeTrayCommand(win, 'play-pause'); } },
+    { label: i18n.t('Next'), click: () => { executeTrayCommand(win, 'play-next'); } },
+    { label: i18n.t('Previous'), click: () => { executeTrayCommand(win, 'play-previous'); } },
     { type: 'separator' },
-    { label: 'Like', click: () => { executeTrayCommand(win, 'like'); } },
+    { label: i18n.t('Like'), click: () => { executeTrayCommand(win, 'like'); } },
     { type: 'separator' },
-    { role: 'quit' },
+    { label: i18n.t('Exit'), role: 'quit' },
   ]);
 
   tray.setToolTip('Headset');
