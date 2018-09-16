@@ -74,12 +74,12 @@ const start = () => {
   new AutoUpdater();
 
   i18next.on('initialized', (options) => {
-    logger(`i18next has been initialized with ${JSON.stringify(options, null, 2)}`);
+    logger.info(`i18next has been initialized with ${JSON.stringify(options, null, 2)}`);
   });
 
   tray = new Tray(path.join(__dirname, 'icons', 'Headset.ico'));
   i18next.on('loaded', () => {
-    logger('i18next resources loaded');
+    logger.info('i18next resources loaded');
     headsetTray(tray, win, player, i18next);
   });
 
@@ -185,7 +185,7 @@ ipcMain.on('player2Win', (e, args) => {
 });
 
 ipcMain.on('change-locale', (e, lng) => {
-  logger(`Changing locale to: ${lng}`);
+  logger.info(`Changing locale to: ${lng}`);
 
   i18next.changeLanguage(lng);
   headsetTray(tray, win, player, i18next);

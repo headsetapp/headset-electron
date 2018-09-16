@@ -9,7 +9,7 @@ const executeTrayCommand = (win, key) => {
 };
 
 module.exports = (tray, win, player, i18n) => {
-  logger('Setting tray');
+  logger.info('Setting tray');
 
   const contextMenu = Menu.buildFromTemplate([
     {
