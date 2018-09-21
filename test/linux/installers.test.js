@@ -1,7 +1,7 @@
 const fs = require('fs');
-const packJson = require('../../linux/package.json');
 const path = require('path');
 const { exec } = require('child_process');
+const packJson = require('../../linux/package.json');
 
 const packagePath = path.join(__dirname, '..', '..', 'linux', 'build', 'installers');
 const debPackage = `headset_${packJson.version}_amd64.deb`;

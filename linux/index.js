@@ -23,16 +23,20 @@ const isDev = (process.env.NODE_ENV === 'development');
 
 logger('Running as developer: %o', isDev);
 
-const shouldQuit = app.makeSingleInstance(() => {
+const gotLock = app.requestSingleInstanceLock();
+if (!gotLock) {
+  logger('Exiting, this is a second instance running');
+  app.exit();
+}
+
+app.on('second-instance', () => {
   // Someone tried to run a second instance, we should focus our window.
-  logger('Second instance of Headset found');
+  logger('Second instance of Headset found, focusing');
   if (win) {
     if (win.isMinimized()) win.restore();
     win.focus();
   }
 });
-
-if (shouldQuit) app.quit();
 
 const start = () => {
   logger('Starting Headset');
