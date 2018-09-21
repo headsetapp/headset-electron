@@ -18,18 +18,18 @@
     "build": "npm run pack && npm run dist"
   },
   "dependencies": {
-    "debug": "^3.1.0",
+    "debug": "^4.0.1",
     "electron-default-menu": "^1.0.1",
-    "electron-window-state": "^4.1.1",
+    "electron-window-state": "^5.0.1",
     "headset-autoupdater": "0.0.1",
     "i18next": "^11.9.0",
     "i18next-node-remote-backend": "^1.0.0"
   },
   "devDependencies": {
     "create-dmg": "^3.1.0",
-    "electron": "^2.0.2",
+    "electron": "^3.0.0",
     "electron-osx-sign": "^0.4.10",
-    "electron-packager": "^12.1.0",
+    "electron-packager": "^12.1.2",
     "foreman": "^3.0.1",
     "http-server": "^0.11.1",
     "iconutil": "^1.0.2"
