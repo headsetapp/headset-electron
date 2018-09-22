@@ -10,12 +10,12 @@ const executeTrayCommand = (win, key) => {
   `);
 };
 
-module.exports = (tray, win, player) => {
+module.exports = (tray, win, player, i18n) => {
   logger('Setting tray');
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Minimize to tray',
+      label: i18n.t('wrapper:Minimize'),
       click: () => {
         logger('Minimizing to tray');
         win.isVisible() ? win.hide() : win.show();
@@ -23,13 +23,13 @@ module.exports = (tray, win, player) => {
       },
     },
     { type: 'separator' },
-    { label: 'Play/Pause', click: () => { executeTrayCommand(win, 'play-pause'); } },
-    { label: 'Next', click: () => { executeTrayCommand(win, 'play-next'); } },
-    { label: 'Previous', click: () => { executeTrayCommand(win, 'play-previous'); } },
+    { label: i18n.t('wrapper:Play/Pause'), click: () => { executeTrayCommand(win, 'play-pause'); } },
+    { label: i18n.t('wrapper:Next'), click: () => { executeTrayCommand(win, 'play-next'); } },
+    { label: i18n.t('wrapper:Previous'), click: () => { executeTrayCommand(win, 'play-previous'); } },
     { type: 'separator' },
-    { label: 'Like', click: () => { executeTrayCommand(win, 'like'); } },
+    { label: i18n.t('wrapper:Like'), click: () => { executeTrayCommand(win, 'like'); } },
     { type: 'separator' },
-    { role: 'quit' },
+    { label: i18n.t('wrapper:Exit'), role: 'quit' },
   ]);
 
   tray.setToolTip('Headset');

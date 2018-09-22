@@ -4,8 +4,10 @@ const defaultMenu = require('electron-default-menu');
 const windowStateKeeper = require('electron-window-state');
 const AutoUpdater = require('headset-autoupdater');
 const path = require('path');
-const { version } = require('./package');
+
 const headsetTray = require('./lib/headsetTray');
+const i18next = require('./lib/i18nextConfig');
+const { version } = require('./package');
 
 const logger = debug('headset');
 const logPlayer2Win = debug('headset:player2Win');
@@ -54,23 +56,32 @@ const start = () => {
     win.loadURL('https://danielravina.github.io/headset/app/');
   }
 
+  player = new BrowserWindow({
+    width: 427,
+    height: 300,
+    minWidth: 427,
+    minHeight: 300,
+    title: 'Headset - Player',
+    icon: path.join(__dirname, 'icons', 'Icon.icns'),
+  });
+
   new AutoUpdater({
     // allows the updater to close the app properly
     onBeforeQuit: () => { willQuitApp = true; },
   });
 
+  i18next.on('initialized', (options) => {
+    logger(`i18next has been initialized with ${JSON.stringify(options, null, 2)}`);
+  });
+
+  tray = new Tray(path.join(__dirname, 'icons', 'Headset.png'));
+  i18next.on('loaded', () => {
+    logger('i18next resources loaded');
+    headsetTray(tray, win, player, i18next);
+  });
+
   win.webContents.on('did-finish-load', () => {
     logger('Main window finished loading');
-    if (player) return;
-
-    player = new BrowserWindow({
-      width: 427,
-      height: 300,
-      minWidth: 427,
-      minHeight: 300,
-      title: 'Headset - Player',
-      icon: path.join(__dirname, 'icons', 'Icon.icns'),
-    });
 
     setTimeout(() => {
       player.minimize();
@@ -81,20 +92,6 @@ const start = () => {
     } else {
       player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
-
-    player.webContents.on('did-finish-load', () => {
-      logger('Player window finished loading');
-      win.focus();
-    });
-
-    player.on('close', (e) => {
-      if (!willQuitApp) {
-        logger('Attempted to close Player window while Headset running');
-        dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
-        e.preventDefault();
-      }
-    });
-
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
@@ -122,9 +119,6 @@ const start = () => {
       `);
     });
 
-    tray = new Tray(path.join(__dirname, 'icons', 'Headset.png'));
-    headsetTray(tray, win, player);
-
     if (isDev) {
       win.webContents.openDevTools();
       // player.webContents.openDevTools();
@@ -134,6 +128,19 @@ const start = () => {
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
   }); // end did-finish-load
+
+  player.webContents.on('did-finish-load', () => {
+    logger('Player window finished loading');
+    win.focus();
+  });
+
+  player.on('close', (e) => {
+    if (!willQuitApp) {
+      logger('Attempted to close Player window while Headset running');
+      dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
+      e.preventDefault();
+    }
+  });
 
   win.on('close', (e) => {
     logger('Closing Headset');
@@ -160,8 +167,7 @@ app.on('ready', start);
 
 /*
  * This is the proxy between the 2 windows.
- * it receives messages from a renderrer
- * and send them to the other renderrer
+ * It receives messages from a renderer and send them to the other renderer
 */
 ipcMain.on('win2Player', (e, args) => {
   logWin2Player('%O', args);
@@ -175,4 +181,11 @@ ipcMain.on('player2Win', (e, args) => {
   try {
     win.webContents.send('player2Win', args);
   } catch (err) { /* window already closed */ }
+});
+
+ipcMain.on('change-locale', (e, lng) => {
+  logger(`Changing locale to: ${lng}`);
+
+  i18next.changeLanguage(lng);
+  headsetTray(tray, win, player, i18next);
 });

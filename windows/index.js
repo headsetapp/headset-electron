@@ -1,12 +1,14 @@
-const electron = require('electron');
 const { exec } = require('child_process');
+const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
 const squirrel = require('electron-squirrel-startup');
 const AutoUpdater = require('headset-autoupdater');
 const path = require('path');
+
 const { version } = require('./package');
 const headsetTray = require('./lib/headsetTray');
 const logger = require('./lib/headset-logger');
+const i18next = require('./lib/i18nextConfig');
 
 const {
   app,
@@ -60,20 +62,29 @@ const start = () => {
     win.loadURL('https://danielravina.github.io/headset/app/');
   }
 
+  player = new BrowserWindow({
+    width: 427,
+    height: 300,
+    minWidth: 430,
+    minHeight: 310,
+    title: 'Headset - Player',
+    icon: path.join(__dirname, 'icons', 'Headset.ico'),
+  });
+
   new AutoUpdater();
+
+  i18next.on('initialized', (options) => {
+    logger.info(`i18next has been initialized with ${JSON.stringify(options, null, 2)}`);
+  });
+
+  tray = new Tray(path.join(__dirname, 'icons', 'Headset.ico'));
+  i18next.on('loaded', () => {
+    logger.info('i18next resources loaded');
+    headsetTray(tray, win, player, i18next);
+  });
 
   win.webContents.on('did-finish-load', () => {
     logger.info('Main window finished loading');
-    if (player) return;
-
-    player = new BrowserWindow({
-      width: 427,
-      height: 300,
-      minWidth: 430,
-      minHeight: 310,
-      title: 'Headset - Player',
-      icon: path.join(__dirname, 'icons', 'Headset.ico'),
-    });
 
     setTimeout(() => {
       player.minimize();
@@ -84,21 +95,6 @@ const start = () => {
     } else {
       player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
-
-    player.webContents.on('did-finish-load', () => {
-      logger.info('Player window finished loading');
-      win.focus();
-    });
-
-    player.on('close', (e) => {
-      if (win) {
-        logger.info('Attempted to close Player window while Headset running');
-        e.preventDefault();
-      } else {
-        logger.info('Closing Player window and killing Headset');
-        exec('taskkill /F /IM Headset.exe');
-      }
-    });
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
@@ -129,13 +125,25 @@ const start = () => {
       `);
     });
 
-    tray = new Tray(path.join(__dirname, 'icons', 'Headset.ico'));
-    headsetTray(tray, win, player);
-
     if (isDev) {
       win.webContents.openDevTools();
     }
   }); // end did-finish-load
+
+  player.webContents.on('did-finish-load', () => {
+    logger.info('Player window finished loading');
+    win.focus();
+  });
+
+  player.on('close', (e) => {
+    if (win) {
+      logger.info('Attempted to close Player window while Headset running');
+      e.preventDefault();
+    } else {
+      logger.info('Closing Player window and killing Headset');
+      exec('taskkill /F /IM Headset.exe');
+    }
+  });
 
   win.on('close', () => {
     logger.info('Closing Headset');
@@ -160,8 +168,7 @@ app.on('browser-window-created', (e, window) => {
 });
 /*
  * This is the proxy between the 2 windows.
- * it receives messages from a renderer
- * and send them to the other renderer
+ * It receives messages from a renderer and send them to the other renderer
 */
 ipcMain.on('win2Player', (e, args) => {
   logger.win2Player(args);
@@ -175,4 +182,11 @@ ipcMain.on('player2Win', (e, args) => {
   try {
     win.webContents.send('player2Win', args);
   } catch (err) { /* window already closed */ }
+});
+
+ipcMain.on('change-locale', (e, lng) => {
+  logger.info(`Changing locale to: ${lng}`);
+
+  i18next.changeLanguage(lng);
+  headsetTray(tray, win, player, i18next);
 });
