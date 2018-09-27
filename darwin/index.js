@@ -19,7 +19,6 @@ const {
   globalShortcut,
   Menu,
   ipcMain,
-  dialog,
   shell,
   Tray,
 } = electron;
@@ -61,6 +60,7 @@ const start = () => {
     height: 300,
     minWidth: 427,
     minHeight: 300,
+    closable: false,
     title: 'Headset - Player',
     icon: path.join(__dirname, 'icons', 'Icon.icns'),
   });
@@ -137,17 +137,16 @@ const start = () => {
   player.on('close', (e) => {
     if (!willQuitApp) {
       logger('Attempted to close Player window while Headset running');
-      dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
       e.preventDefault();
+    } else {
+      logger('Closing Player window');
     }
   });
 
   win.on('close', (e) => {
-    logger('Closing Headset');
     if (willQuitApp) {
       // the user tried to quit the app
-      player = null;
-      win = null;
+      logger('Closing Headset');
     } else {
       // the user only tried to close the win
       e.preventDefault();
@@ -162,7 +161,10 @@ const start = () => {
 }; // end start
 
 app.on('activate', () => { win.show(); });
-app.on('before-quit', () => { willQuitApp = true; });
+app.on('before-quit', () => {
+  willQuitApp = true;
+  player.setClosable(true);
+});
 app.on('ready', start);
 
 /*
