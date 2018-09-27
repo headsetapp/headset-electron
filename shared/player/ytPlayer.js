@@ -93,7 +93,7 @@ class YTPlayer {
   listenToWin() {
     window.ipcRenderer.on('win2Player', (e, args) => {
       const [command, data] = args;
-      this[command](data);
+      if (command !== 'trackInfo') this[command](data);
     });
   }
 
@@ -130,6 +130,9 @@ window.onYouTubePlayerAPIReady = () => {
       },
       onStateChange(e) {
         yt.setState(e.data);
+      },
+      onError() {
+        yt.send('onEnd', true);
       },
     },
   });
