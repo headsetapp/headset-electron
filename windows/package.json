@@ -27,7 +27,7 @@
     "i18next-node-remote-backend": "^1.0.0"
   },
   "devDependencies": {
-    "electron": "^1.8.7",
+    "electron": "^3.0.1",
     "electron-installer-windows": "^1.1.0",
     "electron-packager": "^12.1.2",
     "foreman": "^3.0.1",

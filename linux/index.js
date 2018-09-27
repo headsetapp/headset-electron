@@ -20,7 +20,6 @@ let win;
 let player;
 
 const isDev = (process.env.NODE_ENV === 'development');
-
 logger('Running as developer: %o', isDev);
 
 const gotLock = app.requestSingleInstanceLock();
