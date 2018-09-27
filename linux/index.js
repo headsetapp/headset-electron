@@ -1,4 +1,3 @@
-const { exec } = require('child_process');
 const debug = require('debug');
 const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
@@ -114,9 +113,7 @@ const start = () => {
       logger('Attempted to close Player window while Headset running');
       e.preventDefault();
     } else {
-      logger('Closing Player window and killing Headset');
-      player = null;
-      exec('kill -9 $(pgrep headset) &> /dev/null');
+      logger('Closing Player window');
     }
   });
 
@@ -134,6 +131,11 @@ const start = () => {
 
 app.on('activate', () => win.show());
 app.on('ready', start);
+
+app.on('window-all-closed', () => {
+  logger.info('App is quitting');
+  app.exit();
+});
 
 app.on('browser-window-created', (e, window) => {
   window.setMenu(null);

@@ -1,4 +1,3 @@
-const { exec } = require('child_process');
 const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
 const squirrel = require('electron-squirrel-startup');
@@ -73,6 +72,7 @@ const start = () => {
     height: 300,
     minWidth: 430,
     minHeight: 310,
+    closable: false,
     title: 'Headset - Player',
     icon: path.join(__dirname, 'icons', 'Headset.ico'),
   });
@@ -146,17 +146,16 @@ const start = () => {
       logger.info('Attempted to close Player window while Headset running');
       e.preventDefault();
     } else {
-      logger.info('Closing Player window and killing Headset');
-      exec('taskkill /F /IM Headset.exe');
+      logger.info('Closing Player window');
     }
   });
 
   win.on('close', () => {
-    logger.info('Closing Headset');
+    logger.info('Closing Main window');
     win = null;
     // after app closes in Win, the global shortcuts are still up, disabling it here.
     globalShortcut.unregisterAll();
-    if (player === undefined) return;
+    player.setClosable(true);
     player.close();
   });
 
@@ -168,6 +167,11 @@ const start = () => {
 
 app.on('activate', () => { win.show(); });
 app.on('ready', start);
+
+app.on('window-all-closed', () => {
+  logger.info('App is quitting');
+  app.exit();
+});
 
 app.on('browser-window-created', (e, window) => {
   window.setMenu(null);
