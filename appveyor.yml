@@ -11,7 +11,7 @@ environment:
 
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm i -g  npm@6.1.0
+  - npm i -g npm@6.4.1
   - npm ci
   - cd windows && npm ci && cd..
 

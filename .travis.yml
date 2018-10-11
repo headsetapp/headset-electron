@@ -22,12 +22,12 @@ addons:
     - createrepo
 
 before_install:
-- npm i -g npm@6.1.0
+- npm i -g npm@6.4.1
 
 install:
 - npm ci
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd linux && npm ci && cd ..; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd darwin && npm i && cd ..; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd darwin && npm ci && cd ..; fi
 
 before_script:
 - ./bin/travis_eslint.sh
