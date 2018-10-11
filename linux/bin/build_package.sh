@@ -20,4 +20,6 @@ find $source -type f -exec chmod 0644 {} +
 chmod 0755 $source/headset
 chmod 0755 $source/resources
 chmod 0755 $source/locales
+chmod 0755 bin/debian_scripts/postinst
+chmod 0755 bin/debian_scripts/postrm
 echo -e 'Done'
