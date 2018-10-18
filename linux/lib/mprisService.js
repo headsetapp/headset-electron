@@ -99,12 +99,6 @@ module.exports = (win, player) => {
 
   ipcMain.on('win2Player', (e, args) => {
     switch (args[0]) {
-      case 'playVideo':
-        mprisPlayer.playbackStatus = 'Playing';
-        break;
-      case 'pauseVideo':
-        mprisPlayer.playbackStatus = 'Paused';
-        break;
       case 'setVolume':
         mprisPlayer.volume = (args[1] / 100) + 1e-15;
         break;
@@ -130,9 +124,16 @@ module.exports = (win, player) => {
   });
 
   ipcMain.on('player2Win', (e, args) => {
-    if (args[0] === 'currentTime') {
-      // int64 in microseconds. nodejs dbus doesn't support int64 (bug)
-      mprisPlayer.position = Math.round(args[1] * 1e6);
+    switch (args[0]) {
+      case 'currentTime':
+        // int64 in microseconds. nodejs dbus doesn't support int64 (bug)
+        mprisPlayer.position = Math.round(args[1] * 1e6);
+        break;
+      case 'onStateChange':
+        if (args[1] === 1) mprisPlayer.playbackStatus = 'Playing';
+        if (args[1] === 2) mprisPlayer.playbackStatus = 'Paused';
+        break;
+      default:
     }
   });
 };
