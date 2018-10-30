@@ -120,7 +120,6 @@ module.exports = (win, player) => {
       }
       default:
     }
-    logger('Playback status: %o', mprisPlayer.playbackStatus);
   });
 
   ipcMain.on('player2Win', (e, args) => {
@@ -132,6 +131,7 @@ module.exports = (win, player) => {
       case 'onStateChange':
         if (args[1] === 1) mprisPlayer.playbackStatus = 'Playing';
         if (args[1] === 2) mprisPlayer.playbackStatus = 'Paused';
+        logger('Playback status: %o', mprisPlayer.playbackStatus);
         break;
       default:
     }
