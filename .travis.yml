@@ -21,9 +21,6 @@ addons:
     - reprepro
     - createrepo
 
-before_install:
-- npm i -g npm@6.4.1
-
 install:
 - npm ci
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd linux && npm ci && cd ..; fi
