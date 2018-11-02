@@ -20,6 +20,7 @@
     "repo": "NEW_VERSION=$npm_package_version ./bin/linux_repo.sh"
   },
   "dependencies": {
+    "dbus-native": "^0.2.5",
     "debug": "^3.1.0",
     "electron-window-state": "^4.1.1",
     "mpris-service": "^1.1.4"
