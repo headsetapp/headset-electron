@@ -3,7 +3,6 @@ const debug = require('debug');
 const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
 const mprisService = require('./lib/mprisService.js');
-const registerMediaKeys = require('./lib/registerMediaKeys.js');
 const { version } = require('./package');
 
 const logger = debug('headset');
@@ -87,7 +86,6 @@ const start = () => {
     try {
       logger('Initializing MPRIS and registering MediaKeys');
       mprisService(win, player);
-      registerMediaKeys(win);
     } catch (err) {
       console.error(err);
     }
