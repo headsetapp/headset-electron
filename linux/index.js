@@ -1,4 +1,3 @@
-const { exec } = require('child_process');
 const debug = require('debug');
 const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
@@ -89,7 +88,7 @@ const start = () => {
 
     try {
       logger('Initializing MPRIS and registering MediaKeys');
-      mprisService(win, player);
+      mprisService(win, player, app);
       registerMediaKeys(win);
     } catch (err) {
       console.error(err);
@@ -116,7 +115,7 @@ const start = () => {
     } else {
       logger('Closing Player window and killing Headset');
       player = null;
-      exec('kill -9 $(pgrep headset) &> /dev/null');
+      app.exit();
     }
   });
 

@@ -1,5 +1,4 @@
 const { ipcMain } = require('electron');
-const { exec } = require('child_process');
 const debug = require('debug');
 const mpris = require('mpris-service');
 
@@ -17,7 +16,7 @@ function changeVolumeState(win, volume) {
   `);
 }
 
-module.exports = (win, player) => {
+module.exports = (win, player, app) => {
   const mprisPlayer = mpris({
     name: 'headset',
     identity: 'Headset',
@@ -39,7 +38,7 @@ module.exports = (win, player) => {
 
   mprisPlayer.on('quit', () => {
     logger('Quitting Headset');
-    exec('kill -9 $(pgrep headset) &> /dev/null');
+    app.exit();
   });
 
   mprisPlayer.on('rate', () => {

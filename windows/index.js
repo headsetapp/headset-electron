@@ -1,4 +1,3 @@
-const { exec } = require('child_process');
 const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
 const squirrel = require('electron-squirrel-startup');
@@ -147,7 +146,7 @@ const start = () => {
       e.preventDefault();
     } else {
       logger.info('Closing Player window and killing Headset');
-      exec('taskkill /F /IM Headset.exe');
+      app.exit();
     }
   });
 
