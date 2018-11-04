@@ -48,6 +48,7 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hiddenInset',
+    useContentSize: true,
     icon: path.join(__dirname, 'icons', 'Icon.icns'),
   });
 

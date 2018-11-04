@@ -49,6 +49,7 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hiddenInset',
+    useContentSize: true,
     icon: 'icon.png',
     frame: true,
   });
