@@ -21,17 +21,17 @@
   },
   "dependencies": {
     "dbus-native": "^0.2.5",
-    "debug": "^3.1.0",
-    "electron-window-state": "^4.1.1",
+    "debug": "^4.1.0",
+    "electron-window-state": "^5.0.2",
     "mpris-service": "^1.1.4"
   },
   "devDependencies": {
     "electron": "^2.0.2",
-    "electron-installer-debian": "^0.8.1",
+    "electron-installer-debian": "^1.0.0",
     "electron-installer-redhat": "^0.5.0",
-    "electron-packager": "^12.1.0",
-    "electron-rebuild": "^1.7.3",
-    "foreman": "^3.0.0",
+    "electron-packager": "^12.2.0",
+    "electron-rebuild": "^1.8.2",
+    "foreman": "^3.0.1",
     "http-server": "^0.11.1"
   }
 }
