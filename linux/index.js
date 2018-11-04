@@ -20,8 +20,10 @@ let win;
 let player;
 
 const isDev = (process.env.NODE_ENV === 'development');
-
 logger('Running as developer: %o', isDev);
+
+// Allows to autoplay video, which is disabled in newer versions of Chrome
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 
 const shouldQuit = app.makeSingleInstance(() => {
   // Someone tried to run a second instance, we should focus our window.

@@ -32,6 +32,9 @@ let willQuitApp = false;
 const isDev = (process.env.NODE_ENV === 'development');
 logger('Running as developer: %o', isDev);
 
+// Allows to autoplay video, which is disabled in newer versions of Chrome
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
+
 const start = () => {
   logger('Starting Headset');
   const mainWindowState = windowStateKeeper();
