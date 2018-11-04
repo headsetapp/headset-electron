@@ -46,12 +46,13 @@ const start = () => {
   win = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
-    width: 381,
-    height: 696,
+    width: 375,
+    height: 667,
     resizable: false,
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hiddenInset',
+    useContentSize: true,
     icon: path.join(__dirname, 'icons', 'Headset.ico'),
     frame: true,
   });
