@@ -117,7 +117,6 @@ window.onYouTubePlayerAPIReady = () => {
     width: '427',
     height: '240',
     playerVars: {
-      showinfo: 0,
       controls: 0,
       disablekb: 1,
       modestbranding: 1,
