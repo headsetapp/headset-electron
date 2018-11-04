@@ -28,16 +28,19 @@ logger.info(`Running as developer: ${isDev}`);
 // Allows to autoplay video, which is disabled in newer versions of Chrome
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 
-const shouldQuit = app.makeSingleInstance(() => {
-  // Someone tried to run a second instance, we should focus our window.
-  logger.info('Second instance of Headset found');
+// Exit the app if it starts from squirrel
+if (squirrel) app.exit();
+
+// Quit if second instance found and focus window of first instance
+if (!app.requestSingleInstanceLock()) app.exit();
+
+app.on('second-instance', () => {
+  logger('Second instance of Headset found');
   if (win) {
     if (win.isMinimized()) win.restore();
     win.focus();
   }
 });
-
-if (shouldQuit || squirrel) app.exit();
 
 const start = () => {
   logger.info('Starting Headset');
