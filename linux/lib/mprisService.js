@@ -49,8 +49,8 @@ module.exports = (win, player) => {
 
   mprisPlayer.on('playpause', () => {
     logger('Play-Pause received');
-    if (mprisPlayer.playbackStatus === 'Playing' ||
-        mprisPlayer.playbackStatus === 'Paused') {
+    if (mprisPlayer.playbackStatus === 'Playing'
+    || mprisPlayer.playbackStatus === 'Paused') {
       executeMediaKey(win, 'play-pause');
     }
   });
@@ -71,16 +71,16 @@ module.exports = (win, player) => {
 
   mprisPlayer.on('next', () => {
     logger('Next received');
-    if (mprisPlayer.playbackStatus === 'Playing' ||
-        mprisPlayer.playbackStatus === 'Paused') {
+    if (mprisPlayer.playbackStatus === 'Playing'
+    || mprisPlayer.playbackStatus === 'Paused') {
       executeMediaKey(win, 'play-next');
     }
   });
 
   mprisPlayer.on('previous', () => {
     logger('Previous received');
-    if (mprisPlayer.playbackStatus === 'Playing' ||
-        mprisPlayer.playbackStatus === 'Paused') {
+    if (mprisPlayer.playbackStatus === 'Playing'
+    || mprisPlayer.playbackStatus === 'Paused') {
       executeMediaKey(win, 'play-previous');
     }
   });
