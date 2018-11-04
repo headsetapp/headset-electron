@@ -26,7 +26,7 @@
     "mpris-service": "^1.1.4"
   },
   "devDependencies": {
-    "electron": "^2.0.2",
+    "electron": "^3.0.7",
     "electron-installer-debian": "^1.0.0",
     "electron-installer-redhat": "^0.5.0",
     "electron-packager": "^12.2.0",
