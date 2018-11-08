@@ -9,7 +9,7 @@ i18next
     defaultNS: 'wrapper',
     debug: false,
     backend: {
-      loadPath: 'https://raw.githubusercontent.com/headsetapp/headset-electron/locales/locales/{{ns}}/{{lng}}.json',
+      loadPath: 'https://raw.githubusercontent.com/headsetapp/headset-locales/master/locales/{{ns}}/{{lng}}.json',
     },
   });
 
