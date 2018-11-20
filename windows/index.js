@@ -72,6 +72,7 @@ const start = () => {
     height: 300,
     minWidth: 430,
     minHeight: 310,
+    closable: false,
     title: 'Headset - Player',
     icon: path.join(__dirname, 'icons', 'Headset.ico'),
   });
@@ -140,23 +141,11 @@ const start = () => {
     win.focus();
   });
 
-  player.on('close', (e) => {
-    if (win) {
-      logger.info('Attempted to close Player window while Headset running');
-      e.preventDefault();
-    } else {
-      logger.info('Closing Player window and killing Headset');
-      app.exit();
-    }
-  });
-
   win.on('close', () => {
     logger.info('Closing Headset');
-    win = null;
     // after app closes in Win, the global shortcuts are still up, disabling it here.
     globalShortcut.unregisterAll();
-    if (player === undefined) return;
-    player.close();
+    app.exit();
   });
 
   win.on('restore', (e) => {
