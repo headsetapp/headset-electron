@@ -1,4 +1,3 @@
-const { exec } = require('child_process');
 const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
 const squirrel = require('electron-squirrel-startup');
@@ -23,19 +22,24 @@ let player;
 let tray;
 
 const isDev = (process.env.NODE_ENV === 'development');
-
 logger.info(`Running as developer: ${isDev}`);
 
-const shouldQuit = app.makeSingleInstance(() => {
-  // Someone tried to run a second instance, we should focus our window.
-  logger.info('Second instance of Headset found');
+// Allows to autoplay video, which is disabled in newer versions of Chrome
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
+
+// Exit the app if it starts from squirrel
+if (squirrel) app.exit();
+
+// Quit if second instance found and focus window of first instance
+if (!app.requestSingleInstanceLock()) app.exit();
+
+app.on('second-instance', () => {
+  logger('Second instance of Headset found');
   if (win) {
     if (win.isMinimized()) win.restore();
     win.focus();
   }
 });
-
-if (shouldQuit || squirrel) app.exit();
 
 const start = () => {
   logger.info('Starting Headset');
@@ -44,12 +48,13 @@ const start = () => {
   win = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
-    width: 381,
-    height: 696,
+    width: 375,
+    height: 667,
     resizable: false,
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hiddenInset',
+    useContentSize: true,
     icon: path.join(__dirname, 'icons', 'Headset.ico'),
     frame: true,
   });
@@ -67,6 +72,7 @@ const start = () => {
     height: 300,
     minWidth: 430,
     minHeight: 310,
+    closable: false,
     title: 'Headset - Player',
     icon: path.join(__dirname, 'icons', 'Headset.ico'),
   });
@@ -91,7 +97,7 @@ const start = () => {
     }, 2000);
 
     if (isDev) {
-      player.loadURL('http://127.0.0.1:3001');
+      player.loadURL('http://lvh.me:3001');
     } else {
       player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
@@ -135,23 +141,11 @@ const start = () => {
     win.focus();
   });
 
-  player.on('close', (e) => {
-    if (win) {
-      logger.info('Attempted to close Player window while Headset running');
-      e.preventDefault();
-    } else {
-      logger.info('Closing Player window and killing Headset');
-      exec('taskkill /F /IM Headset.exe');
-    }
-  });
-
   win.on('close', () => {
     logger.info('Closing Headset');
-    win = null;
     // after app closes in Win, the global shortcuts are still up, disabling it here.
     globalShortcut.unregisterAll();
-    if (player === undefined) return;
-    player.close();
+    app.exit();
   });
 
   win.on('restore', (e) => {

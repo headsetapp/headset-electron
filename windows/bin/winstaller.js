@@ -13,9 +13,9 @@ if (typeof CERT_PASSWORD !== 'string' && APPVEYOR_REPO_TAG === 'true') {
 const options = {
   src: 'build/Headset-win32-ia32',
   dest: 'build/installers/',
-  productDescription: 'Headset is a desktop app that turns YouTube into a world class music streaming service.' +
-    'Create collections, tune-in to a music subreddit or quickly play that song ' +
-    'you’ve had stuck in your head all day!',
+  productDescription: 'Headset is a desktop app that turns YouTube into a world class music streaming service.'
+  + 'Create collections, tune-in to a music subreddit or quickly play that song '
+  + 'you’ve had stuck in your head all day!',
   icon: path.join(__dirname, '..', 'icons', 'Headset.ico'),
   noMsi: true,
   tags: ['headset', 'youtube', 'player', 'radio', 'music'],

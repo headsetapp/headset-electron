@@ -1,4 +1,4 @@
-const DBus = require('dbus');
+const DBus = require('dbus-native');
 const debug = require('debug');
 const { ipcMain } = require('electron');
 
@@ -30,11 +30,10 @@ function registerBindings(win, desktopEnv, bus) {
     interfaceName = 'org.gnome.SettingsDaemon.MediaKeys';
   }
 
-  bus.getInterface(serviceName, objectPath, interfaceName, (err, iface) => {
-    if (err) {
-      // dbus is showing "Error: No introspectable" that doesn't affect the code
-      return;
-    }
+  bus.getService(serviceName).getInterface(objectPath, interfaceName, (err, iface) => {
+    // Error when gnome|gnome3|mate is not found
+    if (err) return;
+
     iface.on('MediaPlayerKeyPressed', (n, keyName) => {
       logger('Media key pressed: %o', keyName);
       switch (keyName) {
@@ -52,7 +51,6 @@ function registerBindings(win, desktopEnv, bus) {
         default:
       }
     });
-
     iface.GrabMediaPlayerKeys('headset', 0);
     logger('Grabbed media keys for %o', desktopEnv);
   });
@@ -60,8 +58,7 @@ function registerBindings(win, desktopEnv, bus) {
 
 module.exports = (win) => {
   logger('Registering media Keys');
-  const dbus = new DBus();
-  const bus = dbus.getBus('session');
+  const bus = DBus.sessionBus();
 
   registerBindings(win, 'gnome', bus);
   registerBindings(win, 'gnome3', bus);

@@ -19,7 +19,6 @@ const {
   globalShortcut,
   Menu,
   ipcMain,
-  dialog,
   shell,
   Tray,
 } = electron;
@@ -27,10 +26,12 @@ const {
 let win;
 let player;
 let tray;
-let willQuitApp = false;
 
 const isDev = (process.env.NODE_ENV === 'development');
 logger('Running as developer: %o', isDev);
+
+// Allows to autoplay video, which is disabled in newer versions of Chrome
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 
 const start = () => {
   logger('Starting Headset');
@@ -45,6 +46,7 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hiddenInset',
+    useContentSize: true,
     icon: path.join(__dirname, 'icons', 'Icon.icns'),
   });
 
@@ -61,14 +63,12 @@ const start = () => {
     height: 300,
     minWidth: 427,
     minHeight: 300,
+    closable: false,
     title: 'Headset - Player',
     icon: path.join(__dirname, 'icons', 'Icon.icns'),
   });
 
-  new AutoUpdater({
-    // allows the updater to close the app properly
-    onBeforeQuit: () => { willQuitApp = true; },
-  });
+  new AutoUpdater();
 
   i18next.on('initialized', (options) => {
     logger(`i18next has been initialized with ${JSON.stringify(options, null, 2)}`);
@@ -88,7 +88,7 @@ const start = () => {
     }, 2000);
 
     if (isDev) {
-      player.loadURL('http://127.0.0.1:3001');
+      player.loadURL('http://lvh.me:3001');
     } else {
       player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
@@ -134,25 +134,11 @@ const start = () => {
     win.focus();
   });
 
-  player.on('close', (e) => {
-    if (!willQuitApp) {
-      logger('Attempted to close Player window while Headset running');
-      dialog.showErrorBox('Oops! 🤕', 'Sorry, player window cannot be closed. You can only minimize it.');
-      e.preventDefault();
-    }
-  });
-
   win.on('close', (e) => {
-    logger('Closing Headset');
-    if (willQuitApp) {
-      // the user tried to quit the app
-      player = null;
-      win = null;
-    } else {
-      // the user only tried to close the win
-      e.preventDefault();
-      win.hide();
-    }
+    logger('Minimize main Headset window');
+    // the user only tried to close the win
+    e.preventDefault();
+    win.hide();
   });
 
   win.on('restore', (e) => {
@@ -162,7 +148,11 @@ const start = () => {
 }; // end start
 
 app.on('activate', () => { win.show(); });
-app.on('before-quit', () => { willQuitApp = true; });
+app.on('before-quit', () => {
+  // willQuitApp = true;
+  player.setClosable(true);
+  app.exit();
+});
 app.on('ready', start);
 
 /*

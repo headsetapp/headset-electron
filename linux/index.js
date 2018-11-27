@@ -1,4 +1,3 @@
-const { exec } = require('child_process');
 const debug = require('debug');
 const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
@@ -20,19 +19,21 @@ let win;
 let player;
 
 const isDev = (process.env.NODE_ENV === 'development');
-
 logger('Running as developer: %o', isDev);
 
-const shouldQuit = app.makeSingleInstance(() => {
-  // Someone tried to run a second instance, we should focus our window.
+// Allows to autoplay video, which is disabled in newer versions of Chrome
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
+
+// Quit if second instance found and focus window of first instance
+if (!app.requestSingleInstanceLock()) app.exit();
+
+app.on('second-instance', () => {
   logger('Second instance of Headset found');
   if (win) {
     if (win.isMinimized()) win.restore();
     win.focus();
   }
 });
-
-if (shouldQuit) app.quit();
 
 const start = () => {
   logger('Starting Headset');
@@ -47,6 +48,7 @@ const start = () => {
     title: 'Headset',
     maximizable: false,
     titleBarStyle: 'hiddenInset',
+    useContentSize: true,
     icon: 'icon.png',
     frame: true,
   });
@@ -79,14 +81,14 @@ const start = () => {
     }, 2000);
 
     if (isDev) {
-      player.loadURL('http://127.0.0.1:3001');
+      player.loadURL('http://lvh.me:3001');
     } else {
       player.loadURL('http://danielravina.github.io/headset/player-v2');
     }
 
     try {
       logger('Initializing MPRIS and registering MediaKeys');
-      mprisService(win, player);
+      mprisService(win, player, app);
       registerMediaKeys(win);
     } catch (err) {
       console.error(err);
@@ -113,7 +115,7 @@ const start = () => {
     } else {
       logger('Closing Player window and killing Headset');
       player = null;
-      exec('kill -9 $(pgrep headset) &> /dev/null');
+      app.exit();
     }
   });
 

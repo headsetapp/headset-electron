@@ -1,5 +1,4 @@
 const { ipcMain } = require('electron');
-const { exec } = require('child_process');
 const debug = require('debug');
 const mpris = require('mpris-service');
 
@@ -17,7 +16,7 @@ function changeVolumeState(win, volume) {
   `);
 }
 
-module.exports = (win, player) => {
+module.exports = (win, player, app) => {
   const mprisPlayer = mpris({
     name: 'headset',
     identity: 'Headset',
@@ -39,7 +38,7 @@ module.exports = (win, player) => {
 
   mprisPlayer.on('quit', () => {
     logger('Quitting Headset');
-    exec('kill -9 $(pgrep headset) &> /dev/null');
+    app.exit();
   });
 
   mprisPlayer.on('rate', () => {
@@ -49,8 +48,8 @@ module.exports = (win, player) => {
 
   mprisPlayer.on('playpause', () => {
     logger('Play-Pause received');
-    if (mprisPlayer.playbackStatus === 'Playing' ||
-        mprisPlayer.playbackStatus === 'Paused') {
+    if (mprisPlayer.playbackStatus === 'Playing'
+    || mprisPlayer.playbackStatus === 'Paused') {
       executeMediaKey(win, 'play-pause');
     }
   });
@@ -71,16 +70,16 @@ module.exports = (win, player) => {
 
   mprisPlayer.on('next', () => {
     logger('Next received');
-    if (mprisPlayer.playbackStatus === 'Playing' ||
-        mprisPlayer.playbackStatus === 'Paused') {
+    if (mprisPlayer.playbackStatus === 'Playing'
+    || mprisPlayer.playbackStatus === 'Paused') {
       executeMediaKey(win, 'play-next');
     }
   });
 
   mprisPlayer.on('previous', () => {
     logger('Previous received');
-    if (mprisPlayer.playbackStatus === 'Playing' ||
-        mprisPlayer.playbackStatus === 'Paused') {
+    if (mprisPlayer.playbackStatus === 'Playing'
+    || mprisPlayer.playbackStatus === 'Paused') {
       executeMediaKey(win, 'play-previous');
     }
   });
@@ -120,7 +119,6 @@ module.exports = (win, player) => {
       }
       default:
     }
-    logger('Playback status: %o', mprisPlayer.playbackStatus);
   });
 
   ipcMain.on('player2Win', (e, args) => {
@@ -132,6 +130,7 @@ module.exports = (win, player) => {
       case 'onStateChange':
         if (args[1] === 1) mprisPlayer.playbackStatus = 'Playing';
         if (args[1] === 2) mprisPlayer.playbackStatus = 'Paused';
+        logger('Playback status: %o', mprisPlayer.playbackStatus);
         break;
       default:
     }
