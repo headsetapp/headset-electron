@@ -20,13 +20,13 @@
     "repo": "NEW_VERSION=$npm_package_version ./bin/linux_repo.sh"
   },
   "dependencies": {
-    "dbus-native": "^0.2.5",
+    "dbus-native": "^0.4.0",
     "debug": "^4.1.0",
-    "electron-window-state": "^5.0.2",
+    "electron-window-state": "^5.0.3",
     "mpris-service": "^1.1.4"
   },
   "devDependencies": {
-    "electron": "^3.0.7",
+    "electron": "^3.0.10",
     "electron-installer-debian": "^1.0.0",
     "electron-installer-redhat": "^0.5.0",
     "electron-packager": "^12.2.0",
