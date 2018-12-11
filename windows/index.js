@@ -34,7 +34,7 @@ if (squirrel) app.exit();
 if (!app.requestSingleInstanceLock()) app.exit();
 
 app.on('second-instance', () => {
-  logger('Second instance of Headset found');
+  logger.info('Second instance of Headset found');
   if (win) {
     if (win.isMinimized()) win.restore();
     win.focus();
