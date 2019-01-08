@@ -3,7 +3,8 @@
   "genericName": "Music Player",
   "productDescription": "Headset is a desktop app that turns YouTube into a world class music streaming service. Create collections, tune-in to a music subreddit or quickly play that song you’ve had stuck in your head all day!",
   "depends": [
-    "dbus"
+    "dbus",
+    "libc6"
   ],
   "section": "sound",
   "categories": [
