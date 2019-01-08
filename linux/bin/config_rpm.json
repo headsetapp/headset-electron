@@ -1,15 +1,17 @@
 {
   "icon": "icon.png",
   "requires": [
-    "dbus",
-    "libXScrnSaver"
+    "dbus"
   ],
-  "group": "Applications/Internet",
   "categories": [
     "GNOME",
     "GTK",
     "Audio",
     "Player",
     "Music"
-  ]
+  ],
+  "scripts": {
+    "post": "bin/redhat_scripts/post",
+    "postun": "bin/redhat_scripts/postun"
+  }
 }
