@@ -74,7 +74,7 @@ const start = () => {
     logger(`i18next has been initialized with ${JSON.stringify(options, null, 2)}`);
   });
 
-  tray = new Tray(path.join(__dirname, 'icons', 'Headset.png'));
+  tray = new Tray(path.join(__dirname, 'icons', 'HeadsetTemplate.png'));
   i18next.on('loaded', () => {
     logger('i18next resources loaded');
     headsetTray(tray, win, player, i18next);
