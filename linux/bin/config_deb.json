@@ -21,7 +21,7 @@
     "binary-without-manpage",
     "embedded-library",
     "hardening-no-relro",
-    "hardening-no-pie",
+    "unstripped-binary-or-object",
     "debian-changelog-file-missing"
   ]
 }
