@@ -30,7 +30,7 @@ console.log('Creating package (this may take a while)');
 installer(options)
   .then(() => console.log(`Successfully created package at ${options.dest}`))
   .catch((err) => {
-    console.log('Error creating package');
+    console.error('Error creating package');
     console.error(err, err.stack);
     process.exit(1);
   });
