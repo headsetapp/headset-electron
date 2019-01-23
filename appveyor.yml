@@ -1,6 +1,11 @@
 version: "{build}"
 
-os: unstable
+branches:
+  only:
+  - master
+  - /^v\d+\.\d+\.\d+/
+
+image: Visual Studio 2017
 
 clone_depth: 1
 
@@ -8,6 +13,9 @@ environment:
   nodejs_version: "8"
   CERT_PASSWORD:
     secure: BOXjWrY24hdw8EhsmLkP5RVxG/aY/16gnAt//DlVIHOadhfJWHgQfh+qI7oUkgP2
+
+cache:
+  - '%APPDATA%\npm-cache'
 
 install:
   - ps: Install-Product node $env:nodejs_version
@@ -26,9 +34,6 @@ build_script:
 test_script:
   - cd ..
   - npm run test:windows
-
-cache:
-  - '%APPDATA%\npm-cache'
 
 artifacts:
   - path: windows\build\installers\headset-*-setup.exe

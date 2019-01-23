@@ -1,13 +1,28 @@
 language: node_js
-
-node_js: "8"
+node_js: '10'
 
 os:
   - linux
   - osx
 
+dist: xenial
+osx_image: xcode10.1
+
+cache:
+  directories:
+  - "$HOME/.npm"
+
 git:
   depth: 1
+
+branches:
+  only:
+  - master
+  - /^v\d+\.\d+\.\d+/
+
+env:
+  global:
+    secure: nRtG4v+jNQbCQg/qhYwrPaBMuwGxG8z2+kfiV86dOzNy9+th5UTvcFWYFj05J024CBlqNuc6aykCQ3aBIngAWw5NMl9coAfcBh1z64FXZO4KPjk2rPJIm8E2v/wpISjB0GZOf4Vr6rHBrggXGjkDX+YGF4bd+xCylS6K1hVKbvGlnYf1HBx6ewWp9zqkqyYyB9Vif7AGe/dH5jTzqPNYtt+q4fffxlFTEMvz0L/60szlWFrCfMKLAjA/YY24FvWBExJZ/SqFqugHS9zlhwlLbCoN/sKBG7JlJJIlQvGUxX5upgJI1QJ/RMWLWg+6gkUgk2xNhBMNWF1Ys8kvzBLFLhWrVOH7QknwObJkc3SJkMz5J/rIkt1VrwG0vAymiVUAfSLGTwvuwoMfA8tkAF7zQtMwWUwU5E2CDfh0grPBF/VPQGCKX2VO425Yuw/S2FokeV7bDRyQP3yPnusSZlTX45XyE8EkssK7j+lOZnl0bjbENZJEH0qlh2orRsC/xihBpo4M49G/Xae3lAlDBp9si7tzRCoyTo4v2KzW/r5rdmrqrfgrSFugpLYJpQsUZVM7d2vU9sJB5TTQ2tZuEAB8UAQprgNQF7IS1xkPafq321KYv21YQbPiqi6nBIzRzDbEEbl4qavS9MnfXgAC4z+RYQiv3XM6FRABsHJhwiK7UuE=
 
 addons:
   apt:
@@ -41,10 +56,6 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run test:linux; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run test:darwin; fi
 
-cache:
-  directories:
-  - "$HOME/.npm"
-
 after_success:
 - if [[ "$TRAVIS_OS_NAME" == "linux" && -n "$TRAVIS_TAG" ]]; then
     cd linux &&
@@ -74,9 +85,6 @@ deploy:
   on:
     tags: true
     condition: $TRAVIS_OS_NAME = linux
-env:
-  global:
-    secure: nRtG4v+jNQbCQg/qhYwrPaBMuwGxG8z2+kfiV86dOzNy9+th5UTvcFWYFj05J024CBlqNuc6aykCQ3aBIngAWw5NMl9coAfcBh1z64FXZO4KPjk2rPJIm8E2v/wpISjB0GZOf4Vr6rHBrggXGjkDX+YGF4bd+xCylS6K1hVKbvGlnYf1HBx6ewWp9zqkqyYyB9Vif7AGe/dH5jTzqPNYtt+q4fffxlFTEMvz0L/60szlWFrCfMKLAjA/YY24FvWBExJZ/SqFqugHS9zlhwlLbCoN/sKBG7JlJJIlQvGUxX5upgJI1QJ/RMWLWg+6gkUgk2xNhBMNWF1Ys8kvzBLFLhWrVOH7QknwObJkc3SJkMz5J/rIkt1VrwG0vAymiVUAfSLGTwvuwoMfA8tkAF7zQtMwWUwU5E2CDfh0grPBF/VPQGCKX2VO425Yuw/S2FokeV7bDRyQP3yPnusSZlTX45XyE8EkssK7j+lOZnl0bjbENZJEH0qlh2orRsC/xihBpo4M49G/Xae3lAlDBp9si7tzRCoyTo4v2KzW/r5rdmrqrfgrSFugpLYJpQsUZVM7d2vU9sJB5TTQ2tZuEAB8UAQprgNQF7IS1xkPafq321KYv21YQbPiqi6nBIzRzDbEEbl4qavS9MnfXgAC4z+RYQiv3XM6FRABsHJhwiK7UuE=
 
 notifications:
   slack:
