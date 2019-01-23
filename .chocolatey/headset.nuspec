@@ -16,7 +16,7 @@
     <releaseNotes>https://github.com/headsetapp/headset-electron/releases/tag/v2.1.1</releaseNotes>
     <description>Headset is a desktop app that turns YouTube into a world class music streaming service. Create collections, tune-in to a music subreddit or quickly play that song you've had stuck in your head all day!</description>
     <summary>Discover and collect music on YouTube</summary>
-    <copyright>Copyright © 2018 Daniel Ravina</copyright>
+    <copyright>Copyright © 2019 Daniel Ravina</copyright>
     <tags>headset youtube player radio music</tags>
   </metadata>
 </package>
