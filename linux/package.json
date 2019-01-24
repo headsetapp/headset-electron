@@ -14,7 +14,7 @@
     "player": "./bin/player-window.sh",
     "production-like": "NODE_ENV=production electron .",
     "pack": "NODE_ENV=production ./bin/build_package.sh",
-    "dist": "NODE_ENV=production ./bin/build_installers.sh",
+    "dist": "NODE_ENV=production ./bin/build_installer.sh",
     "build": "npm run pack && npm run dist",
     "postinstall": "electron-rebuild",
     "repo": "NEW_VERSION=$npm_package_version ./bin/linux_repo.sh"
