@@ -1,5 +1,6 @@
 const packager = require('electron-packager');
 const path = require('path');
+const setLanguages = require('electron-packager-languages');
 
 const options = {
   dir: '.',
@@ -12,6 +13,9 @@ const options = {
   prune: true,
   overwrite: true,
   ignore: [/^Procfile$/, /^\/sig$/, /^\/bin$/],
+  afterCopy: [setLanguages([
+    'en', 'en-US', 'es', 'de',
+  ])],
 };
 
 packager(options)

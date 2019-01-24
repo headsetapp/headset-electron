@@ -30,6 +30,7 @@
     "electron": "^4.0.2",
     "electron-installer-windows": "^1.1.0",
     "electron-packager": "^13.0.1",
+    "electron-packager-languages": "^0.3.0",
     "foreman": "^3.0.1",
     "http-server": "^0.11.1"
   }
