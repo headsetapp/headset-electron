@@ -3,17 +3,8 @@
 set -e
 
 source="build/Headset-linux-x64"
-ignoring="(^Procfile$|^/gh-pages$|^/sig$|^/bin$)"
 
-electron-packager . \
-  --executable-name headset \
-  --ignore $ignoring \
-  --prune true \
-  --out build/ \
-  --overwrite \
-  --asar \
-  --platform=linux \
-  --arch=x64
+node bin/packager.js
 
 echo -e '\n\033[1mFixing various file permissions: \033[01;0m'
 find $source -type f -exec chmod 0644 {} +
