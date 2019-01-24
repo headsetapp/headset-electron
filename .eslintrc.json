@@ -23,6 +23,7 @@
     "import/core-modules": [
       "electron",
       "electron-packager",
+      "electron-packager-languages",
       "electron-installer-windows"
       ]
   },
