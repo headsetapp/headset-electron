@@ -23,11 +23,11 @@
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
     "headset-autoupdater": "0.0.1",
-    "i18next": "^13.1.0",
+    "i18next": "^14.0.0",
     "i18next-node-remote-backend": "^1.0.0"
   },
   "devDependencies": {
-    "electron": "^4.0.1",
+    "electron": "^4.0.2",
     "electron-installer-windows": "^1.1.0",
     "electron-packager": "^13.0.1",
     "foreman": "^3.0.1",
