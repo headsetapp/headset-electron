@@ -36,6 +36,9 @@ addons:
     - reprepro
     - createrepo
 
+services:
+  - xvfb
+
 install:
 - npm ci
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd linux && npm ci && cd ..; fi
@@ -43,12 +46,7 @@ install:
 
 before_script:
 - ./bin/travis_eslint.sh
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    export DISPLAY=:99.0 &&
-    sh -e /etc/init.d/xvfb start &&
-    sleep 3 &&
-    cd linux;
-  fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd linux; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd darwin; fi
 
 script:
