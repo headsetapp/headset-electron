@@ -1,18 +1,16 @@
 const packager = require('electron-packager');
-const path = require('path');
 const setLanguages = require('electron-packager-languages');
 
 const options = {
   dir: '.',
   out: 'build',
   executableName: 'headset',
-  icon: path.join(__dirname, '..', 'icons', 'Headset.ico'),
-  platform: 'win32',
-  arch: 'ia32',
+  platform: 'linux',
+  arch: 'x64',
   asar: true,
   prune: true,
   overwrite: true,
-  ignore: [/^Procfile$/, /^\/sig$/, /^\/bin$/],
+  ignore: [/^Procfile$/, /^\/gh-pages$/, /^\/sig$/, /^\/bin$/],
   afterCopy: [setLanguages([
     'en', 'en-US', 'es', 'de',
   ])],

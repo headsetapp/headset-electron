@@ -5,16 +5,20 @@ const setLanguages = require('electron-packager-languages');
 const options = {
   dir: '.',
   out: 'build',
-  executableName: 'headset',
-  icon: path.join(__dirname, '..', 'icons', 'Headset.ico'),
-  platform: 'win32',
-  arch: 'ia32',
+  executableName: 'Headset',
+  icon: path.join(__dirname, '..', 'icons', 'Icon.icns'),
+  platform: 'darwin',
+  arch: 'x64',
   asar: true,
   prune: true,
   overwrite: true,
+  osxSign: true,
+  darwinDarkModeSupport: true,
+  appBundleId: 'co.headsetapp.app',
+  appCategoryType: 'public.app-category.music',
   ignore: [/^Procfile$/, /^\/sig$/, /^\/bin$/],
   afterCopy: [setLanguages([
-    'en', 'en-US', 'es', 'de',
+    'en', 'es', 'de',
   ])],
 };
 

@@ -2,8 +2,6 @@
 
 set -e
 
-ignoring="(^Procfile$|^/sig$|^/bin$)"
-
 if [[ "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_REPO_SLUG" == "headsetapp/headset-electron" && -n "$TRAVIS_TAG" ]]; then
   KEY_CHAIN=mac-build.keychain
   security create-keychain -p travis $KEY_CHAIN
@@ -26,17 +24,4 @@ if [[ "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_REPO_SLUG" == "headsetapp/headset-e
   security set-key-partition-list -S apple-tool:,apple: -s -k travis $KEY_CHAIN
 fi
 
-electron-packager . \
-  --executable-name Headset \
-  --platform=darwin \
-  --arch=x64 \
-  --asar \
-  --ignore=$ignoring \
-  --prune true \
-  --icon=icons/Icon.icns \
-  --out build \
-  --overwrite \
-  --app-bundle-id="co.headsetapp.app" \
-  --app-version="$NEW_VERSION" \
-  --build-version="1.0.100" \
-  --osx-sign
+node bin/packager.js
