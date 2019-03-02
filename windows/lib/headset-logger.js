@@ -5,9 +5,6 @@ const logger = debug('headset');
 const logWin2Player = debug('headset:win2Player');
 const logPlayer2Win = debug('headset:player2Win');
 
-logFile.transports.file.level = true;
-logFile.transports.console.level = false;
-
 class HeadsetLogger {
   static info(message) {
     logger(message);
