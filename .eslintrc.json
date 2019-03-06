@@ -36,6 +36,7 @@
     "no-console": "off",
     "func-names": "off",
     "class-methods-use-this": "off",
+    "no-bitwise": ["error", {"allow": ["~"]} ],
     "no-unused-expressions": ["error", {"allowTernary": true}],
     "prefer-destructuring": ["error", {"array": false}]
   }
