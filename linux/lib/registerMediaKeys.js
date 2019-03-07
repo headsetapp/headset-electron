@@ -1,4 +1,4 @@
-const DBus = require('dbus-native');
+const DBus = require('dbus-next');
 const debug = require('debug');
 const { ipcMain } = require('electron');
 
@@ -19,7 +19,7 @@ function executeMediaKey(win, key) {
   `);
 }
 
-function registerBindings(win, desktopEnv, bus) {
+async function registerBindings(win, desktopEnv, bus) {
   let serviceName = `org.${desktopEnv}.SettingsDaemon`;
   let objectPath = `/org/${desktopEnv}/SettingsDaemon/MediaKeys`;
   let interfaceName = `org.${desktopEnv}.SettingsDaemon.MediaKeys`;
@@ -30,11 +30,11 @@ function registerBindings(win, desktopEnv, bus) {
     interfaceName = 'org.gnome.SettingsDaemon.MediaKeys';
   }
 
-  bus.getService(serviceName).getInterface(objectPath, interfaceName, (err, iface) => {
-    // Error when gnome|gnome3|mate is not found
-    if (err) return;
+  try {
+    const settings = await bus.getProxyObject(serviceName, objectPath);
+    const mediaKeys = settings.getInterface(interfaceName);
 
-    iface.on('MediaPlayerKeyPressed', (n, keyName) => {
+    mediaKeys.on('MediaPlayerKeyPressed', (iface, keyName) => {
       logger('Media key pressed: %o', keyName);
       switch (keyName) {
         case 'Next':
@@ -44,16 +44,17 @@ function registerBindings(win, desktopEnv, bus) {
           executeMediaKey(win, 'play-previous');
           break;
         case 'Play':
-          if (track !== null) {
-            executeMediaKey(win, 'play-pause');
-          }
+          if (track !== null) executeMediaKey(win, 'play-pause');
           break;
         default:
       }
     });
-    iface.GrabMediaPlayerKeys('headset', 0);
+
+    mediaKeys.GrabMediaPlayerKeys('headset', 0);
     logger('Grabbed media keys for %o', desktopEnv);
-  });
+  } catch (err) {
+    // Error if trying to grab keys in another desktop environment
+  }
 }
 
 module.exports = (win) => {

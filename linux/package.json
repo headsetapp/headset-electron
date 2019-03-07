@@ -16,14 +16,13 @@
     "pack": "NODE_ENV=production ./bin/build_package.sh",
     "dist": "NODE_ENV=production ./bin/build_installer.sh",
     "build": "npm run pack && npm run dist",
-    "postinstall": "electron-rebuild",
     "repo": "NEW_VERSION=$npm_package_version ./bin/linux_repo.sh"
   },
   "dependencies": {
-    "dbus-native": "^0.4.0",
+    "dbus-next": "^0.3.1",
     "debug": "^4.1.1",
     "electron-window-state": "^5.0.3",
-    "mpris-service": "^1.1.4"
+    "mpris-service": "^2.0.0"
   },
   "devDependencies": {
     "electron": "^4.0.6",
@@ -31,7 +30,6 @@
     "electron-installer-redhat": "^1.0.1",
     "electron-packager": "^13.1.0",
     "electron-packager-languages": "^0.3.0",
-    "electron-rebuild": "^1.8.4",
     "foreman": "^3.0.1",
     "http-server": "^0.11.1"
   }

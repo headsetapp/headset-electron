@@ -41,8 +41,6 @@ We welcome many ways of contributing to Headset:
 
     which will install both global and OS-dependent packages.
 
-    Linux users also need to install appropriate dependencies for [dbus](https://www.npmjs.com/package/dbus#general)
-
 
 4. Now you can run the app:
 
