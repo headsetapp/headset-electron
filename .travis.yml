@@ -31,8 +31,6 @@ addons:
     - dpkg
     - rpm
     - lintian
-    - libdbus-1-dev
-    - libglib2.0-dev
     - reprepro
     - createrepo
 
