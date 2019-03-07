@@ -34,7 +34,7 @@ async function registerBindings(win, desktopEnv, bus) {
     const settings = await bus.getProxyObject(serviceName, objectPath);
     const mediaKeys = settings.getInterface(interfaceName);
 
-    mediaKeys.on('MediaPlayerKeyPressed', (iface, n, keyName) => {
+    mediaKeys.on('MediaPlayerKeyPressed', (iface, keyName) => {
       logger('Media key pressed: %o', keyName);
       switch (keyName) {
         case 'Next':
