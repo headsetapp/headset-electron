@@ -154,7 +154,7 @@ const start = () => {
   });
 }; // end start
 
-app.on('activate', () => { win.show(); });
+
 app.on('ready', start);
 
 app.on('browser-window-created', (e, window) => {
