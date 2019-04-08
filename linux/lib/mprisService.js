@@ -100,7 +100,6 @@ module.exports = (win, player, app) => {
 
   mprisPlayer.on('seek', (seek) => {
     if (mprisPlayer.playbackStatus !== 'Stopped') {
-      if (seek < 0) seek = ~seek;
       logger(`Seek ${seek / 1e6} sec`);
       win.webContents.send('player2Win', ['seekTo', (mprisPlayer.getPosition() + seek) / 1e6]); // in seconds
     }
@@ -150,7 +149,7 @@ module.exports = (win, player, app) => {
         logger(['Track Info:', mprisPlayer.metadata]);
         break;
       case 'seekTo':
-        mprisPlayer.seeked(Math.round(args[1] * 1e6)); // in microseconds
+        mprisPlayer.seeked(args[1] * 1e6); // in microseconds
         break;
       case 'shuffle':
         mprisPlayer.shuffle = args[1];
@@ -167,7 +166,7 @@ module.exports = (win, player, app) => {
   ipcMain.on('player2Win', (e, args) => {
     switch (args[0]) {
       case 'currentTime':
-        mprisPlayer.getPosition = () => Math.round(args[1] * 1e6); // in microseconds
+        mprisPlayer.getPosition = () => args[1] * 1e6; // in microseconds
         break;
       case 'onStateChange':
         if (args[1] === 1) mprisPlayer.playbackStatus = 'Playing';
