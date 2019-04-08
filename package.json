@@ -11,11 +11,11 @@
     "test:windows": "mocha test/*.js"
   },
   "devDependencies": {
-    "eslint": "^5.14.1",
+    "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "mocha": "^6.0.2",
+    "eslint-plugin-promise": "^4.1.1",
+    "mocha": "^6.1.1",
     "npm-publish-all": "0.0.3",
     "spectron": "^5.0.0",
     "timeout-as-promise": "^1.0.0"
