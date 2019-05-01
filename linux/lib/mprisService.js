@@ -115,7 +115,7 @@ module.exports = (win, player, app) => {
   mprisPlayer.on('shuffle', (shuffle) => {
     if (mprisPlayer.playbackStatus !== 'Stopped') {
       logger(`Set shuffling: ${shuffle}`);
-      win.webContents.send('player2Win', ['setShuffle', shuffle]);
+      win.webContents.send('player2Win', ['onMprisShuffle', shuffle]);
       mprisPlayer.shuffle = shuffle;
     }
   });
@@ -128,7 +128,7 @@ module.exports = (win, player, app) => {
       if (loop === 'Track') repeat = 'one';
       if (loop === 'Playlist') repeat = 'all';
       if (loop === 'None') repeat = null;
-      win.webContents.send('player2Win', ['onRepeat', repeat]);
+      win.webContents.send('player2Win', ['onMprisRepeat', repeat]);
     }
   });
 
