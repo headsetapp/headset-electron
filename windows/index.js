@@ -141,6 +141,13 @@ const start = () => {
     win.focus();
   });
 
+  player.webContents.on('new-window', (event, url) => {
+    event.preventDefault();
+    const docsWin = new BrowserWindow({ closable: true });
+    docsWin.loadURL(url);
+    event.newGuest = docsWin;
+  });
+
   win.on('close', () => {
     logger.info('Closing Headset');
     // after app closes in Win, the global shortcuts are still up, disabling it here.

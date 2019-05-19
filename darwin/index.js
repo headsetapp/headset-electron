@@ -134,6 +134,13 @@ const start = () => {
     win.focus();
   });
 
+  player.webContents.on('new-window', (event, url) => {
+    event.preventDefault();
+    const docsWin = new BrowserWindow({ closable: true });
+    docsWin.loadURL(url);
+    event.newGuest = docsWin;
+  });
+
   win.on('close', (e) => {
     logger('Minimize main Headset window');
     // the user only tried to close the win
