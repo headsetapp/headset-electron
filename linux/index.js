@@ -51,6 +51,7 @@ const start = () => {
     useContentSize: true,
     icon: 'icon.png',
     frame: true,
+    webPreferences: { nodeIntegration: true },
   });
 
   mainWindowState.manage(win);
@@ -67,6 +68,7 @@ const start = () => {
     minWidth: 427,
     minHeight: 300,
     title: 'Headset - Player',
+    webPreferences: { nodeIntegration: true },
   });
 
   win.webContents.on('did-finish-load', () => {

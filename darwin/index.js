@@ -48,6 +48,7 @@ const start = () => {
     titleBarStyle: 'hiddenInset',
     useContentSize: true,
     icon: path.join(__dirname, 'icons', 'Icon.icns'),
+    webPreferences: { nodeIntegration: true },
   });
 
   mainWindowState.manage(win);
@@ -66,6 +67,7 @@ const start = () => {
     closable: false,
     title: 'Headset - Player',
     icon: path.join(__dirname, 'icons', 'Icon.icns'),
+    webPreferences: { nodeIntegration: true },
   });
 
   new AutoUpdater();

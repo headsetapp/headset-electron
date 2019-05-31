@@ -57,6 +57,7 @@ const start = () => {
     useContentSize: true,
     icon: path.join(__dirname, 'icons', 'Headset.ico'),
     frame: true,
+    webPreferences: { nodeIntegration: true },
   });
 
   mainWindowState.manage(win);
@@ -75,6 +76,7 @@ const start = () => {
     closable: false,
     title: 'Headset - Player',
     icon: path.join(__dirname, 'icons', 'Headset.ico'),
+    webPreferences: { nodeIntegration: true },
   });
 
   new AutoUpdater();
