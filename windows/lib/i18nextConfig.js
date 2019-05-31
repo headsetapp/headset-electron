@@ -1,5 +1,5 @@
 const i18next = require('i18next');
-const nodeRemoteBackend = require('i18next-node-remote-backend');
+const nodeRemoteBackend = require('i18next-node-remote-backend').default;
 
 i18next
   .use(nodeRemoteBackend)
