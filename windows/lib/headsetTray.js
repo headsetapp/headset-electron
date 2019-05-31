@@ -2,20 +2,20 @@ const { Menu } = require('electron');
 const logger = require('./headset-logger');
 
 const executeTrayCommand = (win, key) => {
-  logger.info('Executing %o command from tray', key);
+  logger.tray(`Executing ${key} command from tray`);
   win.webContents.executeJavaScript(`
     window.electronConnector.emit('${key}')
   `);
 };
 
 module.exports = (tray, win, player, i18n) => {
-  logger.info('Setting tray');
+  logger.tray('Setting tray');
 
   const contextMenu = Menu.buildFromTemplate([
     {
       label: i18n.t('wrapper:Minimize'),
       click: () => {
-        logger.info('Minimizing to tray');
+        logger.tray('Minimizing to tray');
         win.isVisible() ? win.hide() : win.show();
         player.isVisible() ? player.hide() : player.show();
       },
