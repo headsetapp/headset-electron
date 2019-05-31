@@ -108,24 +108,21 @@ const start = () => {
 
     logger.info('Registering MediaKeys');
     globalShortcut.register('MediaPlayPause', () => {
-      if (win === null) return;
-      logger.info('Executing %o media key command', 'play-pause');
+      logger.media('Executing play-pause media key command');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-pause')
       `);
     });
 
     globalShortcut.register('MediaNextTrack', () => {
-      if (win === null) return;
-      logger.info('Executing %o media key command', 'play-next');
+      logger.media('Executing play-next media key command');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-next')
       `);
     });
 
     globalShortcut.register('MediaPreviousTrack', () => {
-      if (win === null) return;
-      logger.info('Executing %o media key command', 'play-previous');
+      logger.media('Executing play-previous media key command');
       win.webContents.executeJavaScript(`
         window.electronConnector.emit('play-previous')
       `);
