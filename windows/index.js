@@ -80,6 +80,8 @@ function start() {
 
   if (isDev) {
     win.loadURL('http://127.0.0.1:3000');
+
+    // The embedded YouTube player only works on sites with domains and not just IP
     player.loadURL('http://lvh.me:3001');
     win.webContents.openDevTools();
   } else {
