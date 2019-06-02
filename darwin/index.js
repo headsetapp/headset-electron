@@ -22,6 +22,7 @@ const {
   ipcMain,
   shell,
   Tray,
+  systemPreferences,
 } = electron;
 
 let win;
@@ -33,6 +34,8 @@ logger('Running as developer: %o', isDev);
 
 // Allows to autoplay video, which is disabled in newer versions of Chrome
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
+
+systemPreferences.isTrustedAccessibilityClient(true);
 
 function start() {
   new AutoUpdater();
