@@ -33,6 +33,10 @@ addons:
     - lintian
     - reprepro
     - createrepo
+  homebrew:
+    packages:
+    - graphicsmagick
+    - imagemagick
 
 services:
   - xvfb
