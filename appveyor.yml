@@ -10,15 +10,18 @@ image: Visual Studio 2017
 clone_depth: 1
 
 environment:
-  nodejs_version: "8"
+  nodejs_version: "12"
   CERT_PASSWORD:
     secure: BOXjWrY24hdw8EhsmLkP5RVxG/aY/16gnAt//DlVIHOadhfJWHgQfh+qI7oUkgP2
+
+platform:
+  - x86
 
 cache:
   - '%APPDATA%\npm-cache'
 
 install:
-  - ps: Install-Product node $env:nodejs_version
+  - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version) $env:PLATFORM
   - npm ci
   - cd windows && npm ci && cd..
 
