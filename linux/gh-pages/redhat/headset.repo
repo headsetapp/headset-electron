@@ -1,6 +1,0 @@
-[headset-electron]
-name=headset
-baseurl=https://headsetapp.github.io/headset-electron/redhat
-enabled=1
-gpgcheck=0
-metadata_expire=300

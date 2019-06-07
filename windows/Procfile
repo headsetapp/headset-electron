@@ -1,2 +1,0 @@
-headset: npm run electron
-player: cd ../shared/player && http-server -p 3001 -c-1
