@@ -1,5 +1,6 @@
-const windowStateKeeper = require('electron-window-state');
+const defaultMenu = require('electron-default-menu');
 const squirrel = require('electron-squirrel-startup');
+const windowStateKeeper = require('electron-window-state');
 const AutoUpdater = require('headset-autoupdater');
 const { platform } = require('os');
 const path = require('path');
@@ -9,6 +10,7 @@ const {
   globalShortcut,
   ipcMain,
   Menu,
+  shell,
   systemPreferences,
 } = require('electron');
 
@@ -28,18 +30,21 @@ const OS = platform();
 if (OS === 'win32') {
   // Exit the app if it starts from squirrel
   if (squirrel) app.exit();
-
+  Menu.setApplicationMenu(null);
   windowIcon = path.join(__dirname, 'icons', 'headset.ico');
 }
 
 // Load Linux variables
 if (OS === 'linux') {
+  Menu.setApplicationMenu(null);
   windowIcon = path.join(__dirname, 'icons', 'windowIcon.ico');
 }
 
 // Load macOS variables
 if (OS === 'darwin') {
   systemPreferences.isTrustedAccessibilityClient(true);
+  const menu = defaultMenu(app, shell);
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
 }
 
 const isDev = (process.env.NODE_ENV === 'development');
