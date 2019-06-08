@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+# Only clean when uninstalling, not upgrade
+if [ $1 -gt 0 ] ; then
+  exit 0
+fi
+
+RPM_SOURCESDIR="/etc/yum.repos.d"
+SOURCELIST="$RPM_SOURCESDIR/headset.repo"
+
+# Clean sources lists
+rm -f "$SOURCELIST"
