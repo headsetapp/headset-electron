@@ -2,7 +2,6 @@ const defaultMenu = require('electron-default-menu');
 const squirrel = require('electron-squirrel-startup');
 const windowStateKeeper = require('electron-window-state');
 const AutoUpdater = require('headset-autoupdater');
-const { platform } = require('os');
 const path = require('path');
 const {
   app,
@@ -30,7 +29,7 @@ let trayIcon;
 let win;
 let windowIcon;
 
-const OS = platform();
+const OS = process.platform;
 
 // Load Windows variables
 if (OS === 'win32') {

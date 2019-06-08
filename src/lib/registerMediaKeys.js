@@ -1,8 +1,7 @@
-const { platform } = require('os');
 const linux = require('./mediaKeys/linux');
 const macOSWindows = require('./mediaKeys/macOSWindows');
 
-const OS = platform();
+const OS = process.platform;
 
 module.exports = () => { // eslint-disable-line consistent-return
   if (OS === 'linux') { return linux; }
