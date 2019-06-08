@@ -2,11 +2,11 @@
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
-const packJson = require('../../package.json');
+const { version } = require('../../package.json');
 
 const packagePath = path.join(__dirname, '..', '..', 'build', 'installers');
-const debPackage = `headset_${packJson.version}_amd64.deb`;
-const rpmPackage = `headset-${packJson.version}.x86_64.rpm`;
+const debPackage = `headset_${version}_amd64.deb`;
+const rpmPackage = `headset-${version}.x86_64.rpm`;
 
 describe('packages', function () {
   this.timeout(40000);
