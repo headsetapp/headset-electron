@@ -9,8 +9,7 @@
     "promise"
   ],
   "extends": [
-    "airbnb-base",
-    "plugin:promise/recommended"
+    "airbnb-base"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -24,19 +23,17 @@
       "electron",
       "electron-packager",
       "electron-packager-languages",
-      "electron-installer-windows"
-      ]
+      "electron-installer-debian",
+      "electron-installer-redhat",
+      "electron-installer-windows",
+      "dbus-next",
+      "mpris-service"
+    ]
   },
   "rules": {
     "no-new": "off",
-    "new-cap": "off",
     "max-len": ["error", 120],
-    "no-underscore-dangle": "off",
-    "no-param-reassign": "off",
     "no-console": "off",
-    "func-names": "off",
-    "class-methods-use-this": "off",
-    "no-bitwise": ["error", {"allow": ["~"]} ],
     "no-unused-expressions": ["error", {"allowTernary": true}],
     "prefer-destructuring": ["error", {"array": false}]
   }

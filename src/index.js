@@ -68,7 +68,9 @@ app.on('second-instance', () => {
 Menu.setApplicationMenu(null);
 
 function start() {
-  new AutoUpdater();
+  if (OS === 'win32' || OS === 'darwin') {
+    new AutoUpdater(); // Check if new updates
+  }
 
   logger.info('Starting Headset');
   const mainWindowState = windowStateKeeper();
@@ -100,9 +102,7 @@ function start() {
 
   if (isDev) {
     win.loadURL('http://127.0.0.1:3000');
-
-    // The embedded YouTube player only works on sites with domains and not just IP
-    player.loadURL('http://lvh.me:3001');
+    player.loadURL('http://lvh.me:3001'); // YouTube player needs a domain, doesn't work with IPs
     win.webContents.openDevTools();
   } else {
     win.loadURL('https://danielravina.github.io/headset/app/');
@@ -127,7 +127,7 @@ function start() {
     event.preventDefault();
     const docsWin = new BrowserWindow({ closable: true });
     docsWin.loadURL(url);
-    event.newGuest = docsWin;
+    event.newGuest = docsWin; // eslint-disable-line no-param-reassign
   });
 
   win.on('close', () => {

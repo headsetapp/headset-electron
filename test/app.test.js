@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 const { Application } = require('spectron');
 const assert = require('assert');
 const path = require('path');

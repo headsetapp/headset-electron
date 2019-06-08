@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 let ytPlayer;
 /* This class is the connector to the player window.
    It mirrors the youtube API functions and sends / receive messages
