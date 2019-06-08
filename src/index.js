@@ -12,16 +12,20 @@ const {
   Menu,
   shell,
   systemPreferences,
+  Tray,
 } = require('electron');
 
 const { version } = require('../package');
 const logger = require('./lib/headsetLogger');
+const headsetTray = require('./lib/headsetTray');
 
 // Delete the log file. Just a workaround until 'electron-log' is updated
 logger.clear();
 
-let win;
 let player;
+let tray;
+let trayIcon;
+let win;
 let windowIcon;
 
 const OS = platform();
@@ -32,6 +36,7 @@ if (OS === 'win32') {
   if (squirrel) app.exit();
   Menu.setApplicationMenu(null);
   windowIcon = path.join(__dirname, 'icons', 'headset.ico');
+  trayIcon = windowIcon;
 }
 
 // Load Linux variables
@@ -45,6 +50,7 @@ if (OS === 'darwin') {
   systemPreferences.isTrustedAccessibilityClient(true);
   const menu = defaultMenu(app, shell);
   Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+  trayIcon = path.join(__dirname, 'icons', 'headsetTemplate.png');
 }
 
 const isDev = (process.env.NODE_ENV === 'development');
@@ -107,6 +113,12 @@ function start() {
   } else {
     win.loadURL('https://danielravina.github.io/headset/app/');
     player.loadURL('http://danielravina.github.io/headset/player-v2');
+  }
+
+  if (OS === 'win32' || OS === 'darwin') {
+    // Creates a Tray
+    tray = new Tray(trayIcon);
+    headsetTray(tray, win, player);
   }
 
   win.webContents.on('did-finish-load', () => {
