@@ -1,34 +1,52 @@
-const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
 const squirrel = require('electron-squirrel-startup');
 const AutoUpdater = require('headset-autoupdater');
+const { platform } = require('os');
 const path = require('path');
-
-const { version } = require('../package');
-const logger = require('./lib/headsetLogger');
-
 const {
   app,
   BrowserWindow,
   globalShortcut,
   ipcMain,
   Menu,
-} = electron;
+  systemPreferences,
+} = require('electron');
+
+const { version } = require('../package');
+const logger = require('./lib/headsetLogger');
 
 // Delete the log file. Just a workaround until 'electron-log' is updated
 logger.clear();
 
 let win;
 let player;
+let windowIcon;
+
+const OS = platform();
+
+// Load Windows variables
+if (OS === 'win32') {
+  // Exit the app if it starts from squirrel
+  if (squirrel) app.exit();
+
+  windowIcon = path.join(__dirname, 'icons', 'headset.ico');
+}
+
+// Load Linux variables
+if (OS === 'linux') {
+  windowIcon = path.join(__dirname, 'icons', 'windowIcon.ico');
+}
+
+// Load macOS variables
+if (OS === 'darwin') {
+  systemPreferences.isTrustedAccessibilityClient(true);
+}
 
 const isDev = (process.env.NODE_ENV === 'development');
 logger.info(`Running as developer: ${isDev}`);
 
 // Allows to autoplay video, which is disabled in newer versions of Chrome
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
-
-// Exit the app if it starts from squirrel
-if (squirrel) app.exit();
 
 // Quit if second instance found and focus window of first instance
 if (!app.requestSingleInstanceLock()) app.exit();
@@ -59,7 +77,7 @@ function start() {
     title: 'Headset',
     maximizable: false,
     useContentSize: true,
-    icon: path.join(__dirname, 'icons', 'Headset.ico'),
+    icon: windowIcon,
     webPreferences: { nodeIntegration: true },
   });
 
@@ -69,7 +87,7 @@ function start() {
     closable: false,
     useContentSize: true,
     title: 'Headset - Player',
-    icon: path.join(__dirname, 'icons', 'Headset.ico'),
+    icon: windowIcon,
     webPreferences: { nodeIntegration: true },
   });
 
