@@ -8,11 +8,11 @@ const helper = require('./helper.js');
 let execPath = '';
 
 if (process.platform === 'darwin') {
-  execPath = 'darwin/build/Headset-darwin-x64/Headset.app/Contents/MacOS/Headset';
+  execPath = 'build/Headset-darwin-x64/Headset.app/Contents/MacOS/Headset';
 } else if (process.platform === 'linux') {
-  execPath = 'linux/build/Headset-linux-x64/headset';
+  execPath = 'build/Headset-linux-x64/headset';
 } else if (process.platform === 'win32') {
-  execPath = 'windows/build/Headset-win32-ia32/headset.exe';
+  execPath = 'build/Headset-win32-ia32/headset.exe';
 }
 
 const appPath = path.join(__dirname, '..', execPath);
