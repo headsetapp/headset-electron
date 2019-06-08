@@ -18,6 +18,7 @@ const {
 const { version } = require('../package');
 const logger = require('./lib/headsetLogger');
 const headsetTray = require('./lib/headsetTray');
+const mprisService = require('./lib/mprisService');
 
 // Delete the log file. Just a workaround until 'electron-log' is updated
 logger.clear();
@@ -115,10 +116,15 @@ function start() {
     player.loadURL('http://danielravina.github.io/headset/player-v2');
   }
 
+  // Creates a Tray
   if (OS === 'win32' || OS === 'darwin') {
-    // Creates a Tray
     tray = new Tray(trayIcon);
     headsetTray(tray, win, player);
+  }
+
+  // Register MPRIS
+  if (OS === 'linux') {
+    try { mprisService(win, player, app); } catch (err) { console.error(err); }
   }
 
   win.webContents.on('did-finish-load', () => {
