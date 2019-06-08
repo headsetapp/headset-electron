@@ -2,7 +2,6 @@ version: "{build}"
 
 branches:
   only:
-  - merge-OSs
   - master
   - /^v\d+\.\d+\.\d+/
 
