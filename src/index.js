@@ -19,6 +19,7 @@ const { version } = require('../package');
 const logger = require('./lib/headsetLogger');
 const headsetTray = require('./lib/headsetTray');
 const mprisService = require('./lib/mprisService');
+const registerMediaKeys = require('./lib/registerMediaKeys');
 
 // Delete the log file. Just a workaround until 'electron-log' is updated
 logger.clear();
@@ -126,6 +127,9 @@ function start() {
   if (OS === 'linux') {
     try { mprisService(win, player, app); } catch (err) { console.error(err); }
   }
+
+  // Register media keys
+  registerMediaKeys(win);
 
   win.webContents.on('did-finish-load', () => {
     logger.info('Main window finished loading');
