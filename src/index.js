@@ -54,6 +54,10 @@ if (OS === 'darwin') {
   trayIcon = path.join(__dirname, 'icons', 'headsetTemplate.png');
 }
 
+if (process.argv.includes('--disable-gpu')) {
+  app.disableHardwareAcceleration();
+}
+
 const isDev = (process.env.NODE_ENV === 'development');
 logger.info(`Running as developer: ${isDev}`);
 
