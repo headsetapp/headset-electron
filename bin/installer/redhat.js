@@ -22,10 +22,14 @@ const options = {
   },
 };
 
-console.log('Creating Red Hat package (this may take a while)');
-installer(options)
-  .then(() => console.log(`Successfully created package at ${options.dest}\n`))
-  .catch((error) => {
+async function main() {
+  console.log('Creating Red Hat installer (this may take a while)');
+  try {
+    installer(options);
+    console.log(`Successfully created installer at ${options.dest}\n`);
+  } catch (error) {
     console.error(error, error.stack);
     process.exit(1);
-  });
+  }
+}
+main();

@@ -29,15 +29,19 @@ const options = {
     'embedded-library',
     'hardening-no-relro',
     'unstripped-binary-or-object',
-    'debian-changelog-file-missing',
+    'changelog-file-missing-in-native-package',
     'setuid-binary',
   ],
 };
 
-console.log('Creating Debian package (this may take a while)');
-installer(options)
-  .then(() => console.log(`Successfully created package at ${options.dest}\n`))
-  .catch((error) => {
+async function main() {
+  console.log('Creating Debian installer (this may take a while)');
+  try {
+    installer(options);
+    console.log(`Successfully created installer at ${options.dest}\n`);
+  } catch (error) {
     console.error(error, error.stack);
     process.exit(1);
-  });
+  }
+}
+main();

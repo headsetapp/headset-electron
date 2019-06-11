@@ -6,7 +6,7 @@ const { version } = require('../../package.json');
 
 const packagePath = path.join(__dirname, '..', '..', 'build', 'installers');
 const debPackage = `headset_${version}_amd64.deb`;
-const rpmPackage = `headset-${version}.x86_64.rpm`;
+const rpmPackage = `headset-${version}-1.x86_64.rpm`;
 
 describe('packages', function () {
   this.timeout(40000);

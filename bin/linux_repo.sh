@@ -15,6 +15,6 @@ reprepro -b "$root/debian" includedeb stable "$installers/headset_$VERSION"_amd6
 echo -e 'Done'
 
 echo -e "\n\033[1mCreating READHAT repository files:\033[01;0m"
-cp "$installers/headset-$VERSION.x86_64.rpm" $root/redhat
+cp "$installers/headset-$VERSION-1.x86_64.rpm" $root/redhat
 createrepo "$root/redhat"
 echo -e 'Done'

@@ -25,12 +25,14 @@ const options = {
   certificatePassword: CERT_PASSWORD,
 };
 
-console.log('Creating package (this may take a while)');
-
-installer(options)
-  .then(() => console.log(`Successfully created package at ${options.dest}`))
-  .catch((err) => {
-    console.error('Error creating package');
-    console.error(err, err.stack);
+async function main() {
+  console.log('Creating Windows installer (this may take a while)');
+  try {
+    installer(options);
+    console.log(`Successfully created installer at ${options.dest}\n`);
+  } catch (error) {
+    console.error(error, error.stack);
     process.exit(1);
-  });
+  }
+}
+main();
