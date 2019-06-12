@@ -28,58 +28,45 @@ We welcome many ways of contributing to Headset:
   git clone https://github.com/<your-username>/headset-electron.git
   ```
 
-3. Installation is OS-dependent, so choose the appropriate OS directory:
-  - `windows` for Windows
-  - `darwin` for OSX
-  - `linux` for Linux
-
-    To install all the required dependencies run:
+3. Install all required dependencies:
 
     ```shell
-    npm i; cd <os>; npm i
+    npm ci
     ```
-
-    which will install both global and OS-dependent packages.
-
 
 4. Now you can run the app:
 
   ```shell
-  npm run production-like
+  npm run headset
   ```
 
 You are ready to pick a "help wanted" issue and start working on it.
 
 ## Testing
 
-Whenever you work on a new feature, be sure to add appropriate tests. Before 
-submitting your changes, you should run all the test suites to make sure it works
-as expected.
+Whenever you work on a new feature, be sure to add appropriate tests if necessary.
+When testing the app itself, make sure you package for the OS your testing by first running:
+
+```shell
+npm run pack:<os>
+```
+where `<os>` is either `darwin`, `linux` or `windows`.
+
+Before submitting your changes, you should run all the test suites to make sure it works as expected.
 
 1. Linter tests
 
-    To run linter tests use this command in the root directory
     ```shell
-    npm run lint <directory>
-    ```
-    where `<directory>` is either the OS you are working on (`darwin`, `linux`, 
-    `windows`), the `test` folder, or the `shared` folder. If you work on multiple OSs 
-    (or directories), you can run the same `npm run lint` followed by a list of all 
-    directories separated by spaces e.g. 
-    ```shell
-    npm run lint linux windows shared
+    npm run lint
     ```
 
 2. General test suites
 
-    Run 
     ```shell
-    npm run test:<os>
+    npm run test:app
     ```
-    where `<os>` is either `darwin`, `linux` or `windows`. If you're working on 
-    multiple OSs, the command has to be run for each OS. Remember that the tests are
-    OS-specific - you need to run them on the sytem you're testing for, using either
-    physical or virtual machines.
+    Remember that the tests are OS-specific.
+    You need to run them on the system you're testing for, using either physical or virtual machines.
 
 ## Merging your changes
 
@@ -87,13 +74,13 @@ We work in a pull request driven flow. If you don't know how to make a PR,
 [here](https://help.github.com/articles/creating-a-pull-request/) is a GitHub doc on it.
 
 It's best to talk about code and share it early, so you can make a pull request 
-even if you haven't finished - it's much easier to improve once other contributors can
+even if you haven't finished, or it has errors - it's much easier to improve once other contributors can
 see the code! Just make sure to write it in the pull request message and ask for help.
 
 To submit a pull request:
 - create a feature branch locally and commit all your changes to it
 - run all the relevant tests (linter and general), fix any issues
-- push them to a feature branch on your fork - if you do `git push origin     <branch-name>`
+- push them to a feature branch on your fork - if you do `git push origin <branch-name>`
   GitHub will automatically create a new branch for you
 - go to your GitHub fork, switch to the feature branch and submit a pull request to
   the main repository

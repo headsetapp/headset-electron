@@ -10,7 +10,7 @@
   "main": "src/index.js",
   "private": true,
   "scripts": {
-    "electron": "electron .",
+    "headset": "electron .",
     "player": "bash bin/player_window.sh",
     "start": "NODE_ENV=development nf start",
     "lint": "eslint .",

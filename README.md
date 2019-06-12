@@ -66,17 +66,17 @@ If you would like to create a build for a different environment (e.g Manjaro or 
 ```shell
 $ git clone https://github.com/headsetapp/headset-electron.git
 ```
-3. Go into your specific OS folder and install dependencies
+3. Install dependencies
 ```shell
-$ cd headset-electron/linux
-$ npm install
+$ cd headset-electron
+$ npm ci
 ```
 
 4. Create your build:
 ```shell
 electron-packager . \
   --executable-name headset \
-  --ignore "(bin|Procfile|sig|gh-pages)" \
+  --ignore "(^/bin$|^/sig$|^/gh-pages$|^/player$|^/test$|Procfile|\.md$|^\.|^\/\.)" \
   --prune true \
   --out build/ \
   --overwrite \
