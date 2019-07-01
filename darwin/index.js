@@ -6,7 +6,6 @@ const AutoUpdater = require('headset-autoupdater');
 const path = require('path');
 
 const headsetTray = require('./lib/headsetTray');
-const i18next = require('./lib/i18nextConfig');
 const registerMediaKeys = require('./lib/registerMediaKeys');
 const { version } = require('./package');
 
@@ -81,15 +80,8 @@ function start() {
     player.loadURL('http://danielravina.github.io/headset/player-v2');
   }
 
-  i18next.on('initialized', (options) => {
-    logger(`i18next has been initialized with ${JSON.stringify(options, null, 2)}`);
-  });
-
   tray = new Tray(path.join(__dirname, 'icons', 'HeadsetTemplate.png'));
-  i18next.on('loaded', () => {
-    logger('i18next resources loaded');
-    headsetTray(tray, win, player, i18next);
-  });
+  headsetTray(tray, win, player);
 
   // Creates a default Application Menu
   const menu = defaultMenu(app, shell);
@@ -154,11 +146,4 @@ ipcMain.on('player2Win', (e, args) => {
   try {
     win.webContents.send('player2Win', args);
   } catch (err) { /* window already closed */ }
-});
-
-ipcMain.on('change-locale', (e, lng) => {
-  logger(`Changing locale to: ${lng}`);
-
-  i18next.changeLanguage(lng);
-  headsetTray(tray, win, player, i18next);
 });
