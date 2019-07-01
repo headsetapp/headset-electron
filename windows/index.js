@@ -7,11 +7,8 @@ const path = require('path');
 const { version } = require('./package');
 const headsetTray = require('./lib/headsetTray');
 const logger = require('./lib/headset-logger');
-<<<<<<< HEAD
-=======
-const i18next = require('./lib/i18nextConfig');
 const registerMediaKeys = require('./lib/registerMediaKeys');
->>>>>>> master
+
 
 const {
   app,
