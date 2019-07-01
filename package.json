@@ -1,5 +1,5 @@
 {
-  "version": "2.1.2",
+  "version": "2.1.4",
   "scripts": {
     "lint": "eslint",
     "version": "npm-publish-all bump --bumpType=$npm_package_version && npm run bumps && git add .",
@@ -13,9 +13,9 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-promise": "^4.1.1",
-    "mocha": "^6.1.1",
+    "mocha": "^6.1.4",
     "npm-publish-all": "0.0.3",
     "spectron": "^5.0.0",
     "timeout-as-promise": "^1.0.0"

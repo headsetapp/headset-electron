@@ -24,7 +24,7 @@ We welcome many ways of contributing to Headset:
 
 2. Clone your fork of the repository
 
-  ```
+  ```shell
   git clone https://github.com/<your-username>/headset-electron.git
   ```
 
@@ -35,7 +35,7 @@ We welcome many ways of contributing to Headset:
 
     To install all the required dependencies run:
 
-    ```
+    ```shell
     npm i; cd <os>; npm i
     ```
 
@@ -44,7 +44,7 @@ We welcome many ways of contributing to Headset:
 
 4. Now you can run the app:
 
-  ```
+  ```shell
   npm run production-like
   ```
 
@@ -59,21 +59,21 @@ as expected.
 1. Linter tests
 
     To run linter tests use this command in the root directory
-    ``` 
+    ```shell
     npm run lint <directory>
     ```
     where `<directory>` is either the OS you are working on (`darwin`, `linux`, 
     `windows`), the `test` folder, or the `shared` folder. If you work on multiple OSs 
     (or directories), you can run the same `npm run lint` followed by a list of all 
     directories separated by spaces e.g. 
-    ```
+    ```shell
     npm run lint linux windows shared
     ```
 
 2. General test suites
 
     Run 
-    ```
+    ```shell
     npm run test:<os>
     ```
     where `<os>` is either `darwin`, `linux` or `windows`. If you're working on 

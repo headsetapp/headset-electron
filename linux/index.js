@@ -13,6 +13,7 @@ const {
   app,
   BrowserWindow,
   ipcMain,
+  Menu,
 } = electron;
 
 let win;
@@ -35,7 +36,10 @@ app.on('second-instance', () => {
   }
 });
 
-const start = () => {
+// Removes the application menu on all windows
+Menu.setApplicationMenu(null);
+
+function start() {
   logger('Starting Headset');
   const mainWindowState = windowStateKeeper();
 
@@ -47,96 +51,68 @@ const start = () => {
     resizable: false,
     title: 'Headset',
     maximizable: false,
-    titleBarStyle: 'hiddenInset',
     useContentSize: true,
     icon: 'icon.png',
-    frame: true,
+    webPreferences: { nodeIntegration: true },
+  });
+
+  player = new BrowserWindow({
+    width: 427,
+    height: 300,
+    useContentSize: true,
+    show: false,
+    title: 'Headset - Player',
+    icon: 'icon.png',
+    webPreferences: { nodeIntegration: true },
   });
 
   mainWindowState.manage(win);
 
   if (isDev) {
     win.loadURL('http://127.0.0.1:3000');
+
+    // The embedded YouTube player only works on sites with domains and not just IP
+    player.loadURL('http://lvh.me:3001');
+    win.webContents.openDevTools();
   } else {
     win.loadURL('https://danielravina.github.io/headset/app/');
+    player.loadURL('http://danielravina.github.io/headset/player-v2');
   }
 
-  player = new BrowserWindow({
-    width: 427,
-    height: 300,
-    minWidth: 427,
-    minHeight: 300,
-    title: 'Headset - Player',
-  });
+  try {
+    logger('Initializing MPRIS and registering MediaKeys');
+    mprisService(win, player, app);
+    registerMediaKeys(win);
+  } catch (err) {
+    console.error(err);
+  }
 
   win.webContents.on('did-finish-load', () => {
     logger('Main window finished loading');
 
-    setTimeout(() => {
-      try {
-        player.minimize();
-      } catch (err) {
-        // swallow
-      }
-    }, 2000);
-
-    if (isDev) {
-      player.loadURL('http://lvh.me:3001');
-    } else {
-      player.loadURL('http://danielravina.github.io/headset/player-v2');
-    }
-
-    try {
-      logger('Initializing MPRIS and registering MediaKeys');
-      mprisService(win, player, app);
-      registerMediaKeys(win);
-    } catch (err) {
-      console.error(err);
-    }
-
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
     `);
-
-    if (isDev) {
-      win.webContents.openDevTools();
-    }
-  }); // end did-finish-load
+  });
 
   player.webContents.on('did-finish-load', () => {
     logger('Player window finished loading');
+    player.show();
     win.focus();
+    setTimeout(() => player.minimize(), 2000);
   });
 
-  player.on('close', (e) => {
-    if (win) {
-      logger('Attempted to close Player window while Headset running');
-      e.preventDefault();
-    } else {
-      logger('Closing Player window and killing Headset');
-      player = null;
-      app.exit();
-    }
+  player.on('close', (event) => {
+    event.preventDefault();
   });
 
   win.on('close', () => {
     logger('Closing Headset');
-    win = null;
-    player.close();
+    app.exit();
   });
+} // end start
 
-  win.on('restore', (e) => {
-    e.preventDefault();
-    win.show();
-  });
-}; // end start
-
-app.on('activate', () => win.show());
 app.on('ready', start);
-
-app.on('browser-window-created', (e, window) => {
-  window.setMenu(null);
-});
 
 /*
  * This is the proxy between the 2 windows.

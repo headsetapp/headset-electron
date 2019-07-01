@@ -7,12 +7,18 @@ const path = require('path');
 const { version } = require('./package');
 const headsetTray = require('./lib/headsetTray');
 const logger = require('./lib/headset-logger');
+<<<<<<< HEAD
+=======
+const i18next = require('./lib/i18nextConfig');
+const registerMediaKeys = require('./lib/registerMediaKeys');
+>>>>>>> master
 
 const {
   app,
   BrowserWindow,
   globalShortcut,
   ipcMain,
+  Menu,
   Tray,
 } = electron;
 
@@ -40,7 +46,12 @@ app.on('second-instance', () => {
   }
 });
 
-const start = () => {
+// Removes the application menu on all windows
+Menu.setApplicationMenu(null);
+
+function start() {
+  new AutoUpdater();
+
   logger.info('Starting Headset');
   const mainWindowState = windowStateKeeper();
 
@@ -52,85 +63,61 @@ const start = () => {
     resizable: false,
     title: 'Headset',
     maximizable: false,
-    titleBarStyle: 'hiddenInset',
     useContentSize: true,
     icon: path.join(__dirname, 'icons', 'Headset.ico'),
-    frame: true,
+    webPreferences: { nodeIntegration: true },
+  });
+
+  player = new BrowserWindow({
+    width: 427,
+    height: 300,
+    closable: false,
+    useContentSize: true,
+    show: false,
+    title: 'Headset - Player',
+    icon: path.join(__dirname, 'icons', 'Headset.ico'),
+    webPreferences: { nodeIntegration: true },
   });
 
   mainWindowState.manage(win);
 
   if (isDev) {
     win.loadURL('http://127.0.0.1:3000');
+
+    // The embedded YouTube player only works on sites with domains and not just IP
+    player.loadURL('http://lvh.me:3001');
+    win.webContents.openDevTools();
   } else {
     win.loadURL('https://danielravina.github.io/headset/app/');
+    player.loadURL('http://danielravina.github.io/headset/player-v2');
   }
-
-  player = new BrowserWindow({
-    width: 427,
-    height: 300,
-    minWidth: 430,
-    minHeight: 310,
-    closable: false,
-    title: 'Headset - Player',
-    icon: path.join(__dirname, 'icons', 'Headset.ico'),
-  });
-
-  new AutoUpdater();
 
   tray = new Tray(path.join(__dirname, 'icons', 'Headset.ico'));
   headsetTray(tray, win, player);
 
+  logger.media('Registering MediaKeys');
+  registerMediaKeys(win);
+
   win.webContents.on('did-finish-load', () => {
     logger.info('Main window finished loading');
-
-    setTimeout(() => {
-      player.minimize();
-    }, 2000);
-
-    if (isDev) {
-      player.loadURL('http://lvh.me:3001');
-    } else {
-      player.loadURL('http://danielravina.github.io/headset/player-v2');
-    }
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
     `);
-
-    logger.info('Registering MediaKeys');
-    globalShortcut.register('MediaPlayPause', () => {
-      if (win === null) return;
-      logger.info('Executing %o media key command', 'play-pause');
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-pause')
-      `);
-    });
-
-    globalShortcut.register('MediaNextTrack', () => {
-      if (win === null) return;
-      logger.info('Executing %o media key command', 'play-next');
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-next')
-      `);
-    });
-
-    globalShortcut.register('MediaPreviousTrack', () => {
-      if (win === null) return;
-      logger.info('Executing %o media key command', 'play-previous');
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-previous')
-      `);
-    });
-
-    if (isDev) {
-      win.webContents.openDevTools();
-    }
-  }); // end did-finish-load
+  });
 
   player.webContents.on('did-finish-load', () => {
     logger.info('Player window finished loading');
+    player.show();
     win.focus();
+    setTimeout(() => player.minimize(), 2000);
+  });
+
+  player.webContents.on('new-window', (event, url) => {
+    event.preventDefault();
+    const docsWin = new BrowserWindow({ closable: true });
+    docsWin.loadURL(url);
+    event.newGuest = docsWin;
   });
 
   win.on('close', () => {
@@ -139,19 +126,11 @@ const start = () => {
     globalShortcut.unregisterAll();
     app.exit();
   });
-
-  win.on('restore', (e) => {
-    e.preventDefault();
-    win.show();
-  });
-}; // end start
+} // end start
 
 
 app.on('ready', start);
 
-app.on('browser-window-created', (e, window) => {
-  window.setMenu(null);
-});
 /*
  * This is the proxy between the 2 windows.
  * It receives messages from a renderer and send them to the other renderer

@@ -22,6 +22,7 @@
     "embedded-library",
     "hardening-no-relro",
     "unstripped-binary-or-object",
-    "debian-changelog-file-missing"
+    "debian-changelog-file-missing",
+    "setuid-binary"
   ]
 }

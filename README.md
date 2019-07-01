@@ -15,7 +15,7 @@ Want to start contributing? Check out our [contributing](./CONTRIBUTING.md) doc.
 
 Update Homebrew and install `headset` using Hombrew Cask
 
-```
+```shell
 brew update
 brew cask install headset
 ```
@@ -23,12 +23,12 @@ brew cask install headset
 ### Windows (Chocolatey)
 
 To install, run the following command from the command line or from PowerShell:
-```
+```shell
 C:\> choco install headset
 ```
 
 To upgrade, run the following command from the command line or from PowerShell:
-```
+```shell
 C:\> choco upgrade headset
 ```
 
@@ -38,7 +38,7 @@ More details in the chocolatey page: https://chocolatey.org/packages/headset
 As an alternative to `.deb` and `.rpm` packages on the website, you can also install it directly from the command-line:
 
 #### Debian
-```
+```shell
 wget -q http://headsetapp.co/headset-electron/debian/headset.asc -O- | sudo apt-key add -
 echo "deb [arch=amd64] http://headsetapp.co/headset-electron/debian stable non-free" | sudo tee /etc/apt/sources.list.d/headset.list
 sudo apt-get update
@@ -46,12 +46,12 @@ sudo apt-get install headset
 ```
 
 #### Redhat
-```
+```shell
 sudo dnf config-manager --add-repo http://headsetapp.co/headset-electron/redhat/headset.repo
 sudo dnf install headset
 ```
 --- Or ---
-```
+```shell
 sudo yum-config-manager --add-repo http://headsetapp.co/headset-electron/redhat/headset.repo
 sudo yum install headset
 ```
@@ -63,17 +63,17 @@ If you would like to create a build for a different environment (e.g Manjaro or 
 1. Install _NodeJs_ 8 or later
 
 2. Clone the Repo
-```bash
+```shell
 $ git clone https://github.com/headsetapp/headset-electron.git
 ```
 3. Go into your specific OS folder and install dependencies
-```
+```shell
 $ cd headset-electron/linux
 $ npm install
 ```
 
 4. Create your build:
-```bash
+```shell
 electron-packager . \
   --executable-name headset \
   --ignore "(bin|Procfile|sig|gh-pages)" \

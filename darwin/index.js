@@ -6,6 +6,7 @@ const AutoUpdater = require('headset-autoupdater');
 const path = require('path');
 
 const headsetTray = require('./lib/headsetTray');
+const registerMediaKeys = require('./lib/registerMediaKeys');
 const { version } = require('./package');
 
 const logger = debug('headset');
@@ -20,6 +21,7 @@ const {
   ipcMain,
   shell,
   Tray,
+  systemPreferences,
 } = electron;
 
 let win;
@@ -32,7 +34,11 @@ logger('Running as developer: %o', isDev);
 // Allows to autoplay video, which is disabled in newer versions of Chrome
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 
-const start = () => {
+systemPreferences.isTrustedAccessibilityClient(true);
+
+function start() {
+  new AutoUpdater();
+
   logger('Starting Headset');
   const mainWindowState = windowStateKeeper();
 
@@ -47,83 +53,63 @@ const start = () => {
     titleBarStyle: 'hiddenInset',
     useContentSize: true,
     icon: path.join(__dirname, 'icons', 'Icon.icns'),
+    webPreferences: { nodeIntegration: true },
+  });
+
+  player = new BrowserWindow({
+    width: 427,
+    height: 300,
+    closable: false,
+    useContentSize: true,
+    show: false,
+    title: 'Headset - Player',
+    icon: path.join(__dirname, 'icons', 'Icon.icns'),
+    webPreferences: { nodeIntegration: true },
   });
 
   mainWindowState.manage(win);
 
   if (isDev) {
     win.loadURL('http://127.0.0.1:3000');
+
+    // The embedded YouTube player only works on sites with domains and not just IP
+    player.loadURL('http://lvh.me:3001');
+    win.webContents.openDevTools();
   } else {
     win.loadURL('https://danielravina.github.io/headset/app/');
+    player.loadURL('http://danielravina.github.io/headset/player-v2');
   }
-
-  player = new BrowserWindow({
-    width: 427,
-    height: 300,
-    minWidth: 427,
-    minHeight: 300,
-    closable: false,
-    title: 'Headset - Player',
-    icon: path.join(__dirname, 'icons', 'Icon.icns'),
-  });
-
-  new AutoUpdater();
 
   tray = new Tray(path.join(__dirname, 'icons', 'HeadsetTemplate.png'));
   headsetTray(tray, win, player);
 
+  // Creates a default Application Menu
+  const menu = defaultMenu(app, shell);
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+
+  logger('Registering MediaKeys');
+  registerMediaKeys(win);
+
   win.webContents.on('did-finish-load', () => {
     logger('Main window finished loading');
-
-    setTimeout(() => {
-      player.minimize();
-    }, 2000);
-
-    if (isDev) {
-      player.loadURL('http://lvh.me:3001');
-    } else {
-      player.loadURL('http://danielravina.github.io/headset/player-v2');
-    }
 
     win.webContents.executeJavaScript(`
       window.electronVersion = "v${version}"
     `);
-
-    logger('Registering MediaKeys');
-    globalShortcut.register('MediaPlayPause', () => {
-      logger('Executing %o media key command', 'play-pause');
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-pause')
-      `);
-    });
-
-    globalShortcut.register('MediaNextTrack', () => {
-      logger('Executing %o media key command', 'play-next');
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-next')
-      `);
-    });
-
-    globalShortcut.register('MediaPreviousTrack', () => {
-      logger('Executing %o media key command', 'play-previous');
-      win.webContents.executeJavaScript(`
-        window.electronConnector.emit('play-previous')
-      `);
-    });
-
-    if (isDev) {
-      win.webContents.openDevTools();
-      // player.webContents.openDevTools();
-    }
-
-    const menu = defaultMenu(app, shell);
-
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
-  }); // end did-finish-load
+  });
 
   player.webContents.on('did-finish-load', () => {
     logger('Player window finished loading');
+    player.show();
     win.focus();
+    setTimeout(() => player.minimize(), 2000);
+  });
+
+  player.webContents.on('new-window', (event, url) => {
+    event.preventDefault();
+    const docsWin = new BrowserWindow({ closable: true });
+    docsWin.loadURL(url);
+    event.newGuest = docsWin;
   });
 
   win.on('close', (e) => {
@@ -132,19 +118,16 @@ const start = () => {
     e.preventDefault();
     win.hide();
   });
+} // end start
 
-  win.on('restore', (e) => {
-    e.preventDefault();
-    win.show();
-  });
-}; // end start
+app.on('activate', () => win.show());
 
-app.on('activate', () => { win.show(); });
 app.on('before-quit', () => {
-  // willQuitApp = true;
   player.setClosable(true);
+  globalShortcut.unregisterAll();
   app.exit();
 });
+
 app.on('ready', start);
 
 /*
