@@ -96,6 +96,7 @@ function start() {
     maximizable: false,
     useContentSize: true,
     icon: windowIcon,
+    titleBarStyle: 'hiddenInset',
     webPreferences: { nodeIntegration: true },
   });
 

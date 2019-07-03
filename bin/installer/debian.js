@@ -37,7 +37,7 @@ const options = {
 async function main() {
   console.log('Creating Debian installer (this may take a while)');
   try {
-    installer(options);
+    await installer(options);
     console.log(`Successfully created installer at ${options.dest}\n`);
   } catch (error) {
     console.error(error, error.stack);
