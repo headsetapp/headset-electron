@@ -1,2 +1,2 @@
 headset: npm run headset
-player: npm run player
+player: bash bin/player_window.sh

@@ -8,10 +8,12 @@
   "homepage": "http://headsetapp.co",
   "bugs": "https://github.com/headsetapp/headset-electron/issues",
   "main": "src/index.js",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/headsetapp/headset-electron"
+  },
   "scripts": {
     "headset": "electron .",
-    "player": "bash bin/player_window.sh",
     "start": "NODE_ENV=development nf start",
     "lint": "eslint .",
     "version": "npm run bumps && git add .",
@@ -46,10 +48,10 @@
     "cross-env": "^5.2.0",
     "electron": "^5.0.6",
     "electron-installer-windows": "^2.0.0",
-    "electron-packager": "^14.0.0",
+    "electron-packager": "^14.0.1",
     "electron-packager-languages": "^0.3.0",
     "eslint": "^6.0.1",
-    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-promise": "^4.2.1",
     "foreman": "^3.0.1",
