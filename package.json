@@ -14,7 +14,7 @@
   },
   "scripts": {
     "headset": "electron .",
-    "start": "NODE_ENV=development nf start",
+    "dev:headset": "NODE_ENV=development nf start",
     "lint": "eslint .",
     "version": "npm run bumps && git add .",
     "bumps": "npm run bump_auto_updater && npm run bump_choco_version",
