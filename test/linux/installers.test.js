@@ -1,11 +1,12 @@
+/* eslint-disable func-names */
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
-const packJson = require('../../linux/package.json');
+const { version } = require('../../package.json');
 
-const packagePath = path.join(__dirname, '..', '..', 'linux', 'build', 'installers');
-const debPackage = `headset_${packJson.version}_amd64.deb`;
-const rpmPackage = `headset-${packJson.version}.x86_64.rpm`;
+const packagePath = path.join(__dirname, '..', '..', 'build', 'installers');
+const debPackage = `headset_${version}_amd64.deb`;
+const rpmPackage = `headset-${version}-1.x86_64.rpm`;
 
 describe('packages', function () {
   this.timeout(40000);

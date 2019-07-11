@@ -43,18 +43,15 @@ services:
 
 install:
 - npm ci
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd linux && npm ci && cd ..; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd darwin && npm ci && cd ..; fi
 
 before_script:
-- ./bin/travis_eslint.sh
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd linux; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd darwin; fi
+- npm run lint
 
 script:
-- npm run build && cd ..
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run build:linux; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run build:darwin; fi
+- npm run test:app
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run test:linux; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run test:darwin; fi
 
 after_success:
 - if [[ "$TRAVIS_OS_NAME" == "linux" && -n "$TRAVIS_TAG" ]]; then
@@ -70,9 +67,7 @@ deploy:
   file_glob: true
   api_key: "$GITHUB_TOKEN"
   file:
-    - linux/build/installers/*
-    - darwin/build/installers/*.dmg
-    - darwin/build/installers/*.zip
+    - build/installers/*
   name: $TRAVIS_TAG
   tag_name: $TRAVIS_TAG
   draft: true
@@ -80,7 +75,7 @@ deploy:
     tags: true
 - provider: pages
   skip_cleanup: true
-  local_dir: linux/gh-pages
+  local_dir: gh-pages
   github_token: "$GITHUB_TOKEN"
   on:
     tags: true

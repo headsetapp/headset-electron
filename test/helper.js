@@ -2,8 +2,8 @@
 // Returns 3xN array, where N is the number of lines relevant to DEBUG=headset*
 function formatLogs(logs) {
   return logs
-    .map((line) => {
-      line = line.split(' ');
+    .map((ln) => {
+      const line = ln.split(' ');
       return [line[0], line[1], line.splice(2).join(' ')];
     })
     .filter(line => !Number.isNaN(Date.parse(line[0])));

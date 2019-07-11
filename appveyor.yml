@@ -23,29 +23,26 @@ cache:
 install:
   - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version) $env:PLATFORM
   - npm ci
-  - cd windows && npm ci && cd..
 
 before_build:
-  - npm run lint windows
+  - npm run lint
 
 build_script:
-  - cd windows
-  - npm run pack
-  - npm run dist 2> $null
+  - npm run pack:windows
+  - npm run dist:windows 2> $null
   - npm run choco
 
 test_script:
-  - cd ..
-  - npm run test:windows
+  - npm run test:app
 
 artifacts:
-  - path: windows\build\installers\headset-*-setup.exe
+  - path: build\installers\headset-*-setup.exe
     name: HeadsetApp
-  - path: windows\build\installers\headset-*-full.nupkg
+  - path: build\installers\headset-*-full.nupkg
     name: HeadsetNupkg
-  - path: windows\build\installers\RELEASES
+  - path: build\installers\RELEASES
     name: HeadsetReleases
-  - path: windows\build\headset.*.nupkg
+  - path: build\headset.*.nupkg
     name: HeadsetChoco
 
 deploy:
