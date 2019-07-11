@@ -75,6 +75,13 @@ app.on('second-instance', () => {
   }
 });
 
+function close() {
+  logger.info('Closing Headset');
+  // after app closes in Win, the global shortcuts are still up, disabling it here.
+  globalShortcut.unregisterAll();
+  app.exit();
+}
+
 function start() {
   if (OS === 'win32' || OS === 'darwin') {
     new AutoUpdater(); // Check if new updates
@@ -153,16 +160,28 @@ function start() {
     event.newGuest = docsWin; // eslint-disable-line no-param-reassign
   });
 
-  win.on('close', () => {
-    logger.info('Closing Headset');
-    // after app closes in Win, the global shortcuts are still up, disabling it here.
-    globalShortcut.unregisterAll();
-    app.exit();
+  // Linux doesn't implement closable=false for
+  player.on('close', (event) => {
+    event.preventDefault();
+  });
+
+  win.on('close', (e) => {
+    if (OS === 'darwin') {
+      // Hide the window on macOS
+      logger.info('Hide main headset window');
+      e.preventDefault();
+      win.hide();
+    } else {
+      close(); // close the app for Linux and Windows
+    }
   });
 } // end start
 
-
 app.on('ready', start);
+
+app.on('activate', () => win.show()); // macOS only
+
+app.on('before-quit', close);
 
 /*
  * This is the proxy between the 2 windows.
