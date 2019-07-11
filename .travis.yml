@@ -52,13 +52,9 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run build:darwin; fi
 - npm run test:app
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run test:linux; fi
-
-after_success:
 - if [[ "$TRAVIS_OS_NAME" == "linux" && -n "$TRAVIS_TAG" ]]; then
-    cd linux &&
-    openssl aes-256-cbc -K $encrypted_6866d25ad40b_key -iv $encrypted_6866d25ad40b_iv -in sig/headset_priv.asc.enc -out headset_priv.asc -d &&
-    npm run repo &&
-    cd ..;
+    openssl aes-256-cbc -K $encrypted_6866d25ad40b_key -iv $encrypted_6866d25ad40b_iv -in sig/headset_priv.asc.enc -out headset_priv.asc -d;
+    npm run repo;
   fi
 
 deploy:
