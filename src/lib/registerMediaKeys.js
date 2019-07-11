@@ -3,7 +3,7 @@ const macOSWindows = require('./mediaKeys/macOSWindows');
 
 const OS = process.platform;
 
-module.exports = () => { // eslint-disable-line consistent-return
-  if (OS === 'linux') { return linux; }
-  if (OS === 'win32' || OS === 'darwin') { return macOSWindows; }
+module.exports = (win) => { // eslint-disable-line consistent-return
+  if (OS === 'linux') { return linux(win); }
+  if (OS === 'win32' || OS === 'darwin') { return macOSWindows(win); }
 };
