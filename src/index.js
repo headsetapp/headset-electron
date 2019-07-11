@@ -75,9 +75,6 @@ app.on('second-instance', () => {
   }
 });
 
-// Removes the application menu on all windows
-Menu.setApplicationMenu(null);
-
 function start() {
   if (OS === 'win32' || OS === 'darwin') {
     new AutoUpdater(); // Check if new updates
