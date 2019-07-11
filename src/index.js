@@ -160,12 +160,20 @@ function start() {
     event.newGuest = docsWin; // eslint-disable-line no-param-reassign
   });
 
+  // Linux doesn't implement closable=false for
+  player.on('close', (event) => {
+    event.preventDefault();
+  });
+
   win.on('close', (e) => {
-    if (OS !== 'darwin') { close(); } // close the app for Linux and Windows
-    // Hide the window on macOS
-    logger.info('Hide main headset window');
-    e.preventDefault();
-    win.hide();
+    if (OS === 'darwin') {
+      // Hide the window on macOS
+      logger.info('Hide main headset window');
+      e.preventDefault();
+      win.hide();
+    } else {
+      close(); // close the app for Linux and Windows
+    }
   });
 } // end start
 
