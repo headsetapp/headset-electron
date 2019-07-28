@@ -1,7 +1,6 @@
 const defaultMenu = require('electron-default-menu');
 const squirrel = require('electron-squirrel-startup');
 const windowStateKeeper = require('electron-window-state');
-const AutoUpdater = require('headset-autoupdater');
 const path = require('path');
 const {
   app,
@@ -14,6 +13,7 @@ const {
   Tray,
 } = require('electron');
 
+const AutoUpdater = require('./lib/autoUpdater');
 const { version } = require('../package');
 const logger = require('./lib/headsetLogger');
 const headsetTray = require('./lib/headsetTray');
@@ -65,7 +65,9 @@ logger.info(`Running as developer: ${isDev}`);
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 
 // Quit if second instance found and focus window of first instance
-if (!app.requestSingleInstanceLock()) app.exit();
+if (!isDev && !app.requestSingleInstanceLock()) {
+  app.exit();
+}
 
 app.on('second-instance', () => {
   logger.info('Second instance of Headset found');
@@ -84,7 +86,9 @@ function close() {
 
 function start() {
   if (OS === 'win32' || OS === 'darwin') {
-    new AutoUpdater(); // Check if new updates
+    new AutoUpdater({
+      onUpdateDownloaded: () => win.webContents.send('update-ready'),
+    }); // Check if new updates
   }
 
   logger.info('Starting Headset');
@@ -107,12 +111,16 @@ function start() {
   player = new BrowserWindow({
     width: 427,
     height: 300,
+    minWidth: 427,
+    minHeight: 300,
     closable: false,
     useContentSize: true,
     title: 'Headset - Player',
     icon: windowIcon,
     webPreferences: { nodeIntegration: true },
   });
+
+  player.minimize();
 
   mainWindowState.manage(win);
 
@@ -150,7 +158,6 @@ function start() {
   player.webContents.on('did-finish-load', () => {
     logger.info('Player window finished loading');
     win.focus();
-    setTimeout(() => player.minimize(), 2000);
   });
 
   player.webContents.on('new-window', (event, url) => {
@@ -178,9 +185,7 @@ function start() {
 } // end start
 
 app.on('ready', start);
-
 app.on('activate', () => win.show()); // macOS only
-
 app.on('before-quit', close);
 
 /*

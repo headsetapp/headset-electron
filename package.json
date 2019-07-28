@@ -39,6 +39,7 @@
   "dependencies": {
     "debug": "^4.1.1",
     "electron-default-menu": "^1.0.1",
+    "electron-gh-releases": "^2.0.4",
     "electron-log": "^3.0.6",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
