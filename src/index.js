@@ -59,6 +59,7 @@ if (process.argv.includes('--disable-gpu')) {
 }
 
 const isDev = (process.env.NODE_ENV === 'development');
+let isUpdating = false;
 logger.info(`Running as developer: ${isDev}`);
 
 // Allows to autoplay video, which is disabled in newer versions of Chrome
@@ -85,12 +86,6 @@ function close() {
 }
 
 function start() {
-  if (OS === 'win32' || OS === 'darwin') {
-    new AutoUpdater({
-      onUpdateDownloaded: () => win.webContents.send('update-ready'),
-    }); // Check if new updates
-  }
-
   logger.info('Starting Headset');
   const mainWindowState = windowStateKeeper();
 
@@ -173,7 +168,7 @@ function start() {
   });
 
   win.on('close', (e) => {
-    if (OS === 'darwin') {
+    if (OS === 'darwin' && !isUpdating) {
       // Hide the window on macOS
       logger.info('Hide main headset window');
       e.preventDefault();
@@ -182,6 +177,18 @@ function start() {
       close(); // close the app for Linux and Windows
     }
   });
+
+  if (OS === 'win32' || OS === 'darwin') {
+    // Check for new updates
+    const autoUpdater = new AutoUpdater({
+      onUpdateDownloaded: () => win.webContents.send('update-ready'),
+    });
+
+    ipcMain.on('restart-to-update', () => {
+      isUpdating = true;
+      autoUpdater.resetAndInstall();
+    });
+  }
 } // end start
 
 app.on('ready', start);

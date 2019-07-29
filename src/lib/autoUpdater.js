@@ -4,10 +4,11 @@ const { app } = require('electron');
 class AutoUpdater {
   constructor(options = {}) {
     this.options = options;
+    const version = `v${app.getVersion()}`;
 
     this.updater = new GhReleases({
       repo: 'headsetapp/headset-electron',
-      currentVersion: `v${app.getVersion()}`,
+      currentVersion: version,
     });
 
     this.updater.on('update-downloaded', () => options.onUpdateDownloaded());
