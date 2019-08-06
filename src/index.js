@@ -115,7 +115,6 @@ function start() {
     webPreferences: { nodeIntegration: true },
   });
 
-  player.minimize();
 
   mainWindowState.manage(win);
 
@@ -153,6 +152,7 @@ function start() {
   player.webContents.on('did-finish-load', () => {
     logger.info('Player window finished loading');
     win.focus();
+    player.minimize();
   });
 
   player.webContents.on('new-window', (event, url) => {
