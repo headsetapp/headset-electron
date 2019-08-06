@@ -21,7 +21,6 @@ const ignore = [
   /\.gitignore$/,
   /\.travis\.yml$/,
   /appveyor\.yml$/,
-  /auto_updater\.json$/,
   /CONTRIBUTING\.md$/,
   /Procfile$/,
   /README\.md$/,
