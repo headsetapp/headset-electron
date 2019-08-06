@@ -1,36 +1,28 @@
-const GhReleases = require('electron-gh-releases');
-const { app } = require('electron');
+
+const { app, autoUpdater } = require('electron');
+
+const SERVER = 'https://update.electronjs.org';
 
 class AutoUpdater {
   constructor(options = {}) {
-    this.options = options;
-    const version = `v${app.getVersion()}`;
+    const feed = `${SERVER}/headsetapp/headset-electron/${process.platform}-${process.arch}/${app.getVersion()}`;
 
-    this.updater = new GhReleases({
-      repo: 'headsetapp/headset-electron',
-      currentVersion: version,
+    autoUpdater.setFeedURL(feed);
+
+
+    autoUpdater.on('update-downloaded', (e) => {
+      options.onUpdateDownloaded();
     });
 
-    this.updater.on('update-downloaded', () => options.onUpdateDownloaded());
-
-    this.checkForUpdates();
+    autoUpdater.checkForUpdates();
 
     setInterval(() => {
-      this.checkForUpdates();
-    }, 3600000);
+      autoUpdater.checkForUpdates();
+    }, 10 * 60 * 1000);
   }
 
   resetAndInstall() {
-    this.updater.install();
-  }
-
-  checkForUpdates() {
-    this.updater.check((err, status) => {
-      if (!err && status) {
-        // Download the update
-        this.updater.download();
-      }
-    });
+    autoUpdater.quitAndInstall();
   }
 }
 

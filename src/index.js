@@ -178,8 +178,7 @@ function start() {
     }
   });
 
-  if (OS === 'win32' || OS === 'darwin') {
-    // Check for new updates
+  if (!isDev && (OS === 'win32' || OS === 'darwin')) {
     const autoUpdater = new AutoUpdater({
       onUpdateDownloaded: () => win.webContents.send('update-ready'),
     });
