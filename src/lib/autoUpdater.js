@@ -10,7 +10,7 @@ class AutoUpdater {
     autoUpdater.setFeedURL(feed);
 
 
-    autoUpdater.on('update-downloaded', (e) => {
+    autoUpdater.on('update-downloaded', () => {
       options.onUpdateDownloaded();
     });
 
@@ -21,9 +21,11 @@ class AutoUpdater {
     }, 10 * 60 * 1000);
   }
 
+  /* eslint-disable class-methods-use-this */
   resetAndInstall() {
     autoUpdater.quitAndInstall();
   }
+  /* eslint-enable */
 }
 
 module.exports = AutoUpdater;
