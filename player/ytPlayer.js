@@ -34,7 +34,7 @@ class YTPlayer {
     ytPlayer.pauseVideo();
     this.waitToBuffer()
       .then(() => ytPlayer.pauseVideo())
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   }
 
   playVideo() {

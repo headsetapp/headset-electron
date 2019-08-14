@@ -6,7 +6,7 @@ function formatLogs(logs) {
       const line = ln.split(' ');
       return [line[0], line[1], line.splice(2).join(' ')];
     })
-    .filter(line => !Number.isNaN(Date.parse(line[0])));
+    .filter((line) => !Number.isNaN(Date.parse(line[0])));
 }
 
 // Prints a color output of a 3xN array of logs
