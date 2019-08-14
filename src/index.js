@@ -2,6 +2,7 @@ const defaultMenu = require('electron-default-menu');
 const squirrel = require('electron-squirrel-startup');
 const windowStateKeeper = require('electron-window-state');
 const path = require('path');
+const fs = require('fs');
 const {
   app,
   BrowserWindow,
@@ -178,7 +179,9 @@ function start() {
     }
   });
 
-  if (!isDev && (OS === 'win32' || OS === 'darwin')) {
+  // Check if app is installed with Squirrel
+  if ((OS === 'win32' && fs.existsSync(path.resolve(path.dirname(process.execPath), '..', 'update.exe')))
+    || (OS === 'darwin' && path.basename(process.execPath) === 'Headset')) {
     const autoUpdater = new AutoUpdater({
       onUpdateDownloaded: () => win.webContents.send('update-ready'),
     });
