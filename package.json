@@ -17,8 +17,7 @@
     "dev:headset": "NODE_ENV=development nf start",
     "lint": "eslint .",
     "version": "npm run bumps && git add .",
-    "bumps": "npm run bump_auto_updater && npm run bump_choco_version",
-    "bump_auto_updater": "VERSION=$npm_package_version bash bin/bump_auto_updater.sh",
+    "bumps": "npm run bump_choco_version",
     "bump_choco_version": "VERSION=$npm_package_version bash bin/choco_version_bump.sh",
     "pack:linux": "bash bin/packager/linux.sh",
     "pack:darwin": "bash bin/packager/darwin.sh",
@@ -42,7 +41,7 @@
     "electron-log": "^3.0.6",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
-    "headset-autoupdater": "^0.2.1"
+    "update-electron-app": "^1.5.0"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

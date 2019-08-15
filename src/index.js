@@ -1,8 +1,8 @@
 const defaultMenu = require('electron-default-menu');
 const squirrel = require('electron-squirrel-startup');
 const windowStateKeeper = require('electron-window-state');
-const AutoUpdater = require('headset-autoupdater');
 const path = require('path');
+const fs = require('fs');
 const {
   app,
   BrowserWindow,
@@ -14,6 +14,7 @@ const {
   Tray,
 } = require('electron');
 
+const AutoUpdater = require('./lib/autoUpdater');
 const { version } = require('../package');
 const logger = require('./lib/headsetLogger');
 const headsetTray = require('./lib/headsetTray');
@@ -59,13 +60,16 @@ if (process.argv.includes('--disable-gpu')) {
 }
 
 const isDev = (process.env.NODE_ENV === 'development');
+let isUpdating = false;
 logger.info(`Running as developer: ${isDev}`);
 
 // Allows to autoplay video, which is disabled in newer versions of Chrome
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 
 // Quit if second instance found and focus window of first instance
-if (!app.requestSingleInstanceLock()) app.exit();
+if (!isDev && !app.requestSingleInstanceLock()) {
+  app.exit();
+}
 
 app.on('second-instance', () => {
   logger.info('Second instance of Headset found');
@@ -83,10 +87,6 @@ function close() {
 }
 
 function start() {
-  if (OS === 'win32' || OS === 'darwin') {
-    new AutoUpdater(); // Check if new updates
-  }
-
   logger.info('Starting Headset');
   const mainWindowState = windowStateKeeper();
 
@@ -107,12 +107,15 @@ function start() {
   player = new BrowserWindow({
     width: 427,
     height: 300,
+    minWidth: 427,
+    minHeight: 300,
     closable: false,
     useContentSize: true,
     title: 'Headset - Player',
     icon: windowIcon,
     webPreferences: { nodeIntegration: true },
   });
+
 
   mainWindowState.manage(win);
 
@@ -150,7 +153,7 @@ function start() {
   player.webContents.on('did-finish-load', () => {
     logger.info('Player window finished loading');
     win.focus();
-    setTimeout(() => player.minimize(), 2000);
+    player.minimize();
   });
 
   player.webContents.on('new-window', (event, url) => {
@@ -166,7 +169,7 @@ function start() {
   });
 
   win.on('close', (e) => {
-    if (OS === 'darwin') {
+    if (OS === 'darwin' && !isUpdating) {
       // Hide the window on macOS
       logger.info('Hide main headset window');
       e.preventDefault();
@@ -175,12 +178,23 @@ function start() {
       close(); // close the app for Linux and Windows
     }
   });
+
+  // Check if app is installed with Squirrel
+  if ((OS === 'win32' && fs.existsSync(path.resolve(path.dirname(process.execPath), '..', 'update.exe')))
+    || (OS === 'darwin' && path.basename(process.execPath) === 'Headset')) {
+    const autoUpdater = new AutoUpdater({
+      onUpdateDownloaded: () => win.webContents.send('update-ready'),
+    });
+
+    ipcMain.on('restart-to-update', () => {
+      isUpdating = true;
+      autoUpdater.resetAndInstall();
+    });
+  }
 } // end start
 
 app.on('ready', start);
-
 app.on('activate', () => win.show()); // macOS only
-
 app.on('before-quit', close);
 
 /*
