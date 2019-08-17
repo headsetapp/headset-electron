@@ -5,8 +5,8 @@ os:
   - linux
   - osx
 
-dist: xenial
-osx_image: xcode10.1
+dist: bionic
+osx_image: xcode11
 
 cache:
   directories:
