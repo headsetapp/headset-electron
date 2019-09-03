@@ -181,15 +181,22 @@ function start() {
 
   // Check if app is installed with Squirrel
   if ((OS === 'win32' && fs.existsSync(path.resolve(path.dirname(process.execPath), '..', 'update.exe')))
-    || (OS === 'darwin' && path.basename(process.execPath) === 'Headset')) {
-    const autoUpdater = new AutoUpdater({
-      onUpdateDownloaded: () => win.webContents.send('update-ready'),
-    });
+    || OS === 'darwin') {
+    try {
+      const autoUpdater = new AutoUpdater({
+        onUpdateDownloaded: () => win.webContents.send('update-ready'),
+      });
 
-    ipcMain.on('restart-to-update', () => {
-      isUpdating = true;
-      autoUpdater.resetAndInstall();
-    });
+      ipcMain.on('restart-to-update', () => {
+        isUpdating = true;
+        autoUpdater.resetAndInstall();
+      });
+    } catch (error) {
+      if (error.message !== 'Could not get code signature for running application') {
+        console.error(error);
+        app.exit();
+      }
+    }
   }
 } // end start
 
