@@ -80,7 +80,7 @@ see the code! Just make sure to write it in the pull request message and ask for
 To submit a pull request:
 - create a feature branch locally and commit all your changes to it
 - run all the relevant tests (linter and general), fix any issues
-- push them to a feature branch on your fork - if you do `git push origin <branch-name>`
+- push them to a feature branch on your fork - if you do `git push origin <branch-name>`.
   GitHub will automatically create a new branch for you
 - go to your GitHub fork, switch to the feature branch and submit a pull request to
   the main repository
