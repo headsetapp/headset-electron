@@ -221,3 +221,7 @@ ipcMain.on('player2Win', (e, args) => {
     win.webContents.send('player2Win', args);
   } catch (err) { /* window already closed */ }
 });
+
+ipcMain.on('openExternal', (_, link) => {
+  shell.openExternal(link);
+});
