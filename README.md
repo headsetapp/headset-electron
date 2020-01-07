@@ -1,5 +1,8 @@
 # Headset
 
+> **ATTENTION**:  Headset no longer uses a shared YouTube API Key. Please create your own key by [Following this quick guide](https://github.com/headsetapp/headset-electron/wiki/Get-Youtube-API-Key) and make sure you are running the latest version.
+
+
 [![Linux/macOS Build Status](https://img.shields.io/travis/headsetapp/headset-electron/master.svg?logo=travis&label=Linux%2FmacOS)](https://travis-ci.org/headsetapp/headset-electron)
 [![Windows Build status](https://img.shields.io/appveyor/ci/danielravina/headset-electron/master.svg?logo=appveyor&label=Windows)](https://ci.appveyor.com/project/danielravina/headset-electron/branch/master)
 
