@@ -22,4 +22,10 @@ module.exports = (win) => {
       window.electronConnector.emit('play-previous')
     `);
   });
+
+  // Register shortcut key to open Developer Tools
+  globalShortcut.register('CommandOrControl+Shift+I', () => {
+    logger.info('Opening Developer Tools');
+    win.webContents.openDevTools();
+  });
 };
