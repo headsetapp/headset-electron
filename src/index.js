@@ -1,4 +1,3 @@
-const defaultMenu = require('electron-default-menu');
 const squirrel = require('electron-squirrel-startup');
 const windowStateKeeper = require('electron-window-state');
 const path = require('path');
@@ -9,7 +8,6 @@ const {
   globalShortcut,
   ipcMain,
   Menu,
-  shell,
   systemPreferences,
   Tray,
 } = require('electron');
@@ -50,8 +48,6 @@ if (OS === 'linux') {
 // Load macOS variables
 if (OS === 'darwin') {
   systemPreferences.isTrustedAccessibilityClient(true);
-  const menu = defaultMenu(app, shell);
-  Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
   trayIcon = path.join(__dirname, 'icons', 'headsetTemplate.png');
 }
 
