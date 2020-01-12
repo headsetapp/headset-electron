@@ -1,4 +1,3 @@
-const defaultMenu = require('electron-default-menu');
 const squirrel = require('electron-squirrel-startup');
 const windowStateKeeper = require('electron-window-state');
 const path = require('path');
@@ -9,7 +8,6 @@ const {
   globalShortcut,
   ipcMain,
   Menu,
-  shell,
   systemPreferences,
   Tray,
 } = require('electron');
@@ -44,14 +42,12 @@ if (OS === 'win32') {
 // Load Linux variables
 if (OS === 'linux') {
   Menu.setApplicationMenu(null);
-  windowIcon = path.join(__dirname, 'icons', 'windowIcon.ico');
+  windowIcon = path.join(__dirname, 'icons', 'headset.png');
 }
 
 // Load macOS variables
 if (OS === 'darwin') {
   systemPreferences.isTrustedAccessibilityClient(true);
-  const menu = defaultMenu(app, shell);
-  Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
   trayIcon = path.join(__dirname, 'icons', 'headsetTemplate.png');
 }
 
@@ -100,6 +96,7 @@ function start() {
     maximizable: false,
     useContentSize: true,
     icon: windowIcon,
+    autoHideMenuBar: true,
     titleBarStyle: 'hiddenInset',
     webPreferences: { nodeIntegration: true },
   });
@@ -116,6 +113,18 @@ function start() {
     webPreferences: { nodeIntegration: true },
   });
 
+  // Menu for main window. It will be hidden but allows for shortcuts to still work
+  if (OS === 'win32' || OS === 'linux') {
+    const menu = Menu.buildFromTemplate([
+      {
+        label: 'File',
+        submenu: [
+          { role: 'toggleDevTools' },
+        ],
+      },
+    ]);
+    win.setMenu(menu);
+  }
 
   mainWindowState.manage(win);
 

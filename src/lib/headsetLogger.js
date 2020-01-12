@@ -1,6 +1,5 @@
 const logFile = require('electron-log');
 const debug = require('debug');
-const { unlinkSync } = require('fs');
 
 const logger = debug('headset');
 const logMedia = debug('headset:media');
@@ -9,19 +8,12 @@ const logWin2Player = debug('headset:win2Player');
 const logPlayer2Win = debug('headset:player2Win');
 
 logFile.transports.console.level = false;
-logFile.transports.file.fileName = 'headset.log';
 logFile.transports.file.format = '[{y}-{m}-{d} {h}:{i}:{s}.{ms}] {text}';
 
 class HeadsetLogger {
   // This function will be removed when 'electron-log' gets fixed
   static clear() {
-    try {
-      unlinkSync(logFile.transports.file.findLogPath());
-    } catch (error) {
-      if (error.code !== 'ENOENT') {
-        console.error('Could not clear log', error);
-      }
-    }
+    logFile.transports.file.getFile().clear();
   }
 
   static info(message) {

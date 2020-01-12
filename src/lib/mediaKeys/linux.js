@@ -1,5 +1,5 @@
 const DBus = require('dbus-next');
-const { globalShortcut, ipcMain } = require('electron');
+const { ipcMain } = require('electron');
 const logger = require('../headsetLogger');
 
 let track = null;
@@ -66,10 +66,4 @@ module.exports = (win) => {
   } catch (error) {
     console.error(error);
   }
-
-  // Register shortcut key to open Developer Tools
-  globalShortcut.register('CommandOrControl+Shift+I', () => {
-    logger.info('Opening Developer Tools');
-    win.webContents.openDevTools();
-  });
 };
