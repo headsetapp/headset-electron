@@ -1,7 +1,7 @@
 {
   "name": "headset",
   "productName": "Headset",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Discover and collect music on YouTube",
   "license": "MIT",
   "author": "Daniel Ravina <hello@headsetapp.co>",
@@ -37,24 +37,24 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "electron-log": "^4.0.4",
+    "electron-log": "^4.0.5",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.0",
-    "electron": "^7.1.11",
+    "electron": "^8.0.0",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^14.2.0",
     "electron-packager-languages": "^0.4.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-promise": "^4.2.1",
     "foreman": "^3.0.1",
     "http-server": "^0.12.1",
     "mocha": "^7.0.1",
-    "spectron": "^9.0.0",
+    "spectron": "^10.0.0",
     "timeout-as-promise": "^1.0.0"
   },
   "optionalDependencies": {
