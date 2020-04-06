@@ -15,7 +15,7 @@ cache:
 
 git:
   depth: 1
-  autocrlf: input
+  autocrlf: false
 
 branches:
   only:
@@ -47,21 +47,21 @@ install:
 - npm ci
 
 before_script:
-- npm run lint
+- npm run lint || travis_terminate 1;
 
 script:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run build:linux; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run build:darwin; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run build:linux || travis_terminate 1; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run build:darwin || travis_terminate 1; fi
 - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-    npm run npm run pack:windows
-    npm run dist:windows 2> $null
-    npm run choco
+    npm run pack:windows || travis_terminate 1
+    npm run dist:windows || travis_terminate 1
+    npm run choco || travis_terminate 1
   fi
-- npm run test:app
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run test:linux; fi
+- npm run test:app || travis_terminate 1
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run test:linux || travis_terminate 1; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && -n "$TRAVIS_TAG" ]]; then
     openssl aes-256-cbc -K $encrypted_6866d25ad40b_key -iv $encrypted_6866d25ad40b_iv -in sig/headset_priv.asc.enc -out headset_priv.asc -d;
-    npm run repo;
+    npm run repo || travis_terminate 1;
   fi
 
 deploy:

@@ -20,8 +20,8 @@ const options = {
   noMsi: true,
   tags: ['headset', 'youtube', 'player', 'radio', 'music'],
   iconNuget: path.join(__dirname, '..', '..', 'src', 'icons', 'headset.png'),
-  certificateFile: 'sig/headset.pfx',
-  certificatePassword: CERT_PASSWORD,
+  // certificateFile: 'sig/headset.pfx',
+  // certificatePassword: CERT_PASSWORD,
 };
 
 async function main() {
