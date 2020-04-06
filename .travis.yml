@@ -2,8 +2,8 @@ language: node_js
 node_js: '12'
 
 os:
-  - linux
-  - osx
+  # - linux
+  # - osx
   - windows
 
 dist: bionic
@@ -15,6 +15,7 @@ cache:
 
 git:
   depth: 1
+  autocrlf: input
 
 branches:
   only:
