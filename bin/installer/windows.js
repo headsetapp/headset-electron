@@ -1,14 +1,7 @@
 const installer = require('electron-installer-windows');
 const path = require('path');
 
-const { CERT_PASSWORD, APPVEYOR_REPO_TAG } = process.env;
-
-if (typeof CERT_PASSWORD !== 'string' && APPVEYOR_REPO_TAG === 'true') {
-  console.log('Error: The certificate password is not a string');
-  throw new Error('The certificate password is not a string');
-} else {
-  console.log('Warning: The package will not be signed');
-}
+const { CERT_PASSWORD, GITHUB_REF } = process.env;
 
 const options = {
   src: 'build/Headset-win32-ia32',
@@ -20,9 +13,14 @@ const options = {
   noMsi: true,
   tags: ['headset', 'youtube', 'player', 'radio', 'music'],
   iconNuget: path.join(__dirname, '..', '..', 'src', 'icons', 'headset.png'),
-  certificateFile: 'sig/headset.pfx',
-  certificatePassword: CERT_PASSWORD,
 };
+
+if (CERT_PASSWORD && GITHUB_REF && GITHUB_REF.startsWith('refs/tags/')) {
+  options.certificateFile = 'sig/headset.pfx';
+  options.certificatePassword = CERT_PASSWORD;
+} else {
+  console.log('Warning: The package will not be signed');
+}
 
 async function main() {
   console.log('Creating Windows installer (this may take a while)');
@@ -30,7 +28,7 @@ async function main() {
     await installer(options);
     console.log(`Successfully created installer at ${options.dest}\n`);
   } catch (error) {
-    console.error(error, error.stack);
+    console.error(error.stack.replace(new RegExp(CERT_PASSWORD, 'g'), '***'));
     process.exit(1);
   }
 }
