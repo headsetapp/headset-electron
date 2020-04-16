@@ -6,7 +6,7 @@ $chocoInstall = '.chocolatey\tools\chocolateyInstall.ps1'
 $setup = "build\installers\headset-$version-setup.exe"
 
 if (!(Test-Path -Path "$setup")) {
-  exit 1
+  throw "The file $setup couldn't be found"
 }
 
 $sha256 = (CertUtil -hashfile "$setup" SHA256)[1].Replace(' ', '')
