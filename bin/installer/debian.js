@@ -5,7 +5,10 @@ const options = {
   src: 'build/Headset-linux-x64',
   dest: 'build/installers',
   arch: 'amd64',
-  icon: path.join(__dirname, '..', '..', 'src', 'icons', 'headset.png'),
+  icon: {
+    scalable: path.join(__dirname, '..', '..', 'src', 'icons', 'headset.svg'),
+    symbolic: path.join(__dirname, '..', '..', 'src', 'icons', 'headset-symbolic.svg'),
+  },
   genericName: 'Music Player',
   productDescription: `Headset is a desktop app that turns YouTube into a world class music streaming service.
    Create collections, tune-in to a music subreddit or quickly play that song you’ve had stuck in your head all day!`,
