@@ -2,6 +2,7 @@ const logFile = require('electron-log');
 const debug = require('debug');
 
 const logger = debug('headset');
+const logDiscord = debug('headset:discord');
 const logMedia = debug('headset:media');
 const logTray = debug('headset:tray');
 const logWin2Player = debug('headset:win2Player');
@@ -24,6 +25,11 @@ class HeadsetLogger {
   static media(message) {
     logMedia(message);
     logFile.info(`headset:media\t\t ${message}`);
+  }
+
+  static discord(message) {
+    logDiscord(message);
+    logFile.info(`headset:discord\t\t ${message}`);
   }
 
   static tray(message) {
