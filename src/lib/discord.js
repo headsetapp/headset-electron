@@ -7,6 +7,7 @@ process.on('unhandledRejection', () => null);
 
 let client;
 let track;
+let lastUpdate = Date.now();
 
 async function tryConnecting(win) {
   if (!await win.webContents.executeJavaScript("localStorage.getItem('discord')")) return;
@@ -22,7 +23,7 @@ async function tryConnecting(win) {
     logger.discord('[Discord RPC] Disconnected');
     client = null;
   });
-  client.login({ clientId: '712424004190732419' });
+  client.login({ clientId: '712424004190732419' }).catch(console.error);
 }
 
 async function setPresence(trackInfo, isPlaying, win) {
@@ -45,9 +46,13 @@ async function setPresence(trackInfo, isPlaying, win) {
     startTimestamp: start,
     endTimestamp: end,
     instance: false,
+    largeImageKey: 'playing',
+    largeImageText: 'Headset',
   };
 
   if (!isPlaying) {
+    presence.smallImageKey = 'icon-pause';
+    presence.smallImageText = 'Paused';
     delete presence.startTimestamp;
     delete presence.endTimestamp;
     presence.state += ' (Paused)';
@@ -70,6 +75,8 @@ function discord(win) {
   ipcMain.on('player2Win', async (e, args) => {
     switch (args[0]) {
       case 'currentTime':
+        if (Date.now() <= lastUpdate + 15e3) return;
+        lastUpdate = Date.now();
         track.currentTime = args[1] * 1e3;
         await setPresence(track, true, win);
         break;
