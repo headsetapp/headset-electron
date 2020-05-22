@@ -5,36 +5,15 @@ const logger = require('./headsetLogger');
 // Handle because RPC is weird
 process.on('unhandledRejection', () => null);
 
-let client;
-let track;
-let lastUpdate = Date.now();
+let client = null;
+let trackInfo = {
+  title: '  ',
+  artist: '  ',
+  isPlaying: false,
+}; // Needed to set an initial state on Discord. Saves the current track info.
 
-async function tryConnecting(win) {
-  if (!await win.webContents.executeJavaScript("localStorage.getItem('discord')")) return;
-
-  if (client && client.ready) return;
-
-  client = new DiscordRPC.Client({ transport: 'ipc' });
-  client.on('ready', () => {
-    client.ready = true;
-    logger.discord('[Discord RPC] Ready');
-  });
-  client.on('disconnected', () => {
-    logger.discord('[Discord RPC] Disconnected');
-    client = null;
-  });
-  client.login({ clientId: '712424004190732419' }).catch(console.error);
-}
-
-async function setPresence(trackInfo, isPlaying, win) {
-  if (!await win.webContents.executeJavaScript("localStorage.getItem('discord')")) {
-    if (client) {
-      client.destroy();
-      client = null;
-    }
-    return;
-  }
-
+// Set Discord presence to 'trackInfo'
+function setPresence() {
   if (!client || !client.ready) return;
 
   const start = new Date(Date.now() - trackInfo.currentTime);
@@ -50,7 +29,7 @@ async function setPresence(trackInfo, isPlaying, win) {
     largeImageText: 'Headset',
   };
 
-  if (!isPlaying) {
+  if (!trackInfo.isPlaying) {
     presence.smallImageKey = 'icon-pause';
     presence.smallImageText = 'Paused';
     delete presence.startTimestamp;
@@ -60,38 +39,83 @@ async function setPresence(trackInfo, isPlaying, win) {
 
   // Run Event to update
   client.setActivity(presence);
+
+  logger.discord(`Updating Discord presence ${presence}`);
 }
 
-function discord(win) {
-  ipcMain.on('win2Player', async (e, args) => {
-    if (args[0] === 'trackInfo') {
-      track = args[1];
-      track.currentTime = 0;
-      await tryConnecting(win);
-      await setPresence(track, true, win);
-    }
+// Attempt to connect to Discord if it hasn't done it already.
+function tryConnecting() {
+  if (client && client.ready) return;
+
+  client = new DiscordRPC.Client({ transport: 'ipc' });
+
+  client.on('ready', () => {
+    logger.discord('Discord RPC: Ready');
+    client.ready = true;
+    setPresence(); // Set an inital presence upon connecting.
   });
 
-  ipcMain.on('player2Win', async (e, args) => {
-    switch (args[0]) {
-      case 'currentTime':
-        if (Date.now() <= lastUpdate + 15e3) return;
-        lastUpdate = Date.now();
-        track.currentTime = args[1] * 1e3;
-        await setPresence(track, true, win);
-        break;
-      case 'onStateChange':
-        await tryConnecting(win);
-        if (args[1] === 1) await setPresence(track, true, win);
-        if (args[1] === 2) await setPresence(track, false, win);
-        break;
-      default:
-    }
+  client.on('disconnected', () => {
+    logger.discord('Discord RPC: Disconnected');
+    client = null;
   });
 
-  app.on('before-quit', () => {
-    if (client) client.destroy();
-  });
+  client.login({ clientId: '712424004190732419' }).catch(() => { client = null; });
 }
 
-module.exports = discord;
+// Deletes any instance of Discord.
+function killDiscord() {
+  if (client) {
+    logger.discord('Killing Discord');
+    client.destroy();
+    client = null;
+  }
+}
+
+// Receive any changes from the user settings.
+ipcMain.on('discord', (event, isDiscordEnabled) => {
+  logger.discord(`Discord settings changed to ${isDiscordEnabled}`);
+  isDiscordEnabled ? tryConnecting() : killDiscord();
+});
+
+// Listen for any appropiate events to change Discord status.
+ipcMain.on('win2Player', async (event, args) => {
+  // Keep updating trackInfo even if Discord is not running.
+  // If Discord is enabled while something was playing, it will pick up on the right track and time
+  switch (args[0]) {
+    case 'trackInfo':
+      trackInfo = args[1];
+      trackInfo.currentTime = 0;
+      trackInfo.isPlaying = true;
+      break;
+    case 'pauseVideo':
+      trackInfo.isPlaying = false;
+      break;
+    case 'playVideo':
+      trackInfo.isPlaying = true;
+      break;
+    case 'seekTo':
+      trackInfo.currentTime = args[1] * 1e3;
+      break;
+    default:
+  }
+
+  // only update Discord when a valid event triggers it and it's enabled
+  if (['trackInfo', 'pauseVideo', 'playVideo', 'seekTo'].includes(args[0])
+    && await event.sender.webContents.executeJavaScript("localStorage.getItem('discord')")) {
+    client && client.ready ? setPresence() : tryConnecting();
+  }
+});
+
+// Keep updating currentTime. Same logic as 'win2Player'.
+ipcMain.on('player2Win', (event, args) => {
+  if (args[0] === 'currentTime') trackInfo.currentTime = args[1] * 1e3;
+});
+
+// Start Discord, if enabled, when app starts.
+app.on('web-contents-created', async (event, webContents) => {
+  if (await webContents.executeJavaScript("localStorage.getItem('discord')")) tryConnecting();
+});
+
+// Kill Discord when app exits.
+app.on('before-quit', killDiscord);

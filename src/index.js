@@ -14,11 +14,13 @@ const {
 
 const AutoUpdater = require('./lib/autoUpdater');
 const { version } = require('../package');
-const discord = require('./lib/discord');
 const logger = require('./lib/headsetLogger');
 const headsetTray = require('./lib/headsetTray');
 const mprisService = require('./lib/mprisService');
 const registerMediaKeys = require('./lib/registerMediaKeys');
+
+// Register Discord
+require('./lib/discord');
 
 // Delete the log file. Just a workaround until 'electron-log' is updated
 logger.clear();
@@ -151,9 +153,6 @@ function start() {
 
   // Register media keys
   registerMediaKeys(win);
-
-  // Register Discord
-  discord(win);
 
   win.webContents.on('did-finish-load', () => {
     logger.info('Main window finished loading');
