@@ -7,12 +7,12 @@
     <authors>Daniel Ravina</authors>
     <owners>Daniel Ravina</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://raw.githubusercontent.com/headsetapp/headset-electron/master/LICENSE</licenseUrl>
+    <licenseUrl>https://raw.githubusercontent.com/headsetapp/headset-electron/main/LICENSE</licenseUrl>
     <projectUrl>http://headsetapp.co/</projectUrl>
     <iconUrl>https://cdn.rawgit.com/headsetapp/headset-electron/4254239c/windows/Icon.png</iconUrl>
     <projectSourceUrl>https://github.com/headsetapp/headset-electron</projectSourceUrl>
     <bugTrackerUrl>https://github.com/headsetapp/headset-electron/issues</bugTrackerUrl>
-    <packageSourceUrl>https://github.com/headsetapp/headset-electron/tree/master/.chocolatey</packageSourceUrl>
+    <packageSourceUrl>https://github.com/headsetapp/headset-electron</packageSourceUrl>
     <releaseNotes>https://github.com/headsetapp/headset-electron/releases/tag/v3.2.1</releaseNotes>
     <description>Headset is a desktop app that turns YouTube into a world class music streaming service. Create collections, tune-in to a music subreddit or quickly play that song you've had stuck in your head all day!</description>
     <summary>Discover and collect music on YouTube</summary>

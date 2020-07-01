@@ -2,7 +2,7 @@ version: "{build}"
 
 branches:
   only:
-  - master
+  - main
   - /^v\d+\.\d+\.\d+/
 
 image: Visual Studio 2017

@@ -17,7 +17,7 @@ git:
 
 branches:
   only:
-  - master
+  - main
   - /^v\d+\.\d+\.\d+/
 
 env:
