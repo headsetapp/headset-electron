@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    name: Building and Testing
+    name: Build and test
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
@@ -85,13 +85,15 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         path: build/installers/
+    - name: Move artifacts
+      working-directory: build/installers/
+      run: |
+        find . -type f -exec mv {} . \;
+        find . -type d -delete
     - name: Display artifacts
       working-directory: build/installers/
       run: ls -Rl
-    - name: Create a release
-      run: |
-        echo ${{ steps.tags.outputs.oldtag }}
-        echo ${{ steps.tags.outputs.newtag }}
+    # - name: Create a release
     #   uses: ncipollo/release-action@v1
     #   with:
     #     allowUpdates: true
@@ -113,11 +115,18 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v2
       with:
+        name: installers-ubuntu-latest
         path: build/installers/
+    - name: Display artifacts
+      working-directory: build/installers/
+      run: ls -Rl
+    - name: Get tag
+      id: tag
+      uses: dawidd6/action-get-tag@v1
     - name: Creating repositories
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/headset_priv.asc.gpg
-        VERSION=${{ github.event.release.tag_name }} ./bin/linux_repo.sh
+        VERSION=${{ steps.tag.outputs.tag }} ./bin/linux_repo.sh
     # - name: Deploy Linux repositories
     #   uses: crazy-max/ghaction-github-pages@v1
     #   with:
@@ -140,9 +149,13 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v2
       with:
+        name: installers-windows-latest
         path: build/installers/
+    - name: Get tag
+      id: tag
+      uses: dawidd6/action-get-tag@v1
     - name: Creating nuspec
-      run: ./bin/build_choco.ps1 -version ${{ github.event.release.tag_name }}
+      run: ./bin/build_choco.ps1 -version ${{ steps.tag.outputs.tag }}
     # - name: Publishing
     #   working-directory: ./build
     #   run: choco push -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
