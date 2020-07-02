@@ -6,7 +6,8 @@
     "browser": true
   },
   "plugins": [
-    "promise"
+    "promise",
+    "ava"
   ],
   "extends": [
     "airbnb-base"

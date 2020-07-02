@@ -12,6 +12,7 @@ on:
 
 jobs:
   build:
+    name: Build and test
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
@@ -24,18 +25,10 @@ jobs:
     - name: Install Dependencies (macOS)
       if: matrix.os == 'macos-latest'
       run: brew install graphicsmagick imagemagick
-
     - name: Fix git checkout line endings
       run: git config --global core.autocrlf input
     - name: Get source
       uses: actions/checkout@v2
-    - name: Retrieve tags
-      id: tags
-      if: startsWith(github.ref, 'refs/tags/')
-      run: |
-        git fetch --tags -f
-        node bin/getTags.js
-
     - name: Use Node.js ${{ env.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -68,13 +61,36 @@ jobs:
       run: npm run test:linux
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2-preview
+      uses: actions/upload-artifact@v2
       with:
-        name: installers
+        name: installers-${{ matrix.os }}
         path: build/installers/*
 
+  publish:
+    name: Publish to Github Releases
+    needs: build
+    runs-on: 'ubuntu-latest'
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+    - name: Get source
+      uses: actions/checkout@v2
+    - run: mkdir -p build/installers
+    - name: Retrieve tags
+      id: tags
+      run: |
+        git fetch --tags -f
+        ./bin/getTags.sh
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: build/installers/
+    - name: Move artifacts
+      working-directory: build/installers/
+      run: |
+        find . -type f -exec mv {} . \;
+        find . -type d -delete
     - name: Create a release
-      if: startsWith(github.ref, 'refs/tags/')
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
@@ -83,23 +99,57 @@ jobs:
         draft: true
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Create Linux repositories
-      if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/')
+  linux_repo:
+    name: Publish Linux repositories
+    needs: build
+    runs-on: 'ubuntu-latest'
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+    - name: Get source
+      uses: actions/checkout@v2
+    - run: mkdir -p build/installers
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: installers-ubuntu-latest
+        path: build/installers/
+    - name: Get tag
+      id: tag
+      uses: dawidd6/action-get-tag@v1
+    - name: Creating repositories
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/headset_priv.asc.gpg
-        npm run repo
+        VERSION=${{ steps.tag.outputs.tag }} ./bin/linux_repo.sh
     - name: Deploy Linux repositories
-      if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/')
       uses: crazy-max/ghaction-github-pages@v1
       with:
         build_dir: gh-pages
-        commit_message: Deploy ${{ steps.tags.outputs.newtag }}
+        commit_message: Deploy ${{ github.event.release.tag_name }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Publish to Chocolatey
-      if: matrix.os == 'windows-latest' && startsWith(github.ref, 'refs/tags/')
+  chocolatey:
+    name: Publish to Chocolatey
+    needs: build
+    runs-on: 'windows-latest'
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+    - name: Get source
+      uses: actions/checkout@v2
+    - run: mkdir -p build/installers
+    - name: Fix git checkout line endings
+      run: git config --global core.autocrlf input
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: installers-windows-latest
+        path: build/installers/
+    - name: Get tag
+      id: tag
+      uses: dawidd6/action-get-tag@v1
+    - name: Creating nuspec
+      run: ./bin/build_choco.ps1 -version ${{ steps.tag.outputs.tag }}
+    - name: Publishing
       working-directory: ./build
-      run: |
-        npm run choco
-        choco push -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
+      run: choco push -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
