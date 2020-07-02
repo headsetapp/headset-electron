@@ -2,9 +2,6 @@ Param(
   [Parameter(Mandatory=$true)][string]$version
 )
 
-Write-Output $version
-exit
-
 $chocoInstall = '.chocolatey\tools\chocolateyInstall.ps1'
 $setup = "build\installers\headset-$version-setup.exe"
 

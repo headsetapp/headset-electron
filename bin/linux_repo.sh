@@ -2,8 +2,6 @@
 
 set -e
 
-echo "$VERSION"
-exit
 root="gh-pages"
 installers="build/installers"
 

@@ -70,7 +70,7 @@ jobs:
     name: Publish to Github Releases
     needs: build
     runs-on: 'ubuntu-latest'
-    # if: startsWith(github.ref, 'refs/tags/')
+    if: startsWith(github.ref, 'refs/tags/')
 
     steps:
     - name: Get source
@@ -90,23 +90,20 @@ jobs:
       run: |
         find . -type f -exec mv {} . \;
         find . -type d -delete
-    - name: Display artifacts
-      working-directory: build/installers/
-      run: ls -Rl
-    # - name: Create a release
-    #   uses: ncipollo/release-action@v1
-    #   with:
-    #     allowUpdates: true
-    #     artifacts: build/installers/*
-    #     body: https://github.com/headsetapp/headset-electron/compare/${{ steps.tags.outputs.oldtag }}...${{ steps.tags.outputs.newtag }}
-    #     draft: true
-    #     token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create a release
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        artifacts: build/installers/*
+        body: https://github.com/headsetapp/headset-electron/compare/${{ steps.tags.outputs.oldtag }}...${{ steps.tags.outputs.newtag }}
+        draft: true
+        token: ${{ secrets.GITHUB_TOKEN }}
 
   linux_repo:
     name: Publish Linux repositories
     needs: build
     runs-on: 'ubuntu-latest'
-    # if: startsWith(github.ref, 'refs/tags/')
+    if: startsWith(github.ref, 'refs/tags/')
 
     steps:
     - name: Get source
@@ -117,9 +114,6 @@ jobs:
       with:
         name: installers-ubuntu-latest
         path: build/installers/
-    - name: Display artifacts
-      working-directory: build/installers/
-      run: ls -Rl
     - name: Get tag
       id: tag
       uses: dawidd6/action-get-tag@v1
@@ -127,19 +121,19 @@ jobs:
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/headset_priv.asc.gpg
         VERSION=${{ steps.tag.outputs.tag }} ./bin/linux_repo.sh
-    # - name: Deploy Linux repositories
-    #   uses: crazy-max/ghaction-github-pages@v1
-    #   with:
-    #     build_dir: gh-pages
-    #     commit_message: Deploy ${{ github.event.release.tag_name }}
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Deploy Linux repositories
+      uses: crazy-max/ghaction-github-pages@v1
+      with:
+        build_dir: gh-pages
+        commit_message: Deploy ${{ github.event.release.tag_name }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   chocolatey:
     name: Publish to Chocolatey
     needs: build
     runs-on: 'windows-latest'
-    # if: startsWith(github.ref, 'refs/tags/')
+    if: startsWith(github.ref, 'refs/tags/')
     steps:
     - name: Get source
       uses: actions/checkout@v2
@@ -156,6 +150,6 @@ jobs:
       uses: dawidd6/action-get-tag@v1
     - name: Creating nuspec
       run: ./bin/build_choco.ps1 -version ${{ steps.tag.outputs.tag }}
-    # - name: Publishing
-    #   working-directory: ./build
-    #   run: choco push -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
+    - name: Publishing
+      working-directory: ./build
+      run: choco push -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
