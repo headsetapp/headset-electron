@@ -1,0 +1,105 @@
+name: CI
+env:
+  node-version: 12
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Install Dependencies (Linux)
+      if: matrix.os == 'ubuntu-latest'
+      run: sudo apt-get install fakeroot dpkg rpm lintian gnupg2 reprepro createrepo xvfb openssl
+    - name: Install Dependencies (macOS)
+      if: matrix.os == 'macos-latest'
+      run: brew install graphicsmagick imagemagick
+
+    - name: Fix git checkout line endings
+      run: git config --global core.autocrlf input
+    - name: Get source
+      uses: actions/checkout@v2
+    - name: Retrieve tags
+      id: tags
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        git fetch --tags -f
+        node bin/getTags.js
+
+    - name: Use Node.js ${{ env.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.node-version }}
+    - name: Install npm dependencies
+      run: npm ci
+    - name: Linting
+      run: npm run lint
+
+    - name: Building (Linux)
+      if: matrix.os == 'ubuntu-latest'
+      run: npm run build:linux
+    - name: Building (macOS)
+      if: matrix.os == 'macos-latest'
+      run: npm run build:darwin
+      env:
+        CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+    - name: Building (Windows)
+      if: matrix.os == 'windows-latest'
+      run: npm run build:windows
+      env:
+        CERT_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD }}
+
+    - name: Testing app
+      uses: GabrielBB/xvfb-action@v1.0
+      with:
+        run: npm run test:app
+    - name: Test Linux installers
+      if: matrix.os == 'ubuntu-latest'
+      run: npm run test:linux
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2-preview
+      with:
+        name: installers
+        path: build/installers/*
+
+    - name: Create a release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        artifacts: build/installers/*
+        body: https://github.com/headsetapp/headset-electron/compare/${{ steps.tags.outputs.oldtag }}...${{ steps.tags.outputs.newtag }}
+        draft: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Linux repositories
+      if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/')
+      run: |
+        gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/headset_priv.asc.gpg
+        npm run repo
+    - name: Deploy Linux repositories
+      if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/')
+      uses: crazy-max/ghaction-github-pages@v1
+      with:
+        build_dir: gh-pages
+        commit_message: Deploy ${{ steps.tags.outputs.newtag }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish to Chocolatey
+      if: matrix.os == 'windows-latest' && startsWith(github.ref, 'refs/tags/')
+      working-directory: ./build
+      run: |
+        npm run choco
+        choco push -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
