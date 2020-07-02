@@ -116,13 +116,10 @@ jobs:
       with:
         name: installers-ubuntu-latest
         path: build/installers/
-    - name: Get tag
-      id: tags
-      run: ./bin/getTags.sh
     - name: Creating repositories
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/headset_priv.asc.gpg
-        VERSION=${{ steps.tags.outputs.newtag }} ./bin/linux_repo.sh
+        npm run repo
     - name: Deploy Linux repositories
       uses: crazy-max/ghaction-github-pages@v1
       with:
@@ -147,12 +144,8 @@ jobs:
       with:
         name: installers-windows-latest
         path: build/installers/
-    - name: Get tag
-      id: tags
-      shell: bash
-      run: ./bin/getTags.sh
     - name: Creating nuspec
-      run: ./bin/build_choco.ps1 -version ${{ steps.tags.outputs.newtag }}
+      run: npm run choco
     - name: Publishing
       working-directory: ./build
       run: choco push -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
