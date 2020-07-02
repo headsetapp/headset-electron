@@ -14,11 +14,11 @@
   },
   "scripts": {
     "headset": "electron .",
-    "dev:headset": "NODE_ENV=development nf start",
+    "dev:headset": "cross-env NODE_ENV=development nf start",
     "lint": "eslint .",
     "version": "npm run bumps && git add .",
     "bumps": "npm run bump_choco_version",
-    "bump_choco_version": "VERSION=$npm_package_version bash bin/choco_version_bump.sh",
+    "bump_choco_version": "cross-env VERSION=$npm_package_version bash bin/choco_version_bump.sh",
     "pack:linux": "bash bin/packager/linux.sh",
     "pack:darwin": "bash bin/packager/darwin.sh",
     "pack:windows": "cross-env OS=win32 node bin/packager/packager.js",
