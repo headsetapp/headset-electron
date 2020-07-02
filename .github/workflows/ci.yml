@@ -12,6 +12,7 @@ on:
 
 jobs:
   build:
+    name: Building and Testing
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
@@ -24,18 +25,10 @@ jobs:
     - name: Install Dependencies (macOS)
       if: matrix.os == 'macos-latest'
       run: brew install graphicsmagick imagemagick
-
     - name: Fix git checkout line endings
       run: git config --global core.autocrlf input
     - name: Get source
       uses: actions/checkout@v2
-    - name: Retrieve tags
-      id: tags
-      if: startsWith(github.ref, 'refs/tags/')
-      run: |
-        git fetch --tags -f
-        node bin/getTags.js
-
     - name: Use Node.js ${{ env.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -68,38 +61,88 @@ jobs:
       run: npm run test:linux
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2-preview
+      uses: actions/upload-artifact@v2
       with:
         name: installers-${{ matrix.os }}
         path: build/installers/*
 
-    - name: Create a release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: ncipollo/release-action@v1
-      with:
-        allowUpdates: true
-        artifacts: build/installers/*
-        body: https://github.com/headsetapp/headset-electron/compare/${{ steps.tags.outputs.oldtag }}...${{ steps.tags.outputs.newtag }}
-        draft: true
-        token: ${{ secrets.GITHUB_TOKEN }}
+  publish:
+    name: Publish to Github Releases
+    needs: build
+    runs-on: 'ubuntu-latest'
+    # if: startsWith(github.ref, 'refs/tags/')
 
-    - name: Create Linux repositories
-      if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/')
+    steps:
+    - name: Get source
+      uses: actions/checkout@v2
+      run: mkdir -p build/installers
+    - name: Retrieve tags
+      id: tags
+      run: |
+        git fetch --tags -f
+        ./bin/getTags.sh
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: build/installers/
+    - name: Display artifacts
+      working directory: build/installers/
+      run: ls -Rl
+    - name: Create a release
+      run: |
+        echo ${{ steps.tags.outputs.oldtag }}
+        echo ${{ steps.tags.outputs.newtag }}
+    #   uses: ncipollo/release-action@v1
+    #   with:
+    #     allowUpdates: true
+    #     artifacts: build/installers/*
+    #     body: https://github.com/headsetapp/headset-electron/compare/${{ steps.tags.outputs.oldtag }}...${{ steps.tags.outputs.newtag }}
+    #     draft: true
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+
+  linux_repo:
+    name: Publish Linux repositories
+    needs: build
+    runs-on: 'ubuntu-latest'
+    # if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+    - name: Get source
+      uses: actions/checkout@v2
+      run: mkdir -p build/installers
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: build/installers/
+    - name: Creating repositories
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/headset_priv.asc.gpg
-        npm run repo
-    - name: Deploy Linux repositories
-      if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/')
-      uses: crazy-max/ghaction-github-pages@v1
-      with:
-        build_dir: gh-pages
-        commit_message: Deploy ${{ steps.tags.outputs.newtag }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VERSION=${{ github.event.release.tag_name }} ./bin/linux_repo.sh
+    # - name: Deploy Linux repositories
+    #   uses: crazy-max/ghaction-github-pages@v1
+    #   with:
+    #     build_dir: gh-pages
+    #     commit_message: Deploy ${{ github.event.release.tag_name }}
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Publish to Chocolatey
-      if: matrix.os == 'windows-latest' && startsWith(github.ref, 'refs/tags/')
-      working-directory: ./build
-      run: |
-        npm run choco
-        choco push -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
+  chocolatey:
+    name: Publish to Chocolatey
+    needs: build
+    runs-on: 'windows-latest'
+    # if: startsWith(github.ref, 'refs/tags/')
+    steps:
+    - name: Get source
+      uses: actions/checkout@v2
+      run: mkdir -p build/installers
+    - name: Fix git checkout line endings
+      run: git config --global core.autocrlf input
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: build/installers/
+    - name: Creating nuspec
+      run: ./bin/build_choco.ps1 -version ${{ github.event.release.tag_name }}
+    # - name: Publishing
+    #   working-directory: ./build
+    #   run: choco push -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
