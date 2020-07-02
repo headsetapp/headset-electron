@@ -32,7 +32,7 @@
     "build:windows": "npm run pack:windows && npm run dist:windows",
     "choco": "@powershell ./bin/build_choco.ps1 -version %npm_package_version%",
     "repo": "VERSION=$npm_package_version bash bin/linux_repo.sh",
-    "test:app": "ava test/app.test.js",
+    "test:app": "ava --timeout=20s test/app.test.js",
     "test:linux": "ava --timeout=1m test/linux/installers.test.js"
   },
   "dependencies": {
@@ -55,8 +55,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "foreman": "^3.0.1",
     "http-server": "^0.12.1",
-    "spectron": "^10.0.0",
-    "timeout-as-promise": "^1.0.0"
+    "spectron": "^10.0.0"
   },
   "optionalDependencies": {
     "create-dmg": "^4.2.0",

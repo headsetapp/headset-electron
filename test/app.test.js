@@ -1,7 +1,6 @@
 /* eslint-disable func-names */
 const { Application } = require('spectron');
 const path = require('path');
-const delay = require('timeout-as-promise');
 const test = require('ava');
 const helper = require('./helper.js');
 
@@ -35,6 +34,5 @@ test('application', async (t) => {
   const client = t.context.app.client;
   await client.waitUntilWindowLoaded();
   t.is(await client.getWindowCount(), 2, 'Wrong number of windows');
-  await delay(2000); // Inserts a delay so player window can minimize
   helper.printLogs(await client.getMainProcessLogs());
 });
