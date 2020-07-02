@@ -70,7 +70,7 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v2-preview
       with:
-        name: installers
+        name: installers-${{ matrix.os }}
         path: build/installers/*
 
     - name: Create a release

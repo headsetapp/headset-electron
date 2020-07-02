@@ -3,7 +3,7 @@
 > **ATTENTION**:  Headset no longer uses a shared YouTube API Key. Please create your own key by [Following this quick guide](https://github.com/headsetapp/headset-electron/wiki/Get-Youtube-API-Key) and make sure you are running the latest version.
 
 
-[![Build Status](https://github.com/headsetapp/headset-electron/workflows/CI/badge.svg)
+![Build Status](https://github.com/headsetapp/headset-electron/workflows/CI/badge.svg)
 
 [Headset](http://headsetapp.co) is a simple music player for Mac, Windows and Linux with integrated YouTube search, a home screen with popularity list by genres and eras, and best of all, a radio powered by Reddit. Headset takes the songs that are shared in over 80 music subreddits, categorizes them and plays them automatically. It's a great and pretty unique way to find new music as it is chosen by other humans like you and not by algorithms.
 
