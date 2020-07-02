@@ -37,31 +37,31 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "electron-log": "^4.0.5",
+    "electron-log": "^4.2.2",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3"
   },
   "devDependencies": {
     "ava": "^3.9.0",
-    "cross-env": "^7.0.0",
-    "electron": "^8.0.0",
+    "cross-env": "^7.0.2",
+    "electron": "^9.0.5",
     "electron-installer-windows": "^3.0.0",
-    "electron-packager": "^14.2.0",
+    "electron-packager": "^15.0.0",
     "electron-packager-languages": "^0.4.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint": "^7.3.1",
+    "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-ava": "^10.3.1",
-    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-promise": "^4.2.1",
     "foreman": "^3.0.1",
-    "http-server": "^0.12.1",
-    "spectron": "^10.0.0"
+    "http-server": "^0.12.3",
+    "spectron": "^11.0.0"
   },
   "optionalDependencies": {
-    "create-dmg": "^4.2.0",
-    "dbus-next": "^0.8.1",
-    "electron-installer-debian": "^3.0.0",
-    "electron-installer-redhat": "^3.0.0",
+    "create-dmg": "^5.3.0",
+    "dbus-next": "^0.8.2",
+    "electron-installer-debian": "^3.1.0",
+    "electron-installer-redhat": "^3.1.0",
     "mpris-service": "^2.1.0"
   }
 }
