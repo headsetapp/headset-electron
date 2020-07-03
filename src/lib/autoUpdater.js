@@ -1,4 +1,3 @@
-
 const { app, autoUpdater } = require('electron');
 
 const SERVER = 'https://update.electronjs.org';
@@ -8,7 +7,6 @@ class AutoUpdater {
     const feed = `${SERVER}/headsetapp/headset-electron/${process.platform}/${app.getVersion()}`;
 
     autoUpdater.setFeedURL(feed);
-
 
     autoUpdater.on('update-downloaded', () => {
       options.onUpdateDownloaded();

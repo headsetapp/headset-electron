@@ -42,7 +42,6 @@ if (OS === 'darwin') {
   arch = 'x64';
 }
 
-
 const options = {
   dir: '.',
   out: 'build',
