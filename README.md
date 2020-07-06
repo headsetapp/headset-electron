@@ -99,6 +99,8 @@ electron-packager . \
 
 5. [Optional] For the Ubuntu build, we're using `electron-installer-debian` and for the Fedora build, we're using `electron-installer-redhat`. There might be an installer for your specific version, just have to google it.
 
+## Contributors
+
 <a href="https://github.com/fcastilloec"><img src="https://avatars3.githubusercontent.com/u/1280530?v=4" title="fcastilloec" width="80" height="80"></a>
 <a href="https://github.com/danielravina"><img src="https://avatars0.githubusercontent.com/u/3150871?v=4" title="danielravina" width="80" height="80"></a>
 <a href="https://github.com/miniscruff"><img src="https://avatars1.githubusercontent.com/u/8585244?v=4" title="miniscruff" width="80" height="80"></a>
