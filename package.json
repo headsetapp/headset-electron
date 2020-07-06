@@ -36,7 +36,6 @@
     "test:linux": "ava --timeout=1m test/linux/installers.test.js"
   },
   "dependencies": {
-    "contributor-faces": "^1.0.3",
     "debug": "^4.1.1",
     "electron-log": "^4.2.2",
     "electron-squirrel-startup": "^1.0.0",
@@ -44,6 +43,7 @@
   },
   "devDependencies": {
     "ava": "^3.9.0",
+    "contributor-faces": "^1.0.3",
     "cross-env": "^7.0.2",
     "electron": "^9.0.5",
     "electron-installer-windows": "^3.0.0",
