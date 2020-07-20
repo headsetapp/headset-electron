@@ -19,6 +19,7 @@ function setPresence() {
   const start = new Date(Date.now() - trackInfo.currentTime);
   const end = new Date(start.getTime() + (trackInfo.duration * 1e3));
 
+  // See https://discord.com/developers/applications/712424004190732419/rich-presence/assets
   const presence = {
     state: trackInfo.title,
     details: trackInfo.artist,
