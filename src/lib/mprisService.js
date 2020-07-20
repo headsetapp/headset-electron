@@ -1,6 +1,7 @@
 const { ipcMain } = require('electron');
 const mpris = require('mpris-service');
 const logger = require('./headsetLogger');
+const mprisCover = require('./mprisCover');
 
 function executeMediaKey(win, key) {
   win.webContents.executeJavaScript(`
@@ -132,7 +133,7 @@ module.exports = (win, player, app) => {
     }
   });
 
-  ipcMain.on('win2Player', (e, args) => {
+  ipcMain.on('win2Player', async (e, args) => {
     switch (args[0]) {
       case 'setVolume':
         mprisPlayer.volume = (args[1] / 100);
@@ -143,7 +144,7 @@ module.exports = (win, player, app) => {
           'xesam:title': args[1].title,
           'xesam:url': `https://www.youtube.com/watch?v=${args[1].id}`,
           'mpris:trackid': mprisPlayer.objectPath('track/0'),
-          'mpris:artUrl': args[1].thumbnail,
+          'mpris:artUrl': await mprisCover(args[1].id),
           'mpris:length': args[1].duration * 1e6, // in microseconds
         };
         logger.media(`Track Info:\n${JSON.stringify(mprisPlayer.metadata, null, 2)}`);
