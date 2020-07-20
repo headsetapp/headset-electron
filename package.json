@@ -24,7 +24,7 @@
     "pack:windows": "cross-env OS=win32 node bin/packager/packager.js",
     "dist:debian": "node bin/installer/debian.js",
     "dist:redhat": "node bin/installer/redhat.js",
-    "dist:flatpak": "node bin/installer/flatpak.js",
+    "dist:flatpak": "DEBUG=@malept* node bin/installer/flatpak.js",
     "dist:linux": "npm run dist:debian && npm run dist:redhat && npm run dist:flatpak",
     "dist:darwin": "VERSION=$npm_package_version bash bin/installer/darwin.sh",
     "dist:windows": "node bin/installer/windows.js",
