@@ -46,6 +46,7 @@ if (OS === 'win32') {
 if (OS === 'linux') {
   Menu.setApplicationMenu(null);
   windowIcon = path.join(__dirname, 'icons', 'headset.png');
+  app.commandLine.appendSwitch('disable-features', 'MediaSessionService');
 }
 
 // Load macOS variables

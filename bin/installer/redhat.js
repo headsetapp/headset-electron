@@ -25,6 +25,7 @@ const options = {
 async function main() {
   console.log('Creating Red Hat installer (this may take a while)');
   try {
+    process.umask(0o022);
     await installer(options);
     console.log(`Successfully created installer at ${options.dest}\n`);
   } catch (error) {
