@@ -27,6 +27,7 @@
       "electron-installer-debian",
       "electron-installer-redhat",
       "electron-installer-windows",
+      "@malept/electron-installer-flatpak",
       "dbus-next",
       "mpris-service"
     ]

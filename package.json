@@ -24,7 +24,8 @@
     "pack:windows": "cross-env OS=win32 node bin/packager/packager.js",
     "dist:debian": "node bin/installer/debian.js",
     "dist:redhat": "node bin/installer/redhat.js",
-    "dist:linux": "npm run dist:debian && npm run dist:redhat",
+    "dist:flatpak": "node bin/installer/flatpak.js",
+    "dist:linux": "npm run dist:debian && npm run dist:redhat && npm run dist:flatpak",
     "dist:darwin": "VERSION=$npm_package_version bash bin/installer/darwin.sh",
     "dist:windows": "node bin/installer/windows.js",
     "build:linux": "npm run pack:linux && npm run dist:linux",
@@ -62,6 +63,7 @@
     "spectron": "^11.0.0"
   },
   "optionalDependencies": {
+    "@malept/electron-installer-flatpak": "fcastilloec/electron-installer-flatpak#suid-helper",
     "create-dmg": "^5.3.0",
     "dbus-next": "^0.8.2",
     "electron-installer-debian": "^3.1.0",

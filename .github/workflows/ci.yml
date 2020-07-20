@@ -21,7 +21,7 @@ jobs:
     steps:
     - name: Install Dependencies (Linux)
       if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get install fakeroot dpkg rpm lintian gnupg2 xvfb
+      run: sudo apt-get install fakeroot dpkg rpm lintian gnupg2 xvfb flatpak flatpak-builder elfutils
     - name: Install Dependencies (macOS)
       if: matrix.os == 'macos-latest'
       run: brew install graphicsmagick imagemagick
