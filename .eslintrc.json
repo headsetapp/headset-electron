@@ -19,23 +19,12 @@
   "globals": {
     "YT": true
   },
-  "settings": {
-    "import/core-modules": [
-      "electron",
-      "electron-packager",
-      "electron-packager-languages",
-      "electron-installer-debian",
-      "electron-installer-redhat",
-      "electron-installer-windows",
-      "dbus-next",
-      "mpris-service"
-    ]
-  },
   "rules": {
     "no-new": "off",
     "max-len": ["error", 120],
     "no-console": "off",
     "no-unused-expressions": ["error", {"allowTernary": true}],
-    "prefer-destructuring": ["error", {"array": false}]
+    "prefer-destructuring": ["error", {"array": false}],
+    "import/no-extraneous-dependencies": "off"
   }
 }
