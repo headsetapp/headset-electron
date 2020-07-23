@@ -17,8 +17,9 @@
     "dev:headset": "cross-env NODE_ENV=development nf start",
     "lint": "eslint .",
     "version": "npm run bumps && git add .",
-    "bumps": "npm run bump_choco_version",
-    "bump_choco_version": "cross-env VERSION=$npm_package_version bash bin/choco_version_bump.sh",
+    "bumps": "npm run bump_choco && npm run bump_appstream",
+    "bump_choco": "cross-env VERSION=$npm_package_version bash bin/choco_version_bump.sh",
+    "bump_appstream": "cross-env VERSION=$npm_package_version node bin/appstream_version_bump.js",
     "pack:linux": "bash bin/packager/linux.sh",
     "pack:darwin": "bash bin/packager/darwin.sh",
     "pack:windows": "cross-env OS=win32 node bin/packager/packager.js",
@@ -59,7 +60,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "foreman": "^3.0.1",
     "http-server": "^0.12.3",
-    "spectron": "^11.0.0"
+    "spectron": "^11.0.0",
+    "xml2js": "^0.4.23"
   },
   "optionalDependencies": {
     "create-dmg": "^5.3.0",
