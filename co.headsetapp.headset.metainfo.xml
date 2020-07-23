@@ -15,6 +15,7 @@
   <launchable type="desktop-id">co.headsetapp.headset.desktop</launchable>
   <project_license>MIT</project_license>
   <developer_name>Headset Team</developer_name>
+  <content_rating type="oars-1.1" />
   <screenshots>
     <screenshot type="default">
       <image>https://headsetapp.co/images/search.jpg</image>
@@ -33,8 +34,17 @@
       <caption>Headset Pro: Album Mode</caption>
     </screenshot>
   </screenshots>
-  <content_rating type="oars-1.1" />
   <releases>
     <release version="3.2.1" date="2020-02-05"/>
+    <release version="3.2.0" date="2020-01-08"/>
+    <release version="3.1.0" date="2019-09-04"/>
+    <release version="3.0.2" date="2019-07-11"/>
+    <release version="3.0.1" date="2019-07-11"/>
+    <release version="3.0.0" date="2019-07-10"/>
+    <release version="2.2.0" date="2019-07-01"/>
+    <release version="2.1.4" date="2019-05-30"/>
+    <release version="2.1.3" date="2019-05-19"/>
+    <release version="2.1.2" date="2019-03-01"/>
+    <release version="1.6.0" date="2017-09-25"/>
   </releases>
 </component>
