@@ -22,6 +22,8 @@ module.exports = (win, player, app) => {
     identity: 'Headset',
     canRaise: true,
     supportedInterfaces: ['player'],
+    supportedUriSchemes: ['https'],
+    supportedMimeTypes: ['audio/mpeg'],
     desktopEntry: 'headset',
   });
 
