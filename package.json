@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "discord-rpc": "^3.1.1",
+    "discord-rpc": "^3.1.2",
     "electron-log": "^4.2.2",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
@@ -46,28 +46,28 @@
     "register-scheme": "github:devsnek/node-register-scheme"
   },
   "devDependencies": {
-    "ava": "^3.9.0",
+    "ava": "^3.10.1",
     "contributor-faces": "^1.0.3",
     "cross-env": "^7.0.2",
-    "electron": "^9.0.5",
+    "electron": "^9.1.1",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^15.0.0",
     "electron-packager-languages": "^0.4.0",
-    "eslint": "^7.3.1",
+    "eslint": "^7.5.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-ava": "^10.3.1",
+    "eslint-plugin-ava": "^10.4.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-promise": "^4.2.1",
     "foreman": "^3.0.1",
     "http-server": "^0.12.3",
-    "spectron": "^11.0.0",
+    "spectron": "^11.1.0",
     "xml2js": "^0.4.23"
   },
   "optionalDependencies": {
     "create-dmg": "^5.3.0",
     "dbus-next": "^0.8.2",
     "electron-installer-debian": "^3.1.0",
-    "electron-installer-redhat": "^3.1.0",
+    "electron-installer-redhat": "^3.2.0",
     "mpris-service": "^2.1.0"
   }
 }

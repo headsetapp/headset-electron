@@ -5,7 +5,10 @@ const options = {
   src: 'build/Headset-linux-x64',
   dest: 'build/installers',
   arch: 'x86_64',
-  icon: path.join(__dirname, '..', '..', 'src', 'icons', 'headset.png'),
+  icon: {
+    scalable: path.join(__dirname, '..', '..', 'src', 'icons', 'headset.svg'),
+    symbolic: path.join(__dirname, '..', '..', 'src', 'icons', 'headset-symbolic.svg'),
+  },
   requires: [
     'dbus',
   ],
