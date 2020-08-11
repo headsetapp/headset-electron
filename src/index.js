@@ -158,9 +158,7 @@ function start() {
   win.webContents.on('did-finish-load', () => {
     logger.info('Main window finished loading');
 
-    win.webContents.executeJavaScript(`
-      window.electronVersion = "v${version}"
-    `);
+    win.webContents.send('version', `v${version}`);
   });
 
   player.webContents.on('did-finish-load', () => {

@@ -3,12 +3,6 @@ const mpris = require('mpris-service');
 const logger = require('./headsetLogger');
 const mprisCover = require('./mprisCover');
 
-function executeMediaKey(win, key) {
-  win.webContents.executeJavaScript(`
-    window.electronConnector.emit('${key}')
-  `);
-}
-
 function changeVolumeState(win, volume) {
   win.webContents.executeJavaScript(`
     window.changeVolumeSate(${volume})
@@ -54,21 +48,21 @@ module.exports = (win, player, app) => {
     logger.media('Play-Pause received');
     if (mprisPlayer.playbackStatus === 'Playing'
     || mprisPlayer.playbackStatus === 'Paused') {
-      executeMediaKey(win, 'play-pause');
+      win.webContents.send('media', 'play-pause');
     }
   });
 
   mprisPlayer.on('play', () => {
     logger.media('Play received');
     if (mprisPlayer.playbackStatus === 'Paused') {
-      executeMediaKey(win, 'play-pause');
+      win.webContents.send('media', 'play-pause');
     }
   });
 
   mprisPlayer.on('pause', () => {
     logger.media('Pause received');
     if (mprisPlayer.playbackStatus === 'Playing') {
-      executeMediaKey(win, 'play-pause');
+      win.webContents.send('media', 'play-pause');
     }
   });
 
@@ -76,7 +70,7 @@ module.exports = (win, player, app) => {
     logger.media('Next received');
     if (mprisPlayer.playbackStatus === 'Playing'
     || mprisPlayer.playbackStatus === 'Paused') {
-      executeMediaKey(win, 'play-next');
+      win.webContents.send('media', 'play-next');
     }
   });
 
@@ -84,7 +78,7 @@ module.exports = (win, player, app) => {
     logger.media('Previous received');
     if (mprisPlayer.playbackStatus === 'Playing'
     || mprisPlayer.playbackStatus === 'Paused') {
-      executeMediaKey(win, 'play-previous');
+      win.webContents.send('media', 'play-previous');
     }
   });
 
