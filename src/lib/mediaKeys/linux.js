@@ -12,9 +12,7 @@ ipcMain.on('win2Player', (e, args) => {
 
 function executeMediaKey(win, key) {
   logger.media(`Executing ${key} media key command`);
-  win.webContents.executeJavaScript(`
-    window.electronConnector.emit('${key}')
-  `);
+  win.webContents.send('media', key);
 }
 
 async function registerBindings(win, desktopEnv, bus) {

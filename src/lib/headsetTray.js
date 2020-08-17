@@ -1,12 +1,10 @@
 const { Menu } = require('electron');
 const logger = require('./headsetLogger');
 
-const executeTrayCommand = (win, key) => {
+function executeTrayCommand(win, key) {
   logger.tray(`Executing ${key} command from tray`);
-  win.webContents.executeJavaScript(`
-    window.electronConnector.emit('${key}')
-  `);
-};
+  win.webContents.send('media', key);
+}
 
 module.exports = (tray, win, player) => {
   logger.tray('Setting tray');
