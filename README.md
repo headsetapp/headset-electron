@@ -39,6 +39,9 @@ More details in the chocolatey page: https://chocolatey.org/packages/headset
 
 ### Linux
 
+<a href='https://flathub.org/apps/details/co.headsetapp.headset' target="_blank" ><img height='56' width='auto' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
+<a href='https://snapcraft.io/headset' target="_blank" ><img height='56' width='auto' alt='Get it from the Snap Store' src='https://snapcraft.io/static/images/badges/en/snap-store-black.svg'/></a>
+
 As an alternative to `.deb` and `.rpm` packages on the website, you can also install it directly from the command-line:
 
 #### Debian
