@@ -47,7 +47,6 @@
   },
   "devDependencies": {
     "ava": "^3.13.0",
-    "contributor-faces": "^1.1.0",
     "cross-env": "^7.0.2",
     "electron": "^9.2.0",
     "electron-installer-windows": "^3.0.0",
