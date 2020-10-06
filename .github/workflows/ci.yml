@@ -62,6 +62,7 @@ jobs:
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
+      if: startsWith(github.ref, 'refs/tags/')
       with:
         name: installers-${{ matrix.os }}
         path: build/installers/*
