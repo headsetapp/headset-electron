@@ -37,7 +37,7 @@
     "test:linux": "ava --timeout=1m test/linux/installers.test.js"
   },
   "dependencies": {
-    "debug": "^4.2.0",
+    "debug": "^4.3.0",
     "discord-rpc": "^3.1.4",
     "electron-log": "^4.2.4",
     "electron-squirrel-startup": "^1.0.0",
@@ -48,7 +48,7 @@
   "devDependencies": {
     "ava": "^3.13.0",
     "cross-env": "^7.0.2",
-    "electron": "^9.2.0",
+    "electron": "^9.3.2",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^15.1.0",
     "electron-packager-languages": "^0.4.0",
