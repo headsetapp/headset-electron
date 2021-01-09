@@ -18,7 +18,7 @@ Update Homebrew and install `headset` using Hombrew Cask
 
 ```shell
 brew update
-brew cask install headset
+brew install --cask headset
 ```
 
 ### Windows (Chocolatey)
