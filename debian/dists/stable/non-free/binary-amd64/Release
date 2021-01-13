@@ -1,0 +1,4 @@
+Component: non-free
+Origin: headsetapp.co
+Architecture: amd64
+Description: Apt repository for Headset
