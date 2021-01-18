@@ -62,7 +62,7 @@ jobs:
         CERT_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD }}
 
     - name: Testing app
-      uses: GabrielBB/xvfb-action@v1.0
+      uses: GabrielBB/xvfb-action@v1.4
       with:
         run: npm run test:app
     - name: Test Linux installers
