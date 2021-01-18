@@ -26,8 +26,8 @@ test.before(async (t) => {
   await t.context.app.start();
 });
 
-test.after(async (t) => {
-  await t.context.app.stop();
+test.after.always(async (t) => {
+  if (t.context.app && t.context.app.isRunning()) await t.context.app.stop();
 });
 
 test('application', async (t) => {
