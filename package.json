@@ -52,7 +52,7 @@
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^15.2.0",
     "electron-packager-languages": "^0.4.1",
-    "eslint": "^7.17.0",
+    "eslint": "^7.18.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-ava": "^11.0.0",
     "eslint-plugin-import": "^2.22.1",
