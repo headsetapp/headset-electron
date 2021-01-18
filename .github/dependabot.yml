@@ -1,0 +1,26 @@
+version: 2
+updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: github-actions
+    directory: "/"
+    commit_message:
+      prefix: chore
+      include_scope: true
+    schedule:
+      interval: monthly
+      time: "15:45"
+  # Maintian npm dependencies
+  - package-ecosystem: npm
+    directory: "/"
+    ignored_updates:
+      - match:
+        dependency_name: electron
+      - match:
+        dependency_name: spectron
+    commit_message:
+      prefix: chore
+      include_scope: true
+    schedule:
+      interval: monthly
+      time: "16:00"
+    open-pull-requests-limit: 10
