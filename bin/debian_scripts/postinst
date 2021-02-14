@@ -47,8 +47,7 @@ KEYDATA
 # Creates the repository source file
 create_sources_lists() {
   if [ -d "$APT_SOURCESDIR" ]; then
-    printf "%s\n" "$REPOCONFIG" > "$SOURCELIST"
-    if [ $? -eq 0 ]; then
+    if echo "$REPOCONFIG" > "$SOURCELIST"; then
       return 0
     fi
   fi

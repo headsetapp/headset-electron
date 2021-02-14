@@ -6,15 +6,21 @@ if [ "$1" -gt 1 ]; then
   exit 0
 fi
 
-REPOCONFIG="[headset-electron]\nname=headset\nbaseurl=https://headsetapp.github.io/headset-electron/redhat\nenabled=1\ngpgcheck=0\nmetadata_expire=300"
+REPOCONFIG="[headset-electron]
+name=headset
+baseurl=https://headsetapp.github.io/headset-electron/redhat
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+metadata_expire=300
+gpgkey=http://headsetapp.co/headset-electron/headset.asc"
 RPM_SOURCESDIR="/etc/yum.repos.d"
 SOURCELIST="$RPM_SOURCESDIR/headset.repo"
 
 # Creates the repository source file
 create_sources_lists() {
   if [ -d "$RPM_SOURCESDIR" ]; then
-    echo -e "$REPOCONFIG\n" > "$SOURCELIST"
-    if [ $? -eq 0 ]; then
+    if echo "$REPOCONFIG" > "$SOURCELIST"; then
       return 0
     fi
   fi
