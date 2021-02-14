@@ -14,7 +14,7 @@ Want to start contributing? Check out our [contributing](./CONTRIBUTING.md) doc.
 
 ### macOS (Homebrew)
 
-Update Homebrew and install `headset` using Hombrew Cask
+Update Homebrew and install `headset` using Homebrew Cask
 
 ```shell
 brew update
@@ -47,13 +47,13 @@ As an alternative to `.deb` and `.rpm` packages on the website, you can also ins
 #### Debian
 
 ```shell
-wget -q http://headsetapp.co/headset-electron/debian/headset.asc -O- | sudo apt-key add -
+wget -q http://headsetapp.co/headset-electron/headset.asc -O- | sudo apt-key add -
 echo "deb [arch=amd64] http://headsetapp.co/headset-electron/debian stable non-free" | sudo tee /etc/apt/sources.list.d/headset.list
 sudo apt-get update
 sudo apt-get install headset
 ```
 
-#### Redhat
+#### RedHat
 
 ```shell
 sudo dnf config-manager --add-repo http://headsetapp.co/headset-electron/redhat/headset.repo
