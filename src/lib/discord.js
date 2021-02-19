@@ -28,6 +28,12 @@ function setPresence() {
     instance: false,
     largeImageKey: 'playing',
     largeImageText: 'Headset',
+    buttons: [
+      {
+        label: 'Checkout Headset',
+        url: 'https://headsetapp.co/',
+      },
+    ],
   };
 
   if (!trackInfo.isPlaying) {
@@ -41,7 +47,7 @@ function setPresence() {
   // Run Event to update
   client.setActivity(presence);
 
-  logger.discord(`Updating Discord presence ${presence}`);
+  logger.discord(`Updating Discord presence ${JSON.stringify(presence, null, 2)}`);
 }
 
 // Attempt to connect to Discord if it hasn't done it already.
@@ -53,7 +59,7 @@ function tryConnecting() {
   client.on('ready', () => {
     logger.discord('Discord RPC: Ready');
     client.ready = true;
-    setPresence(); // Set an inital presence upon connecting.
+    setPresence(); // Set an initial presence upon connecting.
   });
 
   client.on('disconnected', () => {
@@ -79,7 +85,7 @@ ipcMain.on('discord', (event, isDiscordEnabled) => {
   isDiscordEnabled ? tryConnecting() : killDiscord();
 });
 
-// Listen for any appropiate events to change Discord status.
+// Listen for any appropriate events to change Discord status.
 ipcMain.on('win2Player', async (event, args) => {
   // Keep updating trackInfo even if Discord is not running.
   // If Discord is enabled while something was playing, it will pick up on the right track and time
