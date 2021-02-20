@@ -17,7 +17,6 @@ echo -e 'Done'
 
 echo -e "\n\033[1mCreating READHAT repository files:\033[01;0m"
 cp "$installers/headset-$VERSION-1.x86_64.rpm" $root/redhat
-rpm --addsign "$root/redhat/headset-$VERSION-1.x86_64.rpm"
 createrepo "$root/redhat"
 gpg --detach-sign --armor "$root/redhat/repodata/repomd.xml"
 echo -e 'Done'

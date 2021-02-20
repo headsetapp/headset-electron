@@ -32,6 +32,7 @@
     "build:linux": "npm run pack:linux && npm run dist:linux",
     "build:darwin": "npm run pack:darwin && npm run dist:darwin",
     "build:windows": "npm run pack:windows && npm run dist:windows",
+    "sign:redhat": "VERSION=$npm_package_version bash bin/installer/redhat_sign.sh",
     "choco": "@powershell ./bin/build_choco.ps1 -version %npm_package_version%",
     "repo": "VERSION=$npm_package_version bash bin/linux_repo.sh",
     "test:app": "ava --timeout=20s test/app.test.js",

@@ -60,6 +60,11 @@ jobs:
       run: npm run build:windows
       env:
         CERT_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD }}
+    - name: Signing RedHat installer
+      if: matrix.os == 'ubuntu-18.04' && startsWith(github.ref, 'refs/tags/')
+      run: |
+        gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/headset_priv.asc.gpg
+        npm run sign:redhat
 
     - name: Testing app
       uses: GabrielBB/xvfb-action@v1.4
