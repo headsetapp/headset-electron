@@ -165,5 +165,11 @@ jobs:
     runs-on: 'macos-latest'
     if: startsWith(github.ref, 'refs/tags/') && github.repository == 'headsetapp/headset-electron'
     steps:
+    - name: Set GitHub token
+      run: |
+        printf "protocol=https\nhost=github.com\n" | git credential-osxkeychain erase
+        echo "export HOMEBREW_GITHUB_API_TOKEN=$HOMEBREW_GITHUB_API_TOKEN" >> /Users/runner/.bash_profile
+      env:
+        HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.HOMEBREW }}
     - name: Publish to Homebrew cask
       run: brew bump-cask-pr headset --version="${{ needs.build.outputs.current_tag }}"
