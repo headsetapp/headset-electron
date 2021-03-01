@@ -58,7 +58,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-ava": "^11.0.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-promise": "^4.3.1",
     "foreman": "^3.0.1",
     "http-server": "^0.12.3",
     "husky": "^5.0.9",
