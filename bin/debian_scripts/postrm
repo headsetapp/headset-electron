@@ -2,25 +2,22 @@
 
 set -e
 
-KEYID="9D782F91"
-
 action=$1
 
 # Only do complete clean-up on purge.
-if [ "$action" != "purge" ] ; then
+if [ "${action}" != "purge" ] ; then
   exit 0
 fi
 
-APT_SOURCESDIR="/etc/apt/sources.list.d/"
-SOURCELIST="$APT_SOURCESDIR/headset.list"
+APT_SOURCES_DIR="/etc/apt/sources.list.d/"
+SOURCE_LIST="${APT_SOURCES_DIR}/headset.list"
+KEYRING_DIR="/usr/share/keyrings"
+KEYRING="${KEYRING_DIR}/co.headsetapp.headset-keyring.gpg"
 
 # Clean sources lists
-rm -f "$SOURCELIST"*
+rm -f "${SOURCE_LIST}"*
 
 # Remove key
-APT_KEY="$(which apt-key 2> /dev/null)"
-if [ -x "$APT_KEY" ]; then
-  "$APT_KEY" remove "$KEYID" >/dev/null 2>&1
+if [ -f "${KEYRING}" ]; then
+  rm -f "${KEYRING}"
 fi
-
-# TODO: Remove config?

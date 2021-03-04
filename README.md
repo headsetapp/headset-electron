@@ -47,8 +47,8 @@ As an alternative to `.deb` and `.rpm` packages on the website, you can also ins
 #### Debian
 
 ```shell
-wget -q http://headsetapp.co/headset-electron/headset.asc -O- | sudo apt-key add -
-echo "deb [arch=amd64] http://headsetapp.co/headset-electron/debian stable non-free" | sudo tee /etc/apt/sources.list.d/headset.list
+wget -q http://headsetapp.co/headset-electron/headset.gpg -O- | sudo tee /usr/share/keyrings/headset-archive-keyring.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/headset-archive-keyring.gpg] http://headsetapp.co/headset-electron/debian stable non-free" | sudo tee /etc/apt/sources.list.d/headset.list
 sudo apt-get update
 sudo apt-get install headset
 ```
