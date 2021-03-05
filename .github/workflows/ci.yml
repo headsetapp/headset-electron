@@ -158,3 +158,16 @@ jobs:
     - name: Publishing
       working-directory: ./build
       run: choco push -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
+
+  homebrew:
+    name: Publish to Homebrew cask
+    needs: [build, publish]
+    runs-on: 'macos-latest'
+    if: startsWith(github.ref, 'refs/tags/') && github.repository == 'headsetapp/headset-electron'
+    steps:
+    - name: Delete credentials
+      run: printf "protocol=https\nhost=github.com\n" | git credential-osxkeychain erase
+    - name: Bump the Homebrew cask
+      run: brew bump-cask-pr --no-browse --verbose --version="${{ needs.build.outputs.current_tag }}" headset
+      env:
+        HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.HOMEBREW }}
