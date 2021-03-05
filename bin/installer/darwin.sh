@@ -2,9 +2,11 @@
 
 set -e
 
+_version=${VERSION:?}
+
 echo -e '\n\033[1mPackaging macOS installer: \033[01;0m'
 mkdir -p build/installers
-zip -ryq "Headset-$VERSION-mac.zip" build/Headset-darwin-x64/Headset.app
+zip -ryq "Headset-${_version}-mac.zip" build/Headset-darwin-x64/Headset.app
 
 set +e
 create-dmg --overwrite build/Headset-darwin-x64/Headset.app
@@ -13,5 +15,5 @@ if ! [[ $? -eq 0 || $? -eq 2 ]]; then
 fi
 set -e
 
-mv "Headset $VERSION.dmg" build/installers/"Headset-$VERSION.dmg"
-mv "Headset-$VERSION-mac.zip" build/installers/.
+mv "Headset ${_version}.dmg" build/installers/"Headset-${_version}.dmg"
+mv "Headset-${_version}-mac.zip" build/installers/.
