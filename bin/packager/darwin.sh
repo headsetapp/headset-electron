@@ -2,30 +2,30 @@
 
 set -e
 
-if [[ "$GITHUB_REPOSITORY" == "headsetapp/headset-electron" && "$GITHUB_REF" == refs/tags/* ]]; then
-  KEY_CHAIN=mac-build.keychain
-  DIR="$GITHUB_WORKSPACE/sig"
-  PASSWORD=headset
+if [[ "${GITHUB_REPOSITORY:?}" == "headsetapp/headset-electron" && "${GITHUB_REF:?}" == refs/tags/* ]]; then
+  key_chain=mac-build.keychain
+  dir="${GITHUB_WORKSPACE:?}/sig"
+  password=headset
 
   echo "Creating default keychain"
-  security create-keychain -p $PASSWORD $KEY_CHAIN
+  security create-keychain -p "${password}" "${key_chain}"
   # Make the keychain the default so identities are found
-  security default-keychain -s $KEY_CHAIN
+  security default-keychain -s "${key_chain}"
   # Unlock the keychain
-  security unlock-keychain -p $PASSWORD $KEY_CHAIN
+  security unlock-keychain -p "${password}" "${key_chain}"
   # Set keychain locking timeout to 3600 seconds
-  security set-keychain-settings -t 3600 -u $KEY_CHAIN
+  security set-keychain-settings -t 3600 -u "${key_chain}"
 
   # Add certificates to keychain and allow codesign to access them
-  security import "$DIR"/apple.cer -k $KEY_CHAIN -A /usr/bin/codesign
-  security import "$DIR"/osx.cer -k $KEY_CHAIN -A /usr/bin/codesign
-  security import "$DIR"/osx.p12 -k $KEY_CHAIN -P "$CERT_PASSWORD" -A /usr/bin/codesign
+  security import "${dir}/apple.cer" -k "${key_chain}" -A /usr/bin/codesign
+  security import "${dir}/osx.cer" -k "${key_chain}" -A /usr/bin/codesign
+  security import "${dir}/osx.p12" -k "${key_chain}" -P "${CERT_PASSWORD:?}" -A /usr/bin/codesign
 
   echo "Add keychain to keychain-list"
-  security list-keychains -s $KEY_CHAIN
+  security list-keychains -s "${key_chain}"
 
   echo "Settting key partition list"
-  security set-key-partition-list -S apple-tool:,apple: -s -k $PASSWORD $KEY_CHAIN
+  security set-key-partition-list -S apple-tool:,apple: -s -k "${password}" "${key_chain}"
 else
   printf "\x1b[33m%s\x1b[0m\n" "The package will not be signed"
 fi
