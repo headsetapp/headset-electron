@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 const installer = require('electron-installer-debian');
 const path = require('path');
 
