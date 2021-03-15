@@ -60,11 +60,10 @@ if (process.argv.includes('--disable-gpu')) {
 }
 
 const isDev = (process.env.NODE_ENV === 'development');
+const isTest = (process.env.NODE_ENV === 'test');
 let isUpdating = false;
 logger.info(`Running as developer: ${isDev}`);
-
-// Allows to autoplay video, which is disabled in newer versions of Chrome
-app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
+logger.info(`Running in test mode: ${isTest}`);
 
 // Quit if second instance found and focus window of first instance
 if (!isDev && !app.requestSingleInstanceLock()) {
@@ -102,7 +101,12 @@ function start() {
     icon: windowIcon,
     autoHideMenuBar: true,
     titleBarStyle: 'hiddenInset',
-    webPreferences: { nodeIntegration: true },
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      worldSafeExecuteJavaScript: false,
+      enableRemoteModule: isTest,
+    },
   });
 
   player = new BrowserWindow({
@@ -114,7 +118,12 @@ function start() {
     useContentSize: true,
     title: 'Headset - Player',
     icon: windowIcon,
-    webPreferences: { nodeIntegration: true },
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      worldSafeExecuteJavaScript: false,
+      enableRemoteModule: isTest,
+    },
   });
 
   // Menu for main window. It will be hidden but allows for shortcuts to still work
