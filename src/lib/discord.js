@@ -109,7 +109,7 @@ ipcMain.on('win2Player', async (event, args) => {
 
   // only update Discord when a valid event triggers it and it's enabled
   if (['trackInfo', 'pauseVideo', 'playVideo', 'seekTo'].includes(args[0])
-    && await event.sender.webContents.executeJavaScript("localStorage.getItem('discord')")) {
+    && await event.sender.executeJavaScript("localStorage.getItem('discord')")) {
     client && client.ready ? setPresence() : tryConnecting();
   }
 });
