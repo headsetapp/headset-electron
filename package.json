@@ -13,7 +13,7 @@
     "url": "https://github.com/headsetapp/headset-electron"
   },
   "scripts": {
-    "postinstall": "husky install",
+    "prepare": "husky install",
     "headset": "electron .",
     "dev:headset": "cross-env NODE_ENV=development nf start",
     "lint": "eslint .",
