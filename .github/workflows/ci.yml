@@ -26,7 +26,7 @@ jobs:
       id: npm-cache-dir
       run: echo "::set-output name=dir::$(npm config get cache)"
     - name: Set up npm cache
-      uses: actions/cache@v2
+      uses: actions/cache@v2.1.4
       with:
         path: ${{ steps.npm-cache-dir.outputs.dir }}
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -142,7 +142,7 @@ jobs:
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/headset_priv.asc.gpg
         npm run repo
     - name: Deploy Linux repositories
-      uses: crazy-max/ghaction-github-pages@v2.2.0
+      uses: crazy-max/ghaction-github-pages@v2.3.0
       with:
         build_dir: gh-pages
         commit_message: Deploy ${{ needs.build.outputs.current_tag }}
