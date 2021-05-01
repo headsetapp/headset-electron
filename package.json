@@ -41,7 +41,7 @@
   "dependencies": {
     "debug": "^4.3.1",
     "discord-rpc": "^3.2.0",
-    "electron-log": "^4.3.2",
+    "electron-log": "^4.3.5",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
     "jimp": "^0.16.1"
@@ -49,15 +49,15 @@
   "devDependencies": {
     "ava": "^3.15.0",
     "cross-env": "^7.0.3",
-    "electron": "^12.0.2",
+    "electron": "^12.0.6",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^15.2.0",
     "electron-packager-languages": "^0.5.0",
-    "eslint": "^7.23.0",
+    "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-ava": "^12.0.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-promise": "^5.1.0",
     "foreman": "^3.0.1",
     "http-server": "^0.12.3",
     "husky": "^6.0.0",
@@ -69,6 +69,6 @@
     "dbus-next": "^0.9.2",
     "electron-installer-debian": "^3.1.0",
     "electron-installer-redhat": "^3.3.0",
-    "mpris-service": "^2.1.0"
+    "mpris-service": "^2.1.2"
   }
 }
