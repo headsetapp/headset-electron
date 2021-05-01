@@ -69,6 +69,6 @@
     "dbus-next": "^0.9.2",
     "electron-installer-debian": "^3.1.0",
     "electron-installer-redhat": "^3.3.0",
-    "mpris-service": "^2.1.0"
+    "mpris-service": "^2.1.2"
   }
 }
