@@ -13,7 +13,7 @@ const {
 } = require('electron');
 
 const AutoUpdater = require('./lib/autoUpdater');
-const { version } = require('../package');
+const { version } = require('../package.json');
 const logger = require('./lib/headsetLogger');
 const headsetTray = require('./lib/headsetTray');
 const mprisService = require('./lib/mprisService');
