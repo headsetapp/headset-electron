@@ -2,7 +2,7 @@
 const { Application } = require('spectron');
 const path = require('path');
 const test = require('ava');
-const helper = require('./helper.js');
+const helper = require('./helper');
 
 let execPath = '';
 
