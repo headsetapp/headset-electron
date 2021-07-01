@@ -33,7 +33,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
     - name: Use Node.js ${{ env.node-version }}
-      uses: actions/setup-node@v2.1.5
+      uses: actions/setup-node@v2.2.0
       with:
         node-version: ${{ env.node-version }}
     - name: Update npm
