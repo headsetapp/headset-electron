@@ -60,7 +60,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "foreman": "^3.0.1",
     "http-server": "^0.12.3",
-    "husky": "^6.0.0",
+    "husky": "^7.0.0",
     "spectron": "^14.0.0",
     "xml2js": "^0.4.23"
   },
