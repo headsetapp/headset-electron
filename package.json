@@ -39,7 +39,7 @@
     "test:linux": "ava --timeout=1m test/linux/installers.test.js"
   },
   "dependencies": {
-    "debug": "^4.3.1",
+    "debug": "^4.3.2",
     "discord-rpc": "^4.0.1",
     "electron-log": "^4.3.5",
     "electron-squirrel-startup": "^1.0.0",
