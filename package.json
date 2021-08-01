@@ -41,7 +41,7 @@
   "dependencies": {
     "debug": "^4.3.1",
     "discord-rpc": "^4.0.1",
-    "electron-log": "^4.3.5",
+    "electron-log": "^4.4.1",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
     "jimp": "^0.16.1"
