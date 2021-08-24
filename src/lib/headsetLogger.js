@@ -5,6 +5,7 @@ const logger = debug('headset');
 const logDiscord = debug('headset:discord');
 const logMedia = debug('headset:media');
 const logTray = debug('headset:tray');
+const logUpdate = debug('headset:update');
 const logWin2Player = debug('headset:win2Player');
 const logPlayer2Win = debug('headset:player2Win');
 
@@ -35,6 +36,11 @@ class HeadsetLogger {
   static tray(message) {
     logTray(message);
     logFile.info(`headset:tray\t\t ${message}`);
+  }
+
+  static update(message) {
+    logUpdate(message);
+    logFile.info(`headset:update\t\t ${message}`);
   }
 
   static win2Player(message) {
