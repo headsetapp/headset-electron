@@ -1,4 +1,13 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+case $(uname -s) in
+  Linux*) os=linux;;
+  Darwin*) os=darwin;;
+  MINGW*) os=windows;;
+  *) echo OS not supported; exit 1;;
+esac
+
+npm run pack:${os}
+
 npm run test:app
