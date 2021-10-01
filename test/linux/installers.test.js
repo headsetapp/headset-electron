@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-const fs = require('fs');
+const { access } = require('fs/promises');
 const path = require('path');
 const util = require('util');
 const test = require('ava');
@@ -10,9 +10,9 @@ const packagePath = path.join(__dirname, '..', '..', 'build', 'installers');
 const debPackage = `headset_${version}_amd64.deb`;
 const rpmPackage = `headset-${version}-1.x86_64.rpm`;
 
-test.cb('.deb package created', (t) => {
+test('.deb package created', async (t) => {
   t.timeout(5000);
-  fs.access(`${packagePath}/${debPackage}`, t.end);
+  await t.notThrowsAsync(access(`${packagePath}/${debPackage}`));
 });
 
 test('debian lintian', async (t) => {
@@ -20,7 +20,7 @@ test('debian lintian', async (t) => {
   t.is(stdout.match(/\n/g).length, 1, `Warning and errors not overriding:\n${stdout}`);
 });
 
-test.cb('.rpm package created', (t) => {
+test('.rpm package created', async (t) => {
   t.timeout(5000);
-  fs.access(`${packagePath}/${rpmPackage}`, t.end);
+  await t.notThrowsAsync(access(`${packagePath}/${rpmPackage}`));
 });
