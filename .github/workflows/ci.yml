@@ -79,7 +79,7 @@ jobs:
         npm run sign:redhat
 
     - name: Testing app
-      uses: GabrielBB/xvfb-action@v1.5
+      uses: GabrielBB/xvfb-action@v1.6
       with:
         run: npm run test:app
     - name: Test Linux installers
