@@ -34,6 +34,6 @@ test('application', async (t) => {
   const client = t.context.app.client;
   await client.waitUntilWindowLoaded();
   t.is(await client.getWindowCount(), 2, 'Wrong number of windows');
-  await new Promise((resolve) => setTimeout(resolve, 2000)); // Inserts a 2 sec delay to display all logs
+  await new Promise((resolve) => { setTimeout(resolve, 2000); }); // Inserts a 2 sec delay to display all logs
   helper.printLogs(await client.getMainProcessLogs());
 });
