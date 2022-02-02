@@ -1,6 +1,6 @@
 name: CI
 env:
-  node-version: 14
+  node-version: 16
 
 on:
   push:
@@ -36,8 +36,6 @@ jobs:
       uses: actions/setup-node@v2.5.1
       with:
         node-version: ${{ env.node-version }}
-    - name: Update npm
-      run: npm install -g npm@latest
     - name: Install Dependencies (Linux)
       if: matrix.os == 'ubuntu-18.04'
       run: sudo apt-get install fakeroot dpkg rpm lintian gnupg2 xvfb
