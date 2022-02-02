@@ -76,13 +76,17 @@ jobs:
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/headset_priv.asc.gpg
         npm run sign:redhat
 
-    - name: Testing app
-      uses: GabrielBB/xvfb-action@v1.6
-      with:
-        run: npm run test:app
-    - name: Test Linux installers
+    - name: Testing app (macOS, Windows)
+      if: matrix.os != 'ubuntu-18.04'
+      run: |
+        npm run test:app
+        node test/logs.js
+    - name: Testing Linux
       if: matrix.os == 'ubuntu-18.04'
-      run: npm run test:linux
+      run: |
+        xvfb-run --auto-servernum npm run test:app
+        node test/logs.js
+        npm run test:linux
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2

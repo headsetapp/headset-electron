@@ -19,11 +19,11 @@ const headsetTray = require('./lib/headsetTray');
 const mprisService = require('./lib/mprisService');
 const registerMediaKeys = require('./lib/registerMediaKeys');
 
+// Delete the log file. Just a workaround until 'electron-log' is updated
+logger.init();
+
 // Register Discord
 require('./lib/discord');
-
-// Delete the log file. Just a workaround until 'electron-log' is updated
-logger.clear();
 
 let player;
 let tray;

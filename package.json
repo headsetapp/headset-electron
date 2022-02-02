@@ -33,7 +33,7 @@
     "build:darwin": "npm run pack:darwin && npm run dist:darwin",
     "build:windows": "npm run pack:windows && npm run dist:windows",
     "sign:redhat": "VERSION=$npm_package_version bash bin/installer/redhat_sign.sh",
-    "choco": "@powershell ./bin/build_choco.ps1 -version %npm_package_version%",
+    "choco": "pwsh ./bin/build_choco.ps1 -version %npm_package_version%",
     "repo": "VERSION=$npm_package_version bash bin/linux_repo.sh",
     "test:app": "ava --timeout=20s test/app.test.js",
     "test:linux": "ava --timeout=1m test/linux/installers.test.js"
@@ -41,7 +41,7 @@
   "dependencies": {
     "debug": "^4.3.3",
     "discord-rpc": "^4.0.1",
-    "electron-log": "^4.4.4",
+    "electron-log": "^4.4.5",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
     "jimp": "^0.16.1"
@@ -61,7 +61,7 @@
     "foreman": "^3.0.1",
     "http-server": "^14.0.0",
     "husky": "^7.0.4",
-    "spectron": "^14.0.0",
+    "playwright": "^1.18.1",
     "xml2js": "^0.4.23"
   },
   "optionalDependencies": {
