@@ -1,4 +1,5 @@
 const logFile = require('electron-log');
+const { app } = require('electron');
 const debug = require('debug');
 
 const logger = debug('headset');
@@ -9,13 +10,22 @@ const logUpdate = debug('headset:update');
 const logWin2Player = debug('headset:win2Player');
 const logPlayer2Win = debug('headset:player2Win');
 
-logFile.transports.console.level = false;
-logFile.transports.file.format = '[{y}-{m}-{d} {h}:{i}:{s}.{ms}] {text}';
-
 class HeadsetLogger {
-  // This function will be removed when 'electron-log' gets fixed
-  static clear() {
-    logFile.transports.file.getFile().clear();
+  // Initializes the logger
+  static init() {
+    logFile.transports.console.level = false;
+    logFile.transports.file.format = '{y}-{m}-{d} {h}:{i}:{s}.{ms}\t\t {text}';
+    logFile.transports.file.getFile().clear(); // deletes previous logs
+
+    // Catches any errors (useful for playwright testing)
+    // might be removed once playwright implements electron logging
+    logFile.catchErrors({
+      showDialog: false,
+      onError(error) {
+        logFile.error(error);
+        app.exit();
+      },
+    });
   }
 
   static info(message) {
