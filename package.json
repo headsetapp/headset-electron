@@ -59,7 +59,7 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-promise": "^6.0.0",
     "foreman": "^3.0.1",
-    "http-server": "^14.0.0",
+    "http-server": "^14.1.0",
     "husky": "^7.0.4",
     "playwright": "^1.18.1",
     "xml2js": "^0.4.23"
