@@ -2,6 +2,7 @@ const test = require('ava');
 const path = require('path');
 const { _electron } = require('playwright');
 const { rm } = require('fs/promises');
+const printLogs = require('./logs');
 
 let execPath = '';
 let logFile = '';
@@ -19,19 +20,21 @@ if (process.platform === 'darwin') {
 
 const appPath = path.join(__dirname, '..', execPath);
 
-test.before(async (t) => {
+test('application', async (t) => {
   await rm(logFile, { force: true }); // remove pre-existing logs
   process.env = { ...process.env, DEBUG: 'headset*' }; // sets the DEBUG variable for logs
-  t.context.app = await _electron.launch({ // eslint-disable-line
-    executablePath: appPath,
+
+  // Runs the actual test, which can fail but we'll know why by printing the logs
+  const testing = await t.try('trying to start', async (tt) => {
+    const app = await _electron.launch({ // eslint-disable-line
+      executablePath: appPath,
+    });
+    await new Promise((resolve) => { setTimeout(resolve, 3000); }); // Inserts a 3 sec delay to record all logs
+    tt.is((await app.windows()).length, 2, 'Wrong number of windows');
+    app.close();
   });
-});
 
-test.after.always(async (t) => {
-  if (t.context.app) await t.context.app.close();
-});
+  await printLogs(logFile, t.log);
 
-test('application', async (t) => {
-  t.is((await t.context.app.windows()).length, 2, 'Wrong number of windows');
-  await new Promise((resolve) => { setTimeout(resolve, 3000); }); // Inserts a 3 sec delay to display all logs
+  testing.commit(); // pass or fail the test
 });
