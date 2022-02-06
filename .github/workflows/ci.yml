@@ -78,14 +78,11 @@ jobs:
 
     - name: Testing app (macOS, Windows)
       if: matrix.os != 'ubuntu-18.04'
-      run: |
-        npm run test:app
-        node test/logs.js
+      run: npm run test:app
     - name: Testing Linux
       if: matrix.os == 'ubuntu-18.04'
       run: |
         xvfb-run --auto-servernum npm run test:app
-        node test/logs.js
         npm run test:linux
 
     - name: Upload artifacts

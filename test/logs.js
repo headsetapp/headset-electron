@@ -1,43 +1,33 @@
 const { readFile } = require('fs/promises');
-const { join } = require('path');
 
-let logFile = '';
-
-if (process.platform === 'darwin') {
-  logFile = join(process.env.HOME, 'Library/Logs/Headset', 'main.log');
-} else if (process.platform === 'linux') {
-  logFile = join(process.env.XDG_CONFIG_HOME || `${process.env.HOME}/.config`, 'Headset/logs', 'main.log');
-} else if (process.platform === 'win32') {
-  logFile = join(process.env.APPDATA, 'Headset/logs', 'main.log');
-}
-
-// Prints a color output
-function printFormatedLogs(logs) {
+// Prints a color output either using ava t.log or console
+function printFormattedLogs(logs, logger) {
   logs.split(/\r\n|\r|\n/)
     .map((line) => line.split(/\t+\s/))
     .forEach((line) => {
     // Color is dependent on number of elements per line
       switch (line.length) {
         case 3: // regular Headset logs
-          console.log('\t\x1b[33m%s \x1b[34m%s\x1b[0m', line[0], line[1], line[2]);
+          logger(`\x1b[33m${line[0]} \x1b[34m${line[1]}\x1b[0m ${line[2]}`);
           break;
         case 2: // nodejs error-logs that include time
-          console.log('\t\x1b[33m%s\x1b[0m', line[0], line[1]);
+          logger(`\x1b[33m${line[0]}\x1b[0m ${line[1]}`);
           break;
         default: // any other is just printed
-          console.log(`\t${line.join(' ')}`);
+          logger(`${line.join(' ')}`);
           break;
       }
     });
 }
 
-async function main() {
+async function printLogs(logFile, logger) {
+  if (!logger) throw new Error('No logger specified');
+
   try {
-    const mainLog = await readFile(logFile, 'utf8'); // reads logs
-    printFormatedLogs(mainLog); // pretty print logs
+    printFormattedLogs(await readFile(logFile, 'utf8'), logger); // pretty print logs
   } catch (error) {
-    console.log('\tNo log file found');
+    logger('No log file found');
   }
 }
 
-main();
+module.exports = printLogs;
