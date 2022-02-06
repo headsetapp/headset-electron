@@ -1,4 +1,4 @@
-const test = require('ava');
+const test = require('ava'); // eslint-disable-line
 const path = require('path');
 const { _electron } = require('playwright');
 const { rm } = require('fs/promises');

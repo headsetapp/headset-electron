@@ -41,13 +41,13 @@
   "dependencies": {
     "debug": "^4.3.3",
     "discord-rpc": "^4.0.1",
-    "electron-log": "^4.4.5",
+    "electron-log": "^4.4.6",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
     "jimp": "^0.16.1"
   },
   "devDependencies": {
-    "ava": "^3.15.0",
+    "ava": "^4.0.1",
     "cross-env": "^7.0.3",
     "electron": "^12.0.7",
     "electron-installer-windows": "^3.0.0",
