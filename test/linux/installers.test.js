@@ -1,8 +1,7 @@
-/* eslint-disable func-names */
 const { access } = require('fs/promises');
 const path = require('path');
 const util = require('util');
-const test = require('ava');
+const test = require('ava'); // eslint-disable-line
 const exec = util.promisify(require('child_process').exec);
 const { version } = require('../../package.json');
 
