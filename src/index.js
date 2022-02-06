@@ -11,16 +11,14 @@ const {
   systemPreferences,
   Tray,
 } = require('electron');
-
-const AutoUpdater = require('./lib/autoUpdater');
 const { version } = require('../package.json');
 const logger = require('./lib/headsetLogger');
+
+logger.init(); // initializes logger first to log any errors to file
+const AutoUpdater = require('./lib/autoUpdater');
 const headsetTray = require('./lib/headsetTray');
 const mprisService = require('./lib/mprisService');
 const registerMediaKeys = require('./lib/registerMediaKeys');
-
-// Delete the log file. Just a workaround until 'electron-log' is updated
-logger.init();
 
 // Register Discord
 require('./lib/discord');
