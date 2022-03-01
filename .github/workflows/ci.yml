@@ -33,7 +33,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
     - name: Use Node.js ${{ env.node-version }}
-      uses: actions/setup-node@v2.5.1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ env.node-version }}
     - name: Install Dependencies (Linux)
