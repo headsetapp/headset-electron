@@ -39,7 +39,7 @@
     "test:linux": "ava --timeout=1m test/linux/installers.test.js"
   },
   "dependencies": {
-    "debug": "^4.3.3",
+    "debug": "^4.3.4",
     "discord-rpc": "^4.0.1",
     "electron-log": "^4.4.6",
     "electron-squirrel-startup": "^1.0.0",
@@ -47,13 +47,13 @@
     "jimp": "^0.16.1"
   },
   "devDependencies": {
-    "ava": "^4.0.1",
+    "ava": "^4.1.0",
     "cross-env": "^7.0.3",
     "electron": "^12.0.7",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^15.4.0",
     "electron-packager-languages": "^0.5.0",
-    "eslint": "^8.8.0",
+    "eslint": "^8.12.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-ava": "^13.2.0",
     "eslint-plugin-import": "^2.25.4",
@@ -61,7 +61,7 @@
     "foreman": "^3.0.1",
     "http-server": "^14.1.0",
     "husky": "^7.0.4",
-    "playwright": "^1.18.1",
+    "playwright": "^1.20.1",
     "xml2js": "^0.4.23"
   },
   "optionalDependencies": {
