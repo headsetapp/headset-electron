@@ -45,7 +45,7 @@ jobs:
     - name: Fix git checkout line endings
       run: git config --global core.autocrlf input
     - name: Get source
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Get tags
       id: tags
       if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'ubuntu-18.04'
@@ -129,7 +129,7 @@ jobs:
     - name: Install Dependencies
       run: sudo apt-get install reprepro createrepo
     - name: Get source
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - run: mkdir -p build/installers
     - name: Download artifacts
       uses: actions/download-artifact@v2
@@ -155,7 +155,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/') && github.repository == 'headsetapp/headset-electron'
     steps:
     - name: Get source
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - run: mkdir -p build/installers
     - name: Fix git checkout line endings
       run: git config --global core.autocrlf input
