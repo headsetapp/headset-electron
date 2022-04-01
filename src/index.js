@@ -102,7 +102,6 @@ function start() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      worldSafeExecuteJavaScript: false,
       enableRemoteModule: isTest,
     },
   });
@@ -119,7 +118,6 @@ function start() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      worldSafeExecuteJavaScript: false,
       enableRemoteModule: isTest,
     },
   });
@@ -172,13 +170,6 @@ function start() {
     logger.info('Player window finished loading');
     win.focus();
     player.minimize();
-  });
-
-  player.webContents.on('new-window', (event, url) => {
-    event.preventDefault();
-    const docsWin = new BrowserWindow({ closable: true });
-    docsWin.loadURL(url);
-    event.newGuest = docsWin; // eslint-disable-line no-param-reassign
   });
 
   // Linux doesn't implement closable=false for
