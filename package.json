@@ -14,7 +14,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "headset": "electron .",
+    "headset": "electron --trace-warnings .",
     "dev:headset": "cross-env NODE_ENV=development nf start",
     "lint": "eslint .",
     "version": "npm run bumps && git add .",
@@ -49,7 +49,7 @@
   "devDependencies": {
     "ava": "^4.1.0",
     "cross-env": "^7.0.3",
-    "electron": "^12.0.7",
+    "electron": "^14.2.9",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^15.5.1",
     "electron-packager-languages": "^0.5.0",
