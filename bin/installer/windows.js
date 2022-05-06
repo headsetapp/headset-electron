@@ -30,8 +30,12 @@ async function main() {
     await installer(options);
     console.log(`Successfully created installer at ${options.dest}\n`);
   } catch (error) {
-    const passwordRegex = CERT_PASSWORD.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    console.error(error.stack.replace(new RegExp(passwordRegex, 'g'), '***'));
+    if (CERT_PASSWORD) {
+      const passwordRegex = CERT_PASSWORD.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      console.error(error.stack.replace(new RegExp(passwordRegex, 'g'), '***'));
+    } else {
+      console.error(error.stack);
+    }
     process.exit(1);
   }
 }

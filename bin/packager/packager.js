@@ -2,7 +2,7 @@ const packager = require('electron-packager');
 const setLanguages = require('electron-packager-languages');
 const path = require('path');
 
-const { OS } = process.env;
+const { OS, CERT_PASSWORD } = process.env;
 
 let arch;
 let executableName;
@@ -52,7 +52,7 @@ const options = {
   asar: true,
   prune: true,
   overwrite: true,
-  osxSign: true,
+  osxSign: !!CERT_PASSWORD,
   darwinDarkModeSupport: true,
   appBundleId: 'co.headsetapp.app',
   appCategoryType: 'public.app-category.music',
