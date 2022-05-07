@@ -14,7 +14,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "headset": "electron --trace-warnings .",
+    "headset": "electron .",
     "dev:headset": "cross-env NODE_ENV=development nf start",
     "lint": "eslint .",
     "version": "npm run bumps && git add .",
