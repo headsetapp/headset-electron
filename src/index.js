@@ -5,6 +5,7 @@ const fs = require('fs');
 const {
   app,
   BrowserWindow,
+  dialog,
   globalShortcut,
   ipcMain,
   Menu,
@@ -124,14 +125,10 @@ function start() {
 
   // Menu for main window. It will be hidden but allows for shortcuts to still work
   if (OS === 'win32' || OS === 'linux') {
-    const menu = Menu.buildFromTemplate([
-      {
-        label: 'File',
-        submenu: [
-          { role: 'toggleDevTools' },
-        ],
-      },
-    ]);
+    const menu = Menu.buildFromTemplate([{
+      label: 'File',
+      submenu: [{ role: 'toggleDevTools' }],
+    }]);
     win.setMenu(menu);
   }
 
@@ -146,6 +143,55 @@ function start() {
     player.loadURL('http://danielravina.github.io/headset/player-v2');
   }
 
+  win.webContents.on('did-finish-load', () => {
+    logger.info('Main window finished loading');
+    win.webContents.send('version', `v${version}`);
+  });
+
+  player.webContents.on('did-finish-load', () => {
+    logger.info('Player window finished loading');
+    win.focus();
+    player.minimize();
+  });
+
+  win.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    logger.info("Main window couldn't load the content:\n"
+    + `errorCode: ${errorCode}\n`
+    + `errorDescription: ${errorDescription}`);
+    dialog.showErrorBox(
+      'Cannot load Headset',
+      `Please check your internet connection.\nError: ${errorCode} ${errorDescription}`,
+    );
+    app.exit(10);
+  });
+
+  player.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    logger.info("Player window couldn't load the content:\n"
+    + `errorCode: ${errorCode}\n`
+    + `errorDescription: ${errorDescription}`);
+    dialog.showErrorBox(
+      'Cannot load Youtube',
+      `Please check your internet connection.\nError: ${errorCode} ${errorDescription}`,
+    );
+    app.exit(10);
+  });
+
+  // Linux doesn't implement closable=false for
+  player.on('close', (event) => {
+    event.preventDefault();
+  });
+
+  win.on('close', (e) => {
+    if (OS === 'darwin' && !isUpdating) {
+    // Hide the window on macOS
+      logger.info('Hide main headset window');
+      e.preventDefault();
+      win.hide();
+    } else {
+      close(); // close the app for Linux and Windows
+    }
+  });
+
   // Creates a Tray
   if (OS === 'win32' || OS === 'darwin') {
     tray = new Tray(trayIcon);
@@ -159,34 +205,6 @@ function start() {
 
   // Register media keys
   registerMediaKeys(win);
-
-  win.webContents.on('did-finish-load', () => {
-    logger.info('Main window finished loading');
-
-    win.webContents.send('version', `v${version}`);
-  });
-
-  player.webContents.on('did-finish-load', () => {
-    logger.info('Player window finished loading');
-    win.focus();
-    player.minimize();
-  });
-
-  // Linux doesn't implement closable=false for
-  player.on('close', (event) => {
-    event.preventDefault();
-  });
-
-  win.on('close', (e) => {
-    if (OS === 'darwin' && !isUpdating) {
-      // Hide the window on macOS
-      logger.info('Hide main headset window');
-      e.preventDefault();
-      win.hide();
-    } else {
-      close(); // close the app for Linux and Windows
-    }
-  });
 
   // Check if app is installed with Squirrel
   if ((OS === 'win32' && fs.existsSync(path.resolve(path.dirname(process.execPath), '..', 'update.exe')))
