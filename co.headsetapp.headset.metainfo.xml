@@ -35,6 +35,7 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="4.0.0" date="2022-05-09"/>
     <release version="3.3.3" date="2021-03-04"/>
     <release version="3.3.2" date="2021-02-20"/>
     <release version="3.3.1" date="2021-02-20"/>
