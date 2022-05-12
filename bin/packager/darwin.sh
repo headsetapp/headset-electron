@@ -33,4 +33,4 @@ else
   printf "\x1b[33m%s\x1b[0m\n" "The package will not be signed"
 fi
 
-OS=darwin node bin/packager/packager.js
+OS=darwin DEBUG=electron-osx-sign node bin/packager/packager.js
