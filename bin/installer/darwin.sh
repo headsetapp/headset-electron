@@ -3,13 +3,14 @@
 set -e
 
 _version=${VERSION:?}
+_identity="3rd Party Mac Developer Application: Daniel Ravina (4BJNEK4V69)"
 
 echo -e '\n\033[1mPackaging macOS installer: \033[01;0m'
 mkdir -p build/installers
 zip -ryq "Headset-${_version}-mac.zip" build/Headset-darwin-x64/Headset.app
 
 set +e
-create-dmg --overwrite build/Headset-darwin-x64/Headset.app
+create-dmg --overwrite --identity="${_identity}" build/Headset-darwin-x64/Headset.app
 if ! [[ $? -eq 0 || $? -eq 2 ]]; then
   exit 1
 fi
