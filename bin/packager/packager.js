@@ -4,7 +4,7 @@ const path = require('path');
 
 const { OS, CERT_PASSWORD } = process.env;
 
-const identity = '3rd Party Mac Developer Application: Daniel Ravina (4BJNEK4V69)';
+const identity = 'Apple Distribution: Daniel Ravina (4BJNEK4V69)';
 
 const ignore = [
   /^\/\.chocolatey$/,

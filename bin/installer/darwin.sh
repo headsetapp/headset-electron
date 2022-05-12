@@ -3,7 +3,7 @@
 set -e
 
 _version=${VERSION:?}
-_identity="3rd Party Mac Developer Application: Daniel Ravina (4BJNEK4V69)"
+_identity="Apple Distribution: Daniel Ravina (4BJNEK4V69)"
 
 echo -e '\n\033[1mPackaging macOS installer: \033[01;0m'
 mkdir -p build/installers
