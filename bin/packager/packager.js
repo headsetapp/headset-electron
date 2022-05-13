@@ -4,8 +4,6 @@ const path = require('path');
 
 const { OS, CERT_PASSWORD } = process.env;
 
-const identity = 'Apple Distribution: Daniel Ravina (4BJNEK4V69)';
-
 const ignore = [
   /^\/\.chocolatey$/,
   /^\/\.github$/,
@@ -48,10 +46,7 @@ if (OS === 'darwin') {
   Object.assign(options, {
     executableName: 'Headset',
     icon: path.join(__dirname, '..', '..', 'src', 'icons', 'headset.icns'),
-    osxSign: CERT_PASSWORD ? {
-      identity,
-      keychain: 'mac-build.keychain',
-    } : false,
+    osxSign: !!CERT_PASSWORD,
     darwinDarkModeSupport: true,
     appBundleId: 'co.headsetapp.app',
     appCategoryType: 'public.app-category.music',
