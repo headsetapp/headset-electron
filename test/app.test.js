@@ -21,6 +21,8 @@ if (process.platform === 'darwin') {
 const appPath = path.join(__dirname, '..', execPath);
 
 test('application', async (t) => {
+  if (process.platform === 'win32') { t.timeout(5 * 60 * 1000); } // 5 min timeout for Windows only
+
   await rm(logFile, { force: true }); // remove pre-existing logs
   process.env = { ...process.env, DEBUG: 'headset*' }; // sets the DEBUG variable for logs
 
