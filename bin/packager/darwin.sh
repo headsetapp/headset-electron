@@ -2,11 +2,9 @@
 
 set -e
 
-# if [[ -n "${CERT_PASSWORD}" && "${GITHUB_REPOSITORY:-false}" == "headsetapp/headset-electron" && "${GITHUB_REF:-false}" == refs/tags/* ]]; then
-if [[ -n "${CERT_PASSWORD}" ]]; then
+if [[ -n "${CERT_PASSWORD}" && "${GITHUB_REPOSITORY:-false}" == "headsetapp/headset-electron" && "${GITHUB_REF:-false}" == refs/tags/* ]]; then
   key_chain=mac-build.keychain
   dir="${GITHUB_WORKSPACE:?}/sig"
-  # dir="${PWD}/sig"
   password=headset
 
   echo "Creating default keychain"
@@ -32,4 +30,4 @@ else
   printf "\x1b[33m%s\x1b[0m\n" "The package will not be signed"
 fi
 
-OS=darwin DEBUG=electron-osx-sign node bin/packager/packager.js
+OS=darwin node bin/packager/packager.js
