@@ -17,9 +17,9 @@ if [[ -n "${CERT_PASSWORD}" && "${GITHUB_REPOSITORY:-false}" == "headsetapp/head
   security set-keychain-settings -t 3600 -u "${key_chain}"
 
   # Add certificates to keychain and allow codesign to access them
-  security import "${dir}/DeveloperIDG2CA-macos.cer" -k "${key_chain}" -A -T /usr/bin/codesign
-  security import "${dir}/headset-macos.cer" -k "${key_chain}" -A -T /usr/bin/codesign
-  security import "${dir}/headset-macos.p12" -k "${key_chain}" -P "${CERT_PASSWORD:?}" -A -T /usr/bin/codesign
+  security import "${dir}/macos-DeveloperIDG2CA.cer" -k "${key_chain}" -A -T /usr/bin/codesign
+  security import "${dir}/macos-headset.cer" -k "${key_chain}" -A -T /usr/bin/codesign
+  security import "${dir}/macos-headset.p12" -k "${key_chain}" -P "${CERT_PASSWORD:?}" -A -T /usr/bin/codesign
 
   echo "Add keychain to keychain-list"
   security list-keychains -s "${key_chain}"

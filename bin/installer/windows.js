@@ -18,7 +18,7 @@ const options = {
 if (CERT_PASSWORD
   && GITHUB_REPOSITORY === 'headsetapp/headset-electron'
   && GITHUB_REF && GITHUB_REF.startsWith('refs/tags/')) {
-  options.certificateFile = 'sig/headset.pfx';
+  options.certificateFile = 'sig/win32-headset.pfx';
   options.certificatePassword = CERT_PASSWORD;
 } else {
   console.log('Warning: The package will not be signed');
