@@ -41,27 +41,27 @@
   "dependencies": {
     "debug": "^4.3.4",
     "discord-rpc": "^4.0.1",
-    "electron-log": "^4.4.6",
+    "electron-log": "^4.4.7",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
     "jimp": "^0.16.1"
   },
   "devDependencies": {
-    "ava": "^4.1.0",
+    "ava": "^4.2.0",
     "cross-env": "^7.0.3",
     "electron": "^14.2.9",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^15.5.1",
     "electron-packager-languages": "^0.5.0",
-    "eslint": "^8.12.0",
+    "eslint": "^8.15.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-ava": "^13.2.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.0.0",
     "foreman": "^3.0.1",
     "http-server": "^14.1.0",
-    "husky": "^7.0.4",
-    "playwright": "^1.21.1",
+    "husky": "^8.0.1",
+    "playwright": "^1.22.0",
     "xml2js": "^0.4.23"
   },
   "optionalDependencies": {
