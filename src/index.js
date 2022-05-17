@@ -20,6 +20,7 @@ const AutoUpdater = require('./lib/autoUpdater');
 const headsetTray = require('./lib/headsetTray');
 const mprisService = require('./lib/mprisService');
 const registerMediaKeys = require('./lib/registerMediaKeys');
+const macOSmedia = require('./lib/macOSmedia');
 
 // Register Discord
 require('./lib/discord');
@@ -202,6 +203,9 @@ function start() {
   if (OS === 'linux') {
     try { mprisService(win, player, app); } catch (err) { console.error(err); }
   }
+
+  // Media integration for macOS
+  macOSmedia(win);
 
   // Register media keys
   registerMediaKeys(win);
