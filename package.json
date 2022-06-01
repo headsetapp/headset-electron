@@ -61,7 +61,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.0.0",
     "foreman": "^3.0.1",
-    "http-server": "^14.1.0",
+    "http-server": "^14.1.1",
     "husky": "^8.0.1",
     "playwright": "^1.22.1",
     "xml2js": "^0.4.23"
