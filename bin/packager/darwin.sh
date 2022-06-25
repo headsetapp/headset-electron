@@ -2,7 +2,7 @@
 
 set -e
 
-if [[ -n "${CERT_PASSWORD}" && "${GITHUB_REPOSITORY:-false}" == "headsetapp/headset-electron" && "${GITHUB_REF:-false}" == refs/tags/* ]]; then
+if [[ -n "${CERT_PASSWORD}" && "${GITHUB_REPOSITORY:-false}" == 'headsetapp/headset-electron' && ("${GITHUB_REF_TYPE:-false}" == 'tag' || "${GITHUB_REF:-false}" == 'refs/heads/artifacts') ]]; then
   key_chain=mac-build.keychain
   dir="${GITHUB_WORKSPACE:?}/sig"
   password=headset
