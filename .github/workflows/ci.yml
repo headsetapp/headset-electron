@@ -4,11 +4,14 @@ env:
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - artifacts
     tags:
       - v[0-9]+.[0-9]+.[0-9]+
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
@@ -48,7 +51,7 @@ jobs:
       uses: actions/checkout@v3
     - name: Get tags
       id: tags
-      if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'ubuntu-18.04'
+      if: matrix.os == 'ubuntu-18.04' && github.ref_type	== 'tag'
       run: |
         git fetch --tags -f
         ./bin/getTags.sh
@@ -71,7 +74,7 @@ jobs:
       env:
         CERT_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD }}
     - name: Signing RedHat installer
-      if: matrix.os == 'ubuntu-18.04' && startsWith(github.ref, 'refs/tags/')
+      if: matrix.os == 'ubuntu-18.04' && github.ref_type	== 'tag'
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/linux-headset_priv.asc.gpg
         npm run sign:redhat
@@ -87,7 +90,7 @@ jobs:
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
-      if: startsWith(github.ref, 'refs/tags/')
+      if: github.ref_type	== 'tag' || github.ref == 'refs/heads/artifacts'
       with:
         name: installers-${{ matrix.os }}
         path: build/installers/*
@@ -96,7 +99,7 @@ jobs:
     name: Publish to Github Releases
     needs: build
     runs-on: 'ubuntu-18.04'
-    if: startsWith(github.ref, 'refs/tags/')
+    if: github.ref_type	== 'tag'
 
     steps:
     - run: mkdir -p build/installers
@@ -123,7 +126,7 @@ jobs:
     name: Publish Linux repositories
     needs: build
     runs-on: 'ubuntu-18.04'
-    if: startsWith(github.ref, 'refs/tags/')
+    if: github.ref_type	== 'tag'
 
     steps:
     - name: Install Dependencies
@@ -152,7 +155,7 @@ jobs:
     name: Publish to Chocolatey
     needs: build
     runs-on: 'windows-latest'
-    if: startsWith(github.ref, 'refs/tags/') && github.repository == 'headsetapp/headset-electron'
+    if: github.ref_type	== 'tag' && github.repository == 'headsetapp/headset-electron'
     steps:
     - name: Get source
       uses: actions/checkout@v3
@@ -174,7 +177,7 @@ jobs:
     name: Publish to Homebrew cask
     needs: [build, publish]
     runs-on: 'macos-latest'
-    if: startsWith(github.ref, 'refs/tags/') && github.repository == 'headsetapp/headset-electron'
+    if: github.ref_type	== 'tag' && github.repository == 'headsetapp/headset-electron'
     steps:
     - name: Delete credentials
       run: printf "protocol=https\nhost=github.com\n" | git credential-osxkeychain erase

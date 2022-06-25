@@ -2,6 +2,7 @@ node_modules
 *.log
 build/
 .DS_Store
+TODO
 gh-pages/debian/db
 gh-pages/debian/dists
 gh-pages/debian/pool
