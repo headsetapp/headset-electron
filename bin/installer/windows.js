@@ -1,7 +1,9 @@
 const installer = require('electron-installer-windows');
 const path = require('path');
 
-const { CERT_PASSWORD, GITHUB_REF, GITHUB_REPOSITORY } = process.env;
+const {
+  CERT_PASSWORD, GITHUB_REF_TYPE, GITHUB_REF, GITHUB_REPOSITORY,
+} = process.env;
 
 const options = {
   src: 'build/Headset-win32-ia32',
@@ -17,7 +19,7 @@ const options = {
 
 if (CERT_PASSWORD
   && GITHUB_REPOSITORY === 'headsetapp/headset-electron'
-  && GITHUB_REF && GITHUB_REF.startsWith('refs/tags/')) {
+  && (GITHUB_REF_TYPE === 'tag' || GITHUB_REF === 'refs/tags/artifacts')) {
   options.certificateFile = 'sig/win32-headset.pfx';
   options.certificatePassword = CERT_PASSWORD;
 } else {
