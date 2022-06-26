@@ -1,8 +1,9 @@
 const packager = require('electron-packager');
+const { rebuild } = require('electron-rebuild');
 const setLanguages = require('electron-packager-languages');
 const path = require('path');
 
-const { OS, CERT_PASSWORD } = process.env;
+const { ARCH, OS, CERT_PASSWORD } = process.env;
 
 const ignore = [
   /^\/\.chocolatey$/,
@@ -26,7 +27,7 @@ const options = {
   dir: '.',
   out: 'build',
   executableName: 'headset',
-  arch: 'x64',
+  arch: ARCH || 'x64',
   platform: OS,
   asar: true,
   prune: true,
@@ -50,6 +51,11 @@ if (OS === 'darwin') {
     darwinDarkModeSupport: true,
     appBundleId: 'co.headsetapp.app',
     appCategoryType: 'public.app-category.music',
+  });
+  options.afterCopy.push((buildPath, electronVersion, platform, arch, callback) => {
+    rebuild({ buildPath, electronVersion, arch })
+      .then(() => callback())
+      .catch((err) => callback(err));
   });
 }
 
