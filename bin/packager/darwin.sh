@@ -31,3 +31,4 @@ else
 fi
 
 OS=darwin node bin/packager/packager.js
+OS=darwin ARCH=arm64 node bin/packager/packager.js

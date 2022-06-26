@@ -14,7 +14,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "postinstall": "npx -y electron-rebuild -o electron-media-service",
+    "postinstall": "electron-rebuild -o electron-media-service",
     "headset": "electron .",
     "dev:headset": "cross-env NODE_ENV=development nf start",
     "lint": "eslint .",
@@ -55,6 +55,7 @@
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^15.5.1",
     "electron-packager-languages": "^0.5.0",
+    "electron-rebuild": "^3.2.7",
     "eslint": "^8.15.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-ava": "^13.2.0",
