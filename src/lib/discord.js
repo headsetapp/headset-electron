@@ -23,8 +23,8 @@ function setPresence() {
   const presence = {
     state: trackInfo.title,
     details: trackInfo.artist || '  ',
-    startTimestamp: start,
-    endTimestamp: end,
+    startTimestamp: start || 0,
+    endTimestamp: end || 0,
     instance: false,
     largeImageKey: 'playing',
     largeImageText: 'Headset',
