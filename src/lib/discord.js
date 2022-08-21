@@ -21,7 +21,7 @@ function setPresence() {
 
   // See https://discord.com/developers/applications/712424004190732419/rich-presence/assets
   const presence = {
-    state: trackInfo.title,
+    state: trackInfo.title || '  ',
     details: trackInfo.artist || '  ',
     startTimestamp: start || 0,
     endTimestamp: end || 0,
