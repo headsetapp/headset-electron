@@ -3,7 +3,9 @@ const { rebuild } = require('electron-rebuild');
 const setLanguages = require('electron-packager-languages');
 const path = require('path');
 
-const { ARCH, OS, CERT_PASSWORD } = process.env;
+const {
+  ARCH, OS, CERT_PASSWORD, APPLE_ID, APPLE_ID_PASSWORD, TEAM_ID,
+} = process.env;
 
 const ignore = [
   /^\/\.chocolatey$/,
@@ -48,6 +50,12 @@ if (OS === 'darwin') {
     executableName: 'Headset',
     icon: path.join(__dirname, '..', '..', 'src', 'icons', 'headset.icns'),
     osxSign: !!CERT_PASSWORD,
+    osxNotarize: {
+      tool: 'notarytool',
+      appleId: APPLE_ID,
+      appleIdPassword: APPLE_ID_PASSWORD,
+      teamId: TEAM_ID,
+    },
     darwinDarkModeSupport: true,
     appBundleId: 'co.headsetapp.app',
     appCategoryType: 'public.app-category.music',
