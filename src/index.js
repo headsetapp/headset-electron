@@ -11,6 +11,7 @@ const {
   Menu,
   systemPreferences,
   Tray,
+  session,
 } = require('electron');
 const { version } = require('../package.json');
 const logger = require('./lib/headsetLogger');
@@ -229,6 +230,23 @@ function start() {
       }
     }
   }
+
+  // Add missing SameSite=none to cookies received from amazon AWS
+  session.defaultSession.webRequest.onHeadersReceived(
+    { urls: ['https://*.amazonaws.com/*/*'] },
+    (details, callback) => {
+      if (
+        details.responseHeaders
+      && details.responseHeaders['set-cookie']
+      && details.responseHeaders['set-cookie'].length
+      && !details.responseHeaders['set-cookie'][0].includes('SameSite=none')
+      ) {
+        // eslint-disable-next-line no-param-reassign
+        details.responseHeaders['set-cookie'][0] = `${details.responseHeaders['set-cookie'][0]}; SameSite=none`;
+      }
+      callback({ cancel: false, responseHeaders: details.responseHeaders });
+    },
+  );
 } // end start
 
 app.on('ready', start);
