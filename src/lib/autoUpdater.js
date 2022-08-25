@@ -5,7 +5,7 @@ const SERVER = 'https://update.electronjs.org';
 
 class AutoUpdater {
   constructor(options = {}) {
-    const url = `${SERVER}/headsetapp/headset-electron/${process.platform}/${app.getVersion()}`;
+    const url = `${SERVER}/headsetapp/headset-electron/${process.platform}-${process.arch}/${app.getVersion()}`;
 
     autoUpdater.setFeedURL({ url });
 

@@ -3,7 +3,9 @@ const { rebuild } = require('electron-rebuild');
 const setLanguages = require('electron-packager-languages');
 const path = require('path');
 
-const { ARCH, OS, CERT_PASSWORD } = process.env;
+const {
+  ARCH, OS, APPLE_ID, APPLE_ID_PASSWORD, TEAM_ID, SIGN,
+} = process.env;
 
 const ignore = [
   /^\/\.chocolatey$/,
@@ -47,15 +49,32 @@ if (OS === 'darwin') {
   Object.assign(options, {
     executableName: 'Headset',
     icon: path.join(__dirname, '..', '..', 'src', 'icons', 'headset.icns'),
-    osxSign: !!CERT_PASSWORD,
+    osxSign: false,
     darwinDarkModeSupport: true,
     appBundleId: 'co.headsetapp.app',
     appCategoryType: 'public.app-category.music',
   });
+  // Add electron rebuild for arm64 architectures
   options.afterCopy.push((buildPath, electronVersion, platform, arch, callback) => {
     rebuild({ buildPath, electronVersion, arch })
       .then(() => callback())
       .catch((err) => callback(err));
+  });
+}
+
+if (APPLE_ID && APPLE_ID_PASSWORD && TEAM_ID && SIGN === 'yes') {
+  Object.assign(options, {
+    osxSign: {
+      entitlements: path.join(__dirname, 'entitlements.plist'),
+      'entitlements-inherit': path.join(__dirname, 'entitlements.plist'),
+      'hardened-runtime': true,
+    },
+    osxNotarize: {
+      tool: 'notarytool',
+      appleId: APPLE_ID,
+      appleIdPassword: APPLE_ID_PASSWORD,
+      teamId: TEAM_ID,
+    },
   });
 }
 
