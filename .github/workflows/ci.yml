@@ -25,6 +25,14 @@ jobs:
       previous_tag: ${{ steps.tags.outputs.oldtag }}
 
     steps:
+    - name: Set env variables
+      id: env-vars
+      run: |
+        if [[ "${GITHUB_REPOSITORY}" == 'headsetapp/headset-electron' && ("${GITHUB_REF_TYPE}" == 'tag' || "${GITHUB_REF}" == 'refs/heads/artifacts') ]]; then
+          echo "::set-output name=sign::yes"
+        else
+          echo "::set-output name=sign::no"
+        fi
     - name: Get npm cache directory
       id: npm-cache-dir
       run: echo "::set-output name=dir::$(npm config get cache)"
@@ -68,13 +76,15 @@ jobs:
       run: npm run build:darwin
       env:
         CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+        SIGN: ${{ steps.env-vars.outputs.sign }}
     - name: Building (Windows)
       if: matrix.os == 'windows-latest'
       run: npm run build:windows
       env:
         CERT_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD }}
+        SIGN: ${{ steps.env-vars.outputs.sign }}
     - name: Signing RedHat installer
-      if: matrix.os == 'ubuntu-18.04' && github.ref_type	== 'tag'
+      if: matrix.os == 'ubuntu-18.04' && ${{ steps.env-vars.outputs.sign }} == 'yes'
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/linux-headset_priv.asc.gpg
         npm run sign:redhat

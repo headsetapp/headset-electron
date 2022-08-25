@@ -4,7 +4,7 @@ const setLanguages = require('electron-packager-languages');
 const path = require('path');
 
 const {
-  ARCH, OS, APPLE_ID, APPLE_ID_PASSWORD, TEAM_ID, GITHUB_REF_TYPE, GITHUB_REF,
+  ARCH, OS, APPLE_ID, APPLE_ID_PASSWORD, TEAM_ID, SIGN,
 } = process.env;
 
 const ignore = [
@@ -54,6 +54,7 @@ if (OS === 'darwin') {
     appBundleId: 'co.headsetapp.app',
     appCategoryType: 'public.app-category.music',
   });
+  // Add electron rebuild for arm64 architectures
   options.afterCopy.push((buildPath, electronVersion, platform, arch, callback) => {
     rebuild({ buildPath, electronVersion, arch })
       .then(() => callback())
@@ -61,7 +62,7 @@ if (OS === 'darwin') {
   });
 }
 
-if (APPLE_ID && APPLE_ID_PASSWORD && TEAM_ID && (GITHUB_REF_TYPE === 'tag' || GITHUB_REF === 'refs/heads/artifacts')) {
+if (APPLE_ID && APPLE_ID_PASSWORD && TEAM_ID && SIGN === 'yes') {
   Object.assign(options, {
     osxSign: {
       entitlements: path.join(__dirname, 'entitlements.plist'),
