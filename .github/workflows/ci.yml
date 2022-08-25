@@ -27,6 +27,7 @@ jobs:
     steps:
     - name: Set env variables
       id: env-vars
+      shell: bash
       run: |
         if [[ "${GITHUB_REPOSITORY}" == 'headsetapp/headset-electron' && ("${GITHUB_REF_TYPE}" == 'tag' || "${GITHUB_REF}" == 'refs/heads/artifacts') ]]; then
           echo "::set-output name=sign::yes"
@@ -84,7 +85,7 @@ jobs:
         CERT_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD }}
         SIGN: ${{ steps.env-vars.outputs.sign }}
     - name: Signing RedHat installer
-      if: matrix.os == 'ubuntu-18.04' && ${{ steps.env-vars.outputs.sign }} == 'yes'
+      if: matrix.os == 'ubuntu-18.04' && steps.env-vars.outputs.sign == 'yes'
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/linux-headset_priv.asc.gpg
         npm run sign:redhat
