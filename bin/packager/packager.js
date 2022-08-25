@@ -4,7 +4,7 @@ const setLanguages = require('electron-packager-languages');
 const path = require('path');
 
 const {
-  ARCH, OS, CERT_PASSWORD, APPLE_ID, APPLE_ID_PASSWORD, TEAM_ID,
+  ARCH, OS, APPLE_ID, APPLE_ID_PASSWORD, TEAM_ID, GITHUB_REF_TYPE, GITHUB_REF,
 } = process.env;
 
 const ignore = [
@@ -49,13 +49,7 @@ if (OS === 'darwin') {
   Object.assign(options, {
     executableName: 'Headset',
     icon: path.join(__dirname, '..', '..', 'src', 'icons', 'headset.icns'),
-    osxSign: !!CERT_PASSWORD,
-    osxNotarize: {
-      tool: 'notarytool',
-      appleId: APPLE_ID,
-      appleIdPassword: APPLE_ID_PASSWORD,
-      teamId: TEAM_ID,
-    },
+    osxSign: false,
     darwinDarkModeSupport: true,
     appBundleId: 'co.headsetapp.app',
     appCategoryType: 'public.app-category.music',
@@ -64,6 +58,22 @@ if (OS === 'darwin') {
     rebuild({ buildPath, electronVersion, arch })
       .then(() => callback())
       .catch((err) => callback(err));
+  });
+}
+
+if (APPLE_ID && APPLE_ID_PASSWORD && TEAM_ID && (GITHUB_REF_TYPE === 'tag' || GITHUB_REF === 'refs/heads/artifacts')) {
+  Object.assign(options, {
+    osxSign: {
+      entitlements: path.join(__dirname, 'entitlements.plist'),
+      'entitlements-inherit': path.join(__dirname, 'entitlements.plist'),
+      'hardened-runtime': true,
+    },
+    osxNotarize: {
+      tool: 'notarytool',
+      appleId: APPLE_ID,
+      appleIdPassword: APPLE_ID_PASSWORD,
+      teamId: TEAM_ID,
+    },
   });
 }
 
