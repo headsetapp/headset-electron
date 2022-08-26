@@ -76,6 +76,8 @@ if (APPLE_ID && APPLE_ID_PASSWORD && TEAM_ID && SIGN === 'yes') {
       teamId: TEAM_ID,
     },
   });
+} else {
+  console.log('\x1b[33m%s\x1b[0m\n', 'macOS app will not be signed/notarized');
 }
 
 async function main() {
