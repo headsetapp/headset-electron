@@ -77,6 +77,9 @@ jobs:
       run: npm run build:darwin
       env:
         CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+        TEAM_ID: ${{ secrets.TEAM_ID }}
         SIGN: ${{ steps.env-vars.outputs.sign }}
     - name: Building (Windows)
       if: matrix.os == 'windows-latest'
@@ -98,6 +101,10 @@ jobs:
       run: |
         xvfb-run --auto-servernum npm run test:app
         npm run test:linux
+
+    - name: Test signatures (macOS)
+      if: matrix.os == 'macos-latest' && steps.env-vars.outputs.sign == 'yes'
+      run: npm run test:sign
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
@@ -192,6 +199,8 @@ jobs:
     steps:
     - name: Delete credentials
       run: printf "protocol=https\nhost=github.com\n" | git credential-osxkeychain erase
+    - name: Update brew
+      run: brew update
     - name: Bump the Homebrew cask
       run: brew bump-cask-pr --no-browse --verbose --version="${{ needs.build.outputs.current_tag }}" headset
       env:

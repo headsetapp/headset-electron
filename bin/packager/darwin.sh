@@ -27,7 +27,7 @@ if [[ -n "${CERT_PASSWORD}" && "${SIGN:-no}" == 'yes' ]]; then
   echo "Settting key partition list"
   security set-key-partition-list -S apple-tool:,apple: -s -k "${password}" "${key_chain}"
 else
-  printf "\x1b[33m%s\x1b[0m\n" "The package will not be signed"
+  printf "\x1b[33m%s\x1b[0m\n" "The package/installer will not be signed"
 fi
 
 OS=darwin node bin/packager/packager.js
