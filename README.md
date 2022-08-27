@@ -4,7 +4,7 @@
 
 ![Build Status](https://github.com/headsetapp/headset-electron/workflows/CI/badge.svg)
 
-[Headset](http://headsetapp.co) is a simple music player for Mac, Windows and Linux with integrated YouTube search, a home screen with popularity list by genres and eras, and best of all, a radio powered by Reddit. Headset takes the songs that are shared in over 80 music subreddits, categorizes them and plays them automatically. It's a great and pretty unique way to find new music as it is chosen by other humans like you and not by algorithms.
+[Headset](https://headsetapp.co) is a simple music player for Mac, Windows and Linux with integrated YouTube search, a home screen with popularity list by genres and eras, and best of all, a radio powered by Reddit. Headset takes the songs that are shared in over 80 music subreddits, categorizes them and plays them automatically. It's a great and pretty unique way to find new music as it is chosen by other humans like you and not by algorithms.
 
 Have a question? Join our Slack workspace: https://tinyurl.com/y7m8y5x4
 
@@ -47,8 +47,8 @@ As an alternative to `.deb` and `.rpm` packages on the website, you can also ins
 #### Debian
 
 ```shell
-wget -q http://headsetapp.co/headset-electron/headset.gpg -O- | sudo tee /usr/share/keyrings/headset-archive-keyring.gpg
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/headset-archive-keyring.gpg] http://headsetapp.co/headset-electron/debian stable non-free" | sudo tee /etc/apt/sources.list.d/headset.list
+wget -q https://headsetapp.co/headset-electron/headset.gpg -O- | sudo tee /usr/share/keyrings/headset-archive-keyring.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/headset-archive-keyring.gpg] https://headsetapp.co/headset-electron/debian stable non-free" | sudo tee /etc/apt/sources.list.d/headset.list
 sudo apt-get update
 sudo apt-get install headset
 ```
@@ -56,14 +56,14 @@ sudo apt-get install headset
 #### RedHat
 
 ```shell
-sudo dnf config-manager --add-repo http://headsetapp.co/headset-electron/redhat/headset.repo
+sudo dnf config-manager --add-repo https://headsetapp.co/headset-electron/redhat/headset.repo
 sudo dnf install headset
 ```
 
 --- Or ---
 
 ```shell
-sudo yum-config-manager --add-repo http://headsetapp.co/headset-electron/redhat/headset.repo
+sudo yum-config-manager --add-repo https://headsetapp.co/headset-electron/redhat/headset.repo
 sudo yum install headset
 ```
 
