@@ -18,7 +18,7 @@ jobs:
     name: Build and test
     strategy:
       matrix:
-        os: ['ubuntu-18.04', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-22.04', 'macos-latest', 'windows-latest']
     runs-on: ${{ matrix.os }}
     outputs:
       current_tag: ${{ steps.tags.outputs.newtag }}
@@ -49,7 +49,7 @@ jobs:
       with:
         node-version: ${{ env.node-version }}
     - name: Install Dependencies (Linux)
-      if: matrix.os == 'ubuntu-18.04'
+      if: matrix.os == 'ubuntu-22.04'
       run: sudo apt-get install fakeroot dpkg rpm lintian gnupg2 xvfb
     - name: Install Dependencies (macOS)
       if: matrix.os == 'macos-latest'
@@ -60,7 +60,7 @@ jobs:
       uses: actions/checkout@v3
     - name: Get tags
       id: tags
-      if: matrix.os == 'ubuntu-18.04' && github.ref_type	== 'tag'
+      if: matrix.os == 'ubuntu-22.04' && github.ref_type	== 'tag'
       run: |
         git fetch --tags -f
         ./bin/getTags.sh
@@ -70,7 +70,7 @@ jobs:
       run: npm run lint
 
     - name: Building (Linux)
-      if: matrix.os == 'ubuntu-18.04'
+      if: matrix.os == 'ubuntu-22.04'
       run: npm run build:linux
     - name: Building (macOS)
       if: matrix.os == 'macos-latest'
@@ -88,16 +88,16 @@ jobs:
         CERT_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD }}
         SIGN: ${{ steps.env-vars.outputs.sign }}
     - name: Signing RedHat installer
-      if: matrix.os == 'ubuntu-18.04' && steps.env-vars.outputs.sign == 'yes'
+      if: matrix.os == 'ubuntu-22.04' && steps.env-vars.outputs.sign == 'yes'
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/linux-headset_priv.asc.gpg
         npm run sign:redhat
 
     - name: Testing app (macOS, Windows)
-      if: matrix.os != 'ubuntu-18.04'
+      if: matrix.os != 'ubuntu-22.04'
       run: npm run test:app
     - name: Testing Linux
-      if: matrix.os == 'ubuntu-18.04'
+      if: matrix.os == 'ubuntu-22.04'
       run: |
         xvfb-run --auto-servernum npm run test:app
         npm run test:linux
@@ -116,7 +116,7 @@ jobs:
   publish:
     name: Publish to Github Releases
     needs: build
-    runs-on: 'ubuntu-18.04'
+    runs-on: 'ubuntu-22.04'
     if: github.ref_type	== 'tag'
 
     steps:
@@ -143,19 +143,19 @@ jobs:
   linux_repo:
     name: Publish Linux repositories
     needs: build
-    runs-on: 'ubuntu-18.04'
+    runs-on: 'ubuntu-22.04'
     if: github.ref_type	== 'tag'
 
     steps:
     - name: Install Dependencies
-      run: sudo apt-get install reprepro createrepo
+      run: sudo apt-get install reprepro createrepo-c
     - name: Get source
       uses: actions/checkout@v3
     - run: mkdir -p build/installers
     - name: Download artifacts
       uses: actions/download-artifact@v3
       with:
-        name: installers-ubuntu-18.04
+        name: installers-ubuntu-22.04
         path: build/installers/
     - name: Creating repositories
       run: |
