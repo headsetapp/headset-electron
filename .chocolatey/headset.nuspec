@@ -8,7 +8,7 @@
     <owners>Daniel Ravina</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://raw.githubusercontent.com/headsetapp/headset-electron/main/LICENSE</licenseUrl>
-    <projectUrl>http://headsetapp.co/</projectUrl>
+    <projectUrl>https://headsetapp.co/</projectUrl>
     <iconUrl>https://cdn.rawgit.com/headsetapp/headset-electron/4254239c/windows/Icon.png</iconUrl>
     <projectSourceUrl>https://github.com/headsetapp/headset-electron</projectSourceUrl>
     <bugTrackerUrl>https://github.com/headsetapp/headset-electron/issues</bugTrackerUrl>

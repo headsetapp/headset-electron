@@ -141,7 +141,7 @@ function start() {
     win.webContents.openDevTools();
   } else {
     win.loadURL('https://danielravina.github.io/headset/app/');
-    player.loadURL('http://danielravina.github.io/headset/player-v2');
+    player.loadURL('https://danielravina.github.io/headset/player-v2');
   }
 
   win.webContents.on('did-finish-load', () => {

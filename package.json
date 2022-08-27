@@ -5,7 +5,7 @@
   "description": "Discover and collect music on YouTube",
   "license": "MIT",
   "author": "Daniel Ravina <hello@headsetapp.co>",
-  "homepage": "http://headsetapp.co",
+  "homepage": "https://headsetapp.co",
   "bugs": "https://github.com/headsetapp/headset-electron/issues",
   "main": "src/index.js",
   "repository": {
