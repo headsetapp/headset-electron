@@ -21,8 +21,8 @@ jobs:
         os: ['ubuntu-22.04', 'macos-latest', 'windows-latest']
     runs-on: ${{ matrix.os }}
     outputs:
-      current_tag: ${{ steps.tags.outputs.newtag }}
-      previous_tag: ${{ steps.tags.outputs.oldtag }}
+      current_tag: ${{ env.newtag }}
+      previous_tag: ${{ env.oldtag }}
 
     steps:
     - name: Set env variables
@@ -30,17 +30,14 @@ jobs:
       shell: bash
       run: |
         if [[ "${GITHUB_REPOSITORY}" == 'headsetapp/headset-electron' && ("${GITHUB_REF_TYPE}" == 'tag' || "${GITHUB_REF}" == 'refs/heads/artifacts') ]]; then
-          echo "::set-output name=sign::yes"
+          echo "sign=yes" >> ${GITHUB_ENV}
         else
-          echo "::set-output name=sign::no"
+          echo "sign=no" >> ${GITHUB_ENV}
         fi
-    - name: Get npm cache directory
-      id: npm-cache-dir
-      run: echo "::set-output name=dir::$(npm config get cache)"
     - name: Set up npm cache
       uses: actions/cache@v3.0.9
       with:
-        path: ${{ steps.npm-cache-dir.outputs.dir }}
+        path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
@@ -80,15 +77,15 @@ jobs:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
         TEAM_ID: ${{ secrets.TEAM_ID }}
-        SIGN: ${{ steps.env-vars.outputs.sign }}
+        SIGN: ${{ env.sign }}
     - name: Building (Windows)
       if: matrix.os == 'windows-latest'
       run: npm run build:windows
       env:
         CERT_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD }}
-        SIGN: ${{ steps.env-vars.outputs.sign }}
+        SIGN: ${{ env.sign }}
     - name: Signing RedHat installer
-      if: matrix.os == 'ubuntu-22.04' && steps.env-vars.outputs.sign == 'yes'
+      if: matrix.os == 'ubuntu-22.04' && env.sign == 'yes'
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/linux-headset_priv.asc.gpg
         npm run sign:redhat
@@ -103,7 +100,7 @@ jobs:
         npm run test:linux
 
     - name: Test signatures (macOS)
-      if: matrix.os == 'macos-latest' && steps.env-vars.outputs.sign == 'yes'
+      if: matrix.os == 'macos-latest' && env.sign == 'yes'
       run: npm run test:sign
 
     - name: Upload artifacts
