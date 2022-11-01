@@ -159,7 +159,7 @@ jobs:
         gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/linux-headset_priv.asc.gpg
         npm run repo
     - name: Deploy Linux repositories
-      uses: crazy-max/ghaction-github-pages@v3.0.0
+      uses: crazy-max/ghaction-github-pages@v3.1.0
       with:
         build_dir: gh-pages
         commit_message: Deploy ${{ needs.build.outputs.current_tag }}
