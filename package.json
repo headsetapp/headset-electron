@@ -54,7 +54,7 @@
     "cross-env": "^7.0.3",
     "electron": "^14.2.9",
     "electron-installer-windows": "^3.0.0",
-    "electron-packager": "^17.1.0",
+    "electron-packager": "^17.1.1",
     "electron-packager-languages": "^0.5.0",
     "electron-rebuild": "^3.2.7",
     "eslint": "^8.26.0",
