@@ -8,3 +8,4 @@ gh-pages/debian/dists
 gh-pages/debian/pool
 gh-pages/redhat/repodata
 gh-pages/redhat/*.rpm
+.npmcheckrc
