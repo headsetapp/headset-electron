@@ -6,7 +6,7 @@
 
 [Headset](https://headsetapp.co) is a simple music player for Mac, Windows and Linux with integrated YouTube search, a home screen with popularity list by genres and eras, and best of all, a radio powered by Reddit. Headset takes the songs that are shared in over 80 music subreddits, categorizes them and plays them automatically. It's a great and pretty unique way to find new music as it is chosen by other humans like you and not by algorithms.
 
-Have a question? Join our Slack workspace: https://tinyurl.com/y7m8y5x4
+Have a question? Join our Slack workspace: https://tinyurl.com/8ejkcdac
 
 Want to start contributing? Check out our [contributing](./CONTRIBUTING.md) doc.
 
