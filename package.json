@@ -57,7 +57,7 @@
     "electron-packager": "^17.1.1",
     "electron-packager-languages": "^0.5.0",
     "electron-rebuild": "^3.2.7",
-    "eslint": "^8.33.0",
+    "eslint": "^8.38.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-ava": "^14.0.0",
     "eslint-plugin-import": "^2.27.5",
@@ -65,7 +65,7 @@
     "foreman": "^3.0.1",
     "http-server": "^14.1.1",
     "husky": "^8.0.3",
-    "playwright": "^1.32.1",
+    "playwright": "^1.32.3",
     "xml2js": "^0.5.0"
   },
   "optionalDependencies": {
