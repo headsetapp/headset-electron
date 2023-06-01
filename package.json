@@ -47,17 +47,17 @@
     "electron-media-service": "github:headsetapp/electron-media-service",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
-    "jimp": "^0.22.7"
+    "jimp": "^0.22.8"
   },
   "devDependencies": {
-    "ava": "^5.2.0",
+    "ava": "^5.3.0",
     "cross-env": "^7.0.3",
     "electron": "^14.2.9",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^17.1.1",
     "electron-packager-languages": "^0.5.0",
     "electron-rebuild": "^3.2.7",
-    "eslint": "^8.38.0",
+    "eslint": "^8.41.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-ava": "^14.0.0",
     "eslint-plugin-import": "^2.27.5",
@@ -65,8 +65,8 @@
     "foreman": "^3.0.1",
     "http-server": "^14.1.1",
     "husky": "^8.0.3",
-    "playwright": "^1.33.0",
-    "xml2js": "^0.5.0"
+    "playwright": "^1.34.3",
+    "xml2js": "^0.6.0"
   },
   "optionalDependencies": {
     "create-dmg": "^6.0.0",
