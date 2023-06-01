@@ -50,7 +50,7 @@
     "jimp": "^0.22.7"
   },
   "devDependencies": {
-    "ava": "^5.2.0",
+    "ava": "^5.3.0",
     "cross-env": "^7.0.3",
     "electron": "^14.2.9",
     "electron-installer-windows": "^3.0.0",
