@@ -1,7 +1,7 @@
+const path = require('path');
 const packager = require('electron-packager');
 const { rebuild } = require('electron-rebuild');
 const setLanguages = require('electron-packager-languages');
-const path = require('path');
 
 const {
   ARCH, OS, APPLE_ID, APPLE_ID_PASSWORD, TEAM_ID, SIGN,

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
-const installer = require('electron-installer-redhat');
 const path = require('path');
+const installer = require('electron-installer-redhat');
 
 const options = {
   src: 'build/Headset-linux-x64',

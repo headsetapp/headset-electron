@@ -1,7 +1,7 @@
-const test = require('ava'); // eslint-disable-line
 const path = require('path');
-const { _electron } = require('playwright');
 const { rm } = require('fs/promises');
+const test = require('ava'); // eslint-disable-line
+const { _electron } = require('playwright');
 const printLogs = require('./logs');
 
 let execPath = '';
