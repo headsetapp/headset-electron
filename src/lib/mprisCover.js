@@ -1,6 +1,6 @@
+const path = require('path');
 const Jimp = require('jimp');
 const { app } = require('electron');
-const path = require('path');
 
 /**
  * Retrieves the video thumbnail, crops it to a square and safes it to disk.

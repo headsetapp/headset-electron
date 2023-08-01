@@ -1,7 +1,7 @@
-const squirrel = require('electron-squirrel-startup');
-const windowStateKeeper = require('electron-window-state');
 const path = require('path');
 const fs = require('fs');
+const squirrel = require('electron-squirrel-startup');
+const windowStateKeeper = require('electron-window-state');
 const {
   app,
   BrowserWindow,

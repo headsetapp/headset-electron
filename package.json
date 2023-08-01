@@ -57,7 +57,7 @@
     "electron-packager": "^17.1.1",
     "electron-packager-languages": "^0.5.0",
     "electron-rebuild": "^3.2.7",
-    "eslint": "^8.41.0",
+    "eslint": "^8.46.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-ava": "^14.0.0",
     "eslint-plugin-import": "^2.28.0",

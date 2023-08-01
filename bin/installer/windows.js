@@ -1,5 +1,5 @@
-const installer = require('electron-installer-windows');
 const path = require('path');
+const installer = require('electron-installer-windows');
 
 const { CERT_PASSWORD, SIGN } = process.env;
 
