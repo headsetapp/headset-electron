@@ -35,7 +35,7 @@ jobs:
           echo "sign=no" >> ${GITHUB_ENV}
         fi
     - name: Set up npm cache
-      uses: actions/cache@v3.3.1
+      uses: actions/cache@v3.3.2
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
