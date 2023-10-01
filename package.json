@@ -65,7 +65,7 @@
     "foreman": "^3.0.1",
     "http-server": "^14.1.1",
     "husky": "^8.0.3",
-    "playwright": "^1.37.1",
+    "playwright": "^1.38.1",
     "xml2js": "^0.6.2"
   },
   "optionalDependencies": {
