@@ -13,15 +13,16 @@ const logPlayer2Win = debug('headset:player2Win');
 class HeadsetLogger {
   // Initializes the logger
   static init() {
+    logFile.initialize();
     logFile.transports.console.level = false;
     logFile.transports.file.format = '{y}-{m}-{d} {h}:{i}:{s}.{ms}\t\t {text}';
     logFile.transports.file.getFile().clear(); // deletes previous logs
 
     // Catches any errors (useful for playwright testing)
     // might be removed once playwright implements electron logging
-    logFile.catchErrors({
+    logFile.errorHandler.startCatching({
       showDialog: false,
-      onError(error) {
+      onError({ error }) {
         logFile.error(error);
         app.exit();
       },
