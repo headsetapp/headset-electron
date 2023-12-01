@@ -45,6 +45,8 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.node-version }}
+    - name: Install Python dependencies
+      run: python -m pip install --upgrade packaging setuptools
     - name: Install Dependencies (Linux)
       if: matrix.os == 'ubuntu-22.04'
       run: sudo apt-get install fakeroot dpkg rpm lintian gnupg2 xvfb
