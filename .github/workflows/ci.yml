@@ -106,7 +106,7 @@ jobs:
       run: npm run test:sign
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: github.ref_type	== 'tag' || github.ref == 'refs/heads/artifacts'
       with:
         name: installers-${{ matrix.os }}
