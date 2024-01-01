@@ -121,7 +121,7 @@ jobs:
     steps:
     - run: mkdir -p build/installers
     - name: Download artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: build/installers/
     # Artifacts are downloaded to their own sub-directory, we need to move them
@@ -152,7 +152,7 @@ jobs:
       uses: actions/checkout@v4
     - run: mkdir -p build/installers
     - name: Download artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: installers-ubuntu-22.04
         path: build/installers/
@@ -180,7 +180,7 @@ jobs:
     - name: Fix git checkout line endings
       run: git config --global core.autocrlf input
     - name: Download artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: installers-windows-latest
         path: build/installers/
