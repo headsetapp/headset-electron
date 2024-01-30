@@ -13,7 +13,7 @@
     "url": "https://github.com/headsetapp/headset-electron"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "postinstall": "electron-rebuild -o electron-media-service",
     "headset": "electron .",
     "dev:headset": "cross-env NODE_ENV=development nf start",
@@ -64,7 +64,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "foreman": "^3.0.1",
     "http-server": "^14.1.1",
-    "husky": "^8.0.3",
+    "husky": "^9.0.7",
     "playwright": "^1.40.1",
     "xml2js": "^0.6.2"
   },
