@@ -43,21 +43,21 @@
   "dependencies": {
     "debug": "^4.3.4",
     "discord-rpc": "^4.0.1",
-    "electron-log": "^5.0.3",
+    "electron-log": "^5.1.0",
     "electron-media-service": "github:headsetapp/electron-media-service",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
     "jimp": "^0.22.10"
   },
   "devDependencies": {
-    "ava": "^6.0.1",
+    "ava": "^6.1.1",
     "cross-env": "^7.0.3",
     "electron": "^14.2.9",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^17.1.2",
     "electron-packager-languages": "^0.5.0",
     "electron-rebuild": "^3.2.7",
-    "eslint": "^8.52.0",
+    "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-ava": "^14.0.0",
     "eslint-plugin-import": "^2.29.1",
@@ -65,11 +65,11 @@
     "foreman": "^3.0.1",
     "http-server": "^14.1.1",
     "husky": "^9.0.7",
-    "playwright": "^1.40.1",
+    "playwright": "^1.41.1",
     "xml2js": "^0.6.2"
   },
   "optionalDependencies": {
-    "create-dmg": "^6.1.0",
+    "create-dmg": "^7.0.0",
     "dbus-next": "^0.10.2",
     "electron-installer-debian": "^3.2.0",
     "electron-installer-redhat": "^3.4.0",
