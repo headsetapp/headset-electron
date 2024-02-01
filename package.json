@@ -43,7 +43,7 @@
   "dependencies": {
     "debug": "^4.3.4",
     "discord-rpc": "^4.0.1",
-    "electron-log": "^5.1.0",
+    "electron-log": "^5.1.1",
     "electron-media-service": "github:headsetapp/electron-media-service",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",
