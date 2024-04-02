@@ -1,5 +1,7 @@
 # Headset
 
+This project is currently not being actively maintained and is not accepting new pull requests or issues. Thank you for your understanding.
+
 > **ATTENTION**: Headset no longer uses a shared YouTube API Key. Please create your own key by [Following this quick guide](https://github.com/headsetapp/headset-electron/wiki/Get-Youtube-API-Key) and make sure you are running the latest version.
 
 ![Build Status](https://github.com/headsetapp/headset-electron/workflows/CI/badge.svg)
