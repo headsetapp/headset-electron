@@ -57,4 +57,11 @@
     <release version="2.1.2" date="2019-03-01"/>
     <release version="1.6.0" date="2017-09-25"/>
   </releases>
+  <keywords>
+    <keyword>music player</keyword>
+    <keyword>youtube music</keyword>
+    <keyword>playlist editor</keyword>
+    <keyword>music discovery</keyword>
+    <keyword>desktop audio</keyword>
+  </keywords>
 </component>
